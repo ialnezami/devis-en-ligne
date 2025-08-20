@@ -24,3 +24,7 @@ node_modules/
 # OS specific
 .DS_Store
 backend/dist/
+
+# Task files
+# tasks.json
+# tasks/ 

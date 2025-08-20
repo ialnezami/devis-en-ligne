@@ -336,7 +336,6 @@ export class PushNotificationService {
         },
         data: options.data,
         android: options.android,
-        apns: options.apns,
         webpush: options.webpush,
       };
 

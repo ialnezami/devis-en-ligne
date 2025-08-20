@@ -20,6 +20,7 @@ import { CompaniesModule } from './companies/companies.module';
 import { TemplatesModule } from './templates/templates.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { PDFModule } from './pdf/pdf.module';
+import { IntegrationsModule } from './integrations/integrations.module';
 
 // Common
 import { Logger } from './common/logger/logger.service';
@@ -102,6 +103,7 @@ import { DatabaseModule } from './database/database.module';
     TemplatesModule,
     AnalyticsModule,
     DatabaseModule,
+    IntegrationsModule,
   ],
   controllers: [],
   providers: [Logger],

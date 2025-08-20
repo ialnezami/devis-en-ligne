@@ -20,7 +20,8 @@ import {
   UserIcon,
   OfficeBuildingIcon,
   BellIcon,
-  XIcon
+  XIcon,
+  PuzzleIcon
 } from '@heroicons/react/outline';
 
 interface SidebarProps {
@@ -96,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
         { id: 'settings-profile', label: 'Profile', path: '/settings/profile', icon: UserIcon },
         { id: 'settings-company', label: 'Company', path: '/settings/company', icon: OfficeBuildingIcon },
         { id: 'settings-notifications', label: 'Notifications', path: '/settings/notifications', icon: BellIcon },
-        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations', icon: CogIcon }
+        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations', icon: PuzzleIcon }
       ]
     }
   ];

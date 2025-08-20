@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Template } from '../../templates/entities/template.entity';
+import { QuotationItem } from './quotation-item.entity';
 import { QuotationStatus, QuotationPriority, ApprovalLevel, RevisionReason } from '../enums/quotation-status.enum';
 
 @Entity('quotations')

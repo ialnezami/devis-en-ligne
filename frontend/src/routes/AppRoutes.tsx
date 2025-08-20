@@ -21,6 +21,7 @@ const Profile = React.lazy(() => import('@/pages/Settings/Profile/Profile'));
 const Company = React.lazy(() => import('@/pages/Settings/Company/Company'));
 const Notifications = React.lazy(() => import('@/pages/Settings/Notifications/Notifications'));
 const Integrations = React.lazy(() => import('@/pages/Settings/Integrations/Integrations'));
+const DemoLayout = React.lazy(() => import('@/pages/DemoLayout/DemoLayout'));
 const Login = React.lazy(() => import('@/pages/Auth/Login/Login'));
 const Register = React.lazy(() => import('@/pages/Auth/Register/Register'));
 const ForgotPassword = React.lazy(() => import('@/pages/Auth/ForgotPassword/ForgotPassword'));
@@ -225,7 +226,7 @@ const AppRoutes: React.FC = () => {
           path="/demo"
           element={
             <RouteGuard>
-              <React.lazy(() => import('@/pages/DemoLayout/DemoLayout')) />
+              <DemoLayout />
             </RouteGuard>
           }
         />

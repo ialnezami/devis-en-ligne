@@ -387,7 +387,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                     {report.name}
                   </span>
-                </span>
+                </div>
                 <span className={`text-xs font-medium ${getStatusColor(report.status)}`}>
                   {report.status}
                 </span>

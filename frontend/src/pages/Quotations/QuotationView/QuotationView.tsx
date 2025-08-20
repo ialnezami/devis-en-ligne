@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeftIcon, EyeIcon, PencilIcon, DocumentArrowDownIcon, ShareIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PencilIcon, DocumentDownloadIcon, ShareIcon, TrashIcon } from '@heroicons/react/outline';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Quotation, Client } from '@/types';
+import { Quotation, QuotationStatus, Client } from '@/types';
 
 const QuotationView: React.FC = () => {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const QuotationView: React.FC = () => {
         total: 1800
       }
     ],
-    status: 'sent',
+    status: QuotationStatus.SENT,
     totalAmount: 10500,
     taxAmount: 2100,
     discountAmount: 0,
@@ -104,26 +104,26 @@ const QuotationView: React.FC = () => {
     }
   }, [id]);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: QuotationStatus) => {
     switch (status) {
-      case 'draft':
+      case QuotationStatus.DRAFT:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
-      case 'sent':
+      case QuotationStatus.SENT:
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
-      case 'viewed':
+      case QuotationStatus.VIEWED:
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300';
-      case 'accepted':
+      case QuotationStatus.ACCEPTED:
         return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300';
-      case 'rejected':
+      case QuotationStatus.REJECTED:
         return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300';
-      case 'expired':
+      case QuotationStatus.EXPIRED:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
     }
   };
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = (status: QuotationStatus) => {
     return status.charAt(0).toUpperCase() + status.slice(1);
   };
 
@@ -231,7 +231,7 @@ const QuotationView: React.FC = () => {
               onClick={handleDownload}
               className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
             >
-              <DocumentArrowDownIcon className="h-4 w-4 mr-2" />
+              <DocumentDownloadIcon className="h-4 w-4 mr-2" />
               Download PDF
             </button>
             <button
@@ -453,9 +453,13 @@ const QuotationView: React.FC = () => {
                   Address
                 </label>
                 <p className="text-gray-900 dark:text-white">
-                  {quotation.client.address.street}<br />
-                  {quotation.client.address.city}, {quotation.client.address.state} {quotation.client.address.zipCode}<br />
-                  {quotation.client.address.country}
+                  {quotation.client.address && (
+                    <>
+                      {quotation.client.address.street}<br />
+                      {quotation.client.address.city}, {quotation.client.address.state} {quotation.client.address.zipCode}<br />
+                      {quotation.client.address.country}
+                    </>
+                  )}
                 </p>
               </div>
             </div>

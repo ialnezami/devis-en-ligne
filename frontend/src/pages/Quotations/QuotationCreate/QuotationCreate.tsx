@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { QuotationItem, Client } from '@/types';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { PlusIcon, MagnifyingGlassIcon, FunnelIcon, EyeIcon, PencilIcon, TrashIcon, DocumentArrowDownIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, SearchIcon, FilterIcon, EyeIcon, PencilIcon, TrashIcon, DocumentDownloadIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
-import { Quotation, Client } from '@/types';
+import { Quotation, QuotationStatus } from '@/types';
 
 const QuotationList: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const QuotationList: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   // Mock clients data
-  const mockClients: Client[] = [
+  const mockClients: any[] = [
     {
       id: 'client-1',
       name: 'TechStart Inc',
@@ -64,7 +64,7 @@ const QuotationList: React.FC = () => {
       clientId: 'client-1',
       client: mockClients[0],
       items: [],
-      status: 'sent',
+      status: QuotationStatus.SENT,
       totalAmount: 10500,
       taxAmount: 2100,
       discountAmount: 0,
@@ -83,7 +83,7 @@ const QuotationList: React.FC = () => {
       clientId: 'client-2',
       client: mockClients[1],
       items: [],
-      status: 'draft',
+      status: QuotationStatus.DRAFT,
       totalAmount: 8000,
       taxAmount: 1600,
       discountAmount: 0,
@@ -102,7 +102,7 @@ const QuotationList: React.FC = () => {
       clientId: 'client-1',
       client: mockClients[0],
       items: [],
-      status: 'accepted',
+      status: QuotationStatus.ACCEPTED,
       totalAmount: 15000,
       taxAmount: 3000,
       discountAmount: 1500,
@@ -133,26 +133,26 @@ const QuotationList: React.FC = () => {
     loadQuotations();
   }, []);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: QuotationStatus) => {
     switch (status) {
-      case 'draft':
+      case QuotationStatus.DRAFT:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
-      case 'sent':
+      case QuotationStatus.SENT:
         return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300';
-      case 'viewed':
+      case QuotationStatus.VIEWED:
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300';
-      case 'accepted':
+      case QuotationStatus.ACCEPTED:
         return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300';
-      case 'rejected':
+      case QuotationStatus.REJECTED:
         return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300';
-      case 'expired':
+      case QuotationStatus.EXPIRED:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
       default:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
     }
   };
 
-  const getStatusLabel = (status: string) => {
+  const getStatusLabel = (status: QuotationStatus) => {
     return status.charAt(0).toUpperCase() + status.slice(1);
   };
 
@@ -239,7 +239,7 @@ const QuotationList: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search quotations..."
@@ -372,7 +372,7 @@ const QuotationList: React.FC = () => {
                           className="text-purple-600 hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300"
                           title="Download PDF"
                         >
-                          <DocumentArrowDownIcon className="h-4 w-4" />
+                          <DocumentDownloadIcon className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(quotation.id)}
@@ -392,7 +392,7 @@ const QuotationList: React.FC = () => {
           {sortedQuotations.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 dark:text-gray-500 mb-4">
-                <FunnelIcon className="mx-auto h-12 w-12" />
+                <FilterIcon className="mx-auto h-12 w-12" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                 No quotations found
@@ -432,13 +432,13 @@ const QuotationList: React.FC = () => {
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
               <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Accepted</div>
               <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                {sortedQuotations.filter(q => q.status === 'accepted').length}
+                {sortedQuotations.filter(q => q.status === QuotationStatus.ACCEPTED).length}
               </div>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
               <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Pending</div>
               <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-                {sortedQuotations.filter(q => ['draft', 'sent', 'viewed'].includes(q.status)).length}
+                {sortedQuotations.filter(q => [QuotationStatus.DRAFT, QuotationStatus.SENT, QuotationStatus.VIEWED].includes(q.status)).length}
               </div>
             </div>
           </div>

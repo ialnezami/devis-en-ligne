@@ -1,5 +1,5 @@
 import React from 'react';
-import { EyeIcon, FileTextIcon, CheckCircleIcon, XCircleIcon, CurrencyDollarIcon } from '@heroicons/react/outline';
+import { EyeIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon, CurrencyDollarIcon } from '@heroicons/react/outline';
 
 interface ConversionFunnelData {
   stages: Array<{
@@ -22,7 +22,7 @@ interface ConversionFunnelProps {
 const ConversionFunnel: React.FC<ConversionFunnelProps> = ({ data, dateRange }) => {
   const iconMap = {
     EyeIcon,
-    FileTextIcon,
+    DocumentTextIcon,
     CheckCircleIcon,
     XCircleIcon,
     CurrencyDollarIcon

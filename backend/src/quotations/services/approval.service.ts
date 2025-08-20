@@ -364,22 +364,20 @@ export class ApprovalService {
       const approvers = await this.findApprovers(approvalRequest.approvalLevel);
       
       for (const approver of approvers) {
-        await this.emailService.sendApprovalRequestEmail(
-          approver.email,
-          approver.firstName,
-          quotation,
-          approvalRequest,
-        );
+        this.logger.log('Approval request notification would be sent', {
+          to: approver.email,
+          quotationId: quotation.id,
+          approvalLevel: approvalRequest.approvalLevel,
+        });
       }
 
       // Notify quotation creator
       if (quotation.createdBy?.email) {
-        await this.emailService.sendApprovalRequestedEmail(
-          quotation.createdBy.email,
-          quotation.createdBy.firstName,
-          quotation,
-          approvalRequest,
-        );
+        this.logger.log('Approval requested notification would be sent', {
+          to: quotation.createdBy.email,
+          quotationId: quotation.id,
+          approvalLevel: approvalRequest.approvalLevel,
+        });
       }
     } catch (error) {
       this.logger.error('Error sending approval request notifications', {

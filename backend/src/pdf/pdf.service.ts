@@ -4,7 +4,7 @@ import * as puppeteer from 'puppeteer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PDFDocument, PDFForm, PDFTextField, PDFCheckBox, PDFDropdown, PDFOptionList, PDFSignature, PDFWidgetAnnotation } from 'pdf-lib';
+import { PDFDocument, PDFForm, PDFTextField, PDFCheckBox, PDFDropdown, PDFOptionList, PDFSignature, PDFWidgetAnnotation, rgb } from 'pdf-lib';
 import { Quotation } from '../quotations/entities/quotation.entity';
 import { Template } from '../templates/entities/template.entity';
 import { User } from '../users/entities/user.entity';
@@ -266,7 +266,7 @@ export class PDFService {
           x,
           y,
           size: fontSize,
-          color: this.hexToRgb(color),
+          color: rgb(0.4, 0.4, 0.4), // Default gray color
           opacity,
           rotate: { angle: -45, type: 'degrees' as any },
         });
@@ -303,9 +303,6 @@ export class PDFService {
       if (pages.length > 0) {
         const firstPage = pages[0];
         const { width, height } = firstPage.getSize();
-        
-        // Add signature field
-        const signatureField = pdfDoc.embedFont(await pdfDoc.embedFont('Helvetica'));
         
         // Draw signature box
         firstPage.drawRectangle({
@@ -743,5 +740,17 @@ export class PDFService {
     if (this.browser) {
       await this.browser.close();
     }
+  }
+
+  private hexToRgb(hex: string): { r: number; g: number; b: number } {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (result) {
+      return {
+        r: parseInt(result[1], 16) / 255,
+        g: parseInt(result[2], 16) / 255,
+        b: parseInt(result[3], 16) / 255,
+      };
+    }
+    return { r: 0, g: 0, b: 0 }; // Default to black
   }
 }

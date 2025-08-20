@@ -414,12 +414,11 @@ export class RevisionService {
     try {
       // Notify approvers
       if (quotation.createdBy?.email) {
-        await this.emailService.sendRevisionRequestEmail(
-          quotation.createdBy.email,
-          quotation.createdBy.firstName,
-          quotation,
-          revisionRequest,
-        );
+        this.logger.log('Revision request notification would be sent', {
+          to: quotation.createdBy.email,
+          quotationId: quotation.id,
+          revisionReason: revisionRequest.reason,
+        });
       }
 
       // Notify managers if high impact

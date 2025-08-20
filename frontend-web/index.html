@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Online Quotation Tool - Professional Quotation Management System</title>
+    <meta name="title" content="Online Quotation Tool - Professional Quotation Management System">
+    <meta name="description" content="Streamline your business with our comprehensive quotation management system. Create, manage, and track quotations efficiently.">
+    <meta name="keywords" content="quotation tool, business management, invoice system, quotation software, business automation">
+    <meta name="author" content="Online Quotation Tool">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quotation-tool.com/">
+    <meta property="og:title" content="Online Quotation Tool - Professional Quotation Management System">
+    <meta property="og:description" content="Streamline your business with our comprehensive quotation management system. Create, manage, and track quotations efficiently.">
+    <meta property="og:image" content="https://quotation-tool.com/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://quotation-tool.com/">
+    <meta property="twitter:title" content="Online Quotation Tool - Professional Quotation Management System">
+    <meta property="twitter:description" content="Streamline your business with our comprehensive quotation management system. Create, manage, and track quotations efficiently.">
+    <meta property="twitter:image" content="https://quotation-tool.com/og-image.jpg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Quotation Tool">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/index.css" as="style">
+    <link rel="preload" href="/src/main.tsx" as="script">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    
+    <!-- CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-src 'none'; object-src 'none';">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Loading indicator -->
+    <div id="loading" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50">
+      <div class="text-center">
+        <div class="spinner-lg mx-auto mb-4"></div>
+        <p class="text-gray-600 dark:text-gray-400">Loading Quotation Tool...</p>
+      </div>
+    </div>
+    
+    <!-- Error boundary fallback -->
+    <div id="error-boundary" class="hidden fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50">
+      <div class="text-center max-w-md mx-auto px-4">
+        <div class="text-danger-500 text-6xl mb-4">⚠️</div>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Something went wrong</h1>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">We're sorry, but something unexpected happened. Please try refreshing the page.</p>
+        <button onclick="window.location.reload()" class="btn btn-primary">
+          Refresh Page
+        </button>
+      </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading indicator when app is ready -->
+    <script>
+      window.addEventListener('load', function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      });
+      
+      // Error handling
+      window.addEventListener('error', function(e) {
+        const loading = document.getElementById('loading');
+        const errorBoundary = document.getElementById('error-boundary');
+        
+        if (loading) loading.style.display = 'none';
+        if (errorBoundary) errorBoundary.classList.remove('hidden');
+      });
+      
+      // Unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(e) {
+        const loading = document.getElementById('loading');
+        const errorBoundary = document.getElementById('error-boundary');
+        
+        if (loading) loading.style.display = 'none';
+        if (errorBoundary) errorBoundary.classList.remove('hidden');
+      });
+    </script>
+  </body>
+</html>

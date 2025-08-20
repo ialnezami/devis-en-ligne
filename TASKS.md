@@ -232,12 +232,12 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Add notification scheduling
 - [x] Create notification templates
 
-#### 2.6.3 In-App Notifications 🟡 ⏱️ 6h 👤 Backend Developer
-- [ ] Create Notification entity
-- [ ] Implement notification CRUD
-- [ ] Add real-time notifications (WebSocket)
-- [ ] Create notification preferences
-- [ ] Implement notification history
+#### 2.6.3 In-App Notifications ✅ ⏱️ 6h 👤 Backend Developer
+- [x] Create Notification entity
+- [x] Implement notification CRUD
+- [x] Add real-time notifications (WebSocket)
+- [x] Create notification preferences
+- [x] Implement notification history
 
 ### 2.7 Integration & APIs
 

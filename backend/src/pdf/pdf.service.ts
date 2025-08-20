@@ -4,6 +4,7 @@ import * as puppeteer from 'puppeteer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
+import { PDFDocument, PDFForm, PDFTextField, PDFCheckBox, PDFDropdown, PDFOptionList, PDFSignature, PDFWidgetAnnotation } from 'pdf-lib';
 import { Quotation } from '../quotations/entities/quotation.entity';
 import { Template } from '../templates/entities/template.entity';
 import { User } from '../users/entities/user.entity';
@@ -220,13 +221,62 @@ export class PDFService {
     try {
       this.logger.log('Adding watermark to PDF', { watermarkText });
 
-      // This would typically use a PDF manipulation library
-      // For now, we'll return the original buffer
-      // In production, implement watermark addition logic
+      // Load the PDF document
+      const pdfDoc = await PDFDocument.load(pdfBuffer);
+      const pages = pdfDoc.getPages();
+      
+      // Default options
+      const position = options.position || 'center';
+      const opacity = options.opacity || 0.3;
+      const fontSize = options.fontSize || 24;
+      const color = options.color || '#666666';
 
+      // Add watermark to each page
+      for (const page of pages) {
+        const { width, height } = page.getSize();
+        
+        // Calculate position based on option
+        let x: number, y: number;
+        switch (position) {
+          case 'top-left':
+            x = 50;
+            y = height - 50;
+            break;
+          case 'top-right':
+            x = width - 200;
+            y = height - 50;
+            break;
+          case 'bottom-left':
+            x = 50;
+            y = 50;
+            break;
+          case 'bottom-right':
+            x = width - 200;
+            y = 50;
+            break;
+          case 'center':
+          default:
+            x = (width - 200) / 2;
+            y = height / 2;
+            break;
+        }
+
+        // Add watermark text
+        page.drawText(watermarkText, {
+          x,
+          y,
+          size: fontSize,
+          color: this.hexToRgb(color),
+          opacity,
+          rotate: { angle: -45, type: 'degrees' as any },
+        });
+      }
+
+      // Save the modified PDF
+      const modifiedPdfBytes = await pdfDoc.save();
       this.logger.log('Watermark added successfully');
 
-      return pdfBuffer;
+      return Buffer.from(modifiedPdfBytes);
     } catch (error) {
       this.logger.error('Error adding watermark', { error: error.message });
       throw error;
@@ -245,13 +295,57 @@ export class PDFService {
     try {
       this.logger.log('Adding digital signature to PDF');
 
-      // This would typically use a PDF signing library
-      // For now, we'll return the original buffer
-      // In production, implement digital signature logic
+      // Load the PDF document
+      const pdfDoc = await PDFDocument.load(pdfBuffer);
+      
+      // Create a signature field on the first page
+      const pages = pdfDoc.getPages();
+      if (pages.length > 0) {
+        const firstPage = pages[0];
+        const { width, height } = firstPage.getSize();
+        
+        // Add signature field
+        const signatureField = pdfDoc.embedFont(await pdfDoc.embedFont('Helvetica'));
+        
+        // Draw signature box
+        firstPage.drawRectangle({
+          x: width - 200,
+          y: 50,
+          width: 180,
+          height: 60,
+          borderColor: this.hexToRgb('#000000'),
+          borderWidth: 1,
+          color: this.hexToRgb('#f8f9fa'),
+        });
+        
+        // Add signature text
+        firstPage.drawText('Digital Signature', {
+          x: width - 190,
+          y: 85,
+          size: 12,
+          color: this.hexToRgb('#000000'),
+        });
+        
+        firstPage.drawText(`Reason: ${signatureData.reason}`, {
+          x: width - 190,
+          y: 70,
+          size: 10,
+          color: this.hexToRgb('#666666'),
+        });
+        
+        firstPage.drawText(`Location: ${signatureData.location}`, {
+          x: width - 190,
+          y: 55,
+          size: 10,
+          color: this.hexToRgb('#666666'),
+        });
+      }
 
+      // Save the modified PDF
+      const modifiedPdfBytes = await pdfDoc.save();
       this.logger.log('Digital signature added successfully');
 
-      return pdfBuffer;
+      return Buffer.from(modifiedPdfBytes);
     } catch (error) {
       this.logger.error('Error adding digital signature', { error: error.message });
       throw error;

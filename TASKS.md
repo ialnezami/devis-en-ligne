@@ -226,11 +226,11 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Implement bulk email handling
 
 #### 2.6.2 Push Notifications 🟡 ⏱️ 8h 👤 Backend Developer
-- [ ] Integrate Firebase Cloud Messaging
-- [ ] Create push notification service
-- [ ] Implement device token management
-- [ ] Add notification scheduling
-- [ ] Create notification templates
+- [x] Integrate Firebase Cloud Messaging
+- [x] Create push notification service
+- [x] Implement device token management
+- [x] Add notification scheduling
+- [x] Create notification templates
 
 #### 2.6.3 In-App Notifications 🟡 ⏱️ 6h 👤 Backend Developer
 - [ ] Create Notification entity

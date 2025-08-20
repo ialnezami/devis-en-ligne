@@ -73,9 +73,10 @@ export class User {
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.CLIENT,
+    array: true,
+    default: [UserRole.CLIENT],
   })
-  role: UserRole;
+  roles: UserRole[];
 
   @Column({
     type: 'enum',
@@ -106,6 +107,16 @@ export class User {
 
   @Column({ type: 'varchar', length: 45, nullable: true })
   lastLoginIp?: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Exclude()
+  passwordResetToken?: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  passwordResetExpiresAt?: Date;
+
+  @Column({ type: 'varchar', length: 500, nullable: true })
+  suspensionReason?: string;
 
   @Column({ type: 'jsonb', nullable: true })
   preferences?: {
@@ -166,11 +177,11 @@ export class User {
   }
 
   get isAdmin(): boolean {
-    return [UserRole.SUPER_ADMIN, UserRole.ADMIN].includes(this.role);
+    return this.roles?.some(role => [UserRole.SUPER_ADMIN, UserRole.ADMIN].includes(role)) || false;
   }
 
   get isManager(): boolean {
-    return [UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MANAGER].includes(this.role);
+    return this.roles?.some(role => [UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MANAGER].includes(role)) || false;
   }
 
   // Hooks

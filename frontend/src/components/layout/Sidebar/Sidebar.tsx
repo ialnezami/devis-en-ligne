@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { 
+import {
   HomeIcon,
   DocumentTextIcon,
   UserGroupIcon,
-  CogIcon,
   ChartBarIcon,
   FolderIcon,
-  XIcon,
+  CogIcon,
   ChevronDownIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  DocumentIcon,
+  PlusIcon,
+  UsersIcon,
+  UserAddIcon,
+  ChartPieIcon,
+  DocumentReportIcon,
+  DownloadIcon,
+  UserIcon,
+  OfficeBuildingIcon,
+  BellIcon,
+  XIcon
 } from '@heroicons/react/outline';
 
 interface SidebarProps {
@@ -28,7 +38,7 @@ interface MenuItem {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(['dashboard']);
   const { user } = useAuth();
   const location = useLocation();
 
@@ -45,9 +55,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       icon: DocumentTextIcon,
       path: '/quotations',
       children: [
-        { id: 'quotations-list', label: 'All Quotations', path: '/quotations' },
-        { id: 'quotations-create', label: 'Create New', path: '/quotations/create' },
-        { id: 'quotations-templates', label: 'Templates', path: '/quotations/templates' }
+        { id: 'quotations-list', label: 'All Quotations', path: '/quotations', icon: DocumentIcon },
+        { id: 'quotations-create', label: 'Create New', path: '/quotations/create', icon: PlusIcon },
+        { id: 'quotations-templates', label: 'Templates', path: '/quotations/templates', icon: DocumentTextIcon }
       ]
     },
     {
@@ -56,8 +66,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       icon: UserGroupIcon,
       path: '/clients',
       children: [
-        { id: 'clients-list', label: 'All Clients', path: '/clients' },
-        { id: 'clients-create', label: 'Add Client', path: '/clients/create' }
+        { id: 'clients-list', label: 'All Clients', path: '/clients', icon: UsersIcon },
+        { id: 'clients-create', label: 'Add Client', path: '/clients/create', icon: UserAddIcon }
       ]
     },
     {
@@ -66,9 +76,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       icon: ChartBarIcon,
       path: '/analytics',
       children: [
-        { id: 'analytics-overview', label: 'Overview', path: '/analytics' },
-        { id: 'analytics-reports', label: 'Reports', path: '/analytics/reports' },
-        { id: 'analytics-export', label: 'Export Data', path: '/analytics/export' }
+        { id: 'analytics-overview', label: 'Overview', path: '/analytics', icon: ChartPieIcon },
+        { id: 'analytics-reports', label: 'Reports', path: '/analytics/reports', icon: DocumentReportIcon },
+        { id: 'analytics-export', label: 'Export Data', path: '/analytics/export', icon: DownloadIcon }
       ]
     },
     {
@@ -83,10 +93,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       icon: CogIcon,
       path: '/settings',
       children: [
-        { id: 'settings-profile', label: 'Profile', path: '/settings/profile' },
-        { id: 'settings-company', label: 'Company', path: '/settings/company' },
-        { id: 'settings-notifications', label: 'Notifications', path: '/settings/notifications' },
-        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations' }
+        { id: 'settings-profile', label: 'Profile', path: '/settings/profile', icon: UserIcon },
+        { id: 'settings-company', label: 'Company', path: '/settings/company', icon: OfficeBuildingIcon },
+        { id: 'settings-notifications', label: 'Notifications', path: '/settings/notifications', icon: BellIcon },
+        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations', icon: CogIcon }
       ]
     }
   ];
@@ -137,7 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
               )}
             </button>
           ) : (
-            <NavLink
+            <Link
               to={item.path}
               onClick={onClose}
               className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium rounded-md transition-colors ${
@@ -148,7 +158,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
             >
               <Icon className="h-5 w-5" />
               <span>{item.label}</span>
-            </NavLink>
+            </Link>
           )}
         </div>
 
@@ -156,7 +166,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
         {hasChildren && isExpanded && (
           <div className="ml-4 mt-1 space-y-1">
             {item.children!.map(child => (
-              <NavLink
+              <Link
                 key={child.id}
                 to={child.path}
                 onClick={onClose}
@@ -166,8 +176,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                {child.label}
-              </NavLink>
+                <Icon className="h-4 w-4 mr-2" /> {child.label}
+              </Link>
             ))}
           </div>
         )}

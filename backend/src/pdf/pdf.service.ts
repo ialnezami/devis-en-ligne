@@ -310,9 +310,9 @@ export class PDFService {
           y: 50,
           width: 180,
           height: 60,
-          borderColor: this.hexToRgb('#000000'),
+          borderColor: rgb(0, 0, 0),
           borderWidth: 1,
-          color: this.hexToRgb('#f8f9fa'),
+          color: rgb(0.97, 0.97, 0.98),
         });
         
         // Add signature text
@@ -320,21 +320,21 @@ export class PDFService {
           x: width - 190,
           y: 85,
           size: 12,
-          color: this.hexToRgb('#000000'),
+          color: rgb(0, 0, 0),
         });
         
         firstPage.drawText(`Reason: ${signatureData.reason}`, {
           x: width - 190,
           y: 70,
           size: 10,
-          color: this.hexToRgb('#666666'),
+          color: rgb(0.4, 0.4, 0.4),
         });
         
         firstPage.drawText(`Location: ${signatureData.location}`, {
           x: width - 190,
           y: 55,
           size: 10,
-          color: this.hexToRgb('#666666'),
+          color: rgb(0.4, 0.4, 0.4),
         });
       }
 

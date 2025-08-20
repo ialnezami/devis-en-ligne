@@ -88,7 +88,7 @@ export class InAppNotificationsController {
   }
 
   @Get()
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Get user notifications with filtering and pagination' })
   @ApiResponse({ status: 200, description: 'Notifications retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -124,7 +124,7 @@ export class InAppNotificationsController {
   }
 
   @Get(':id')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Get a specific notification by ID' })
   @ApiResponse({ status: 200, description: 'Notification retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

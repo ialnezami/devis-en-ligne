@@ -89,6 +89,9 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
     }));
   };
 
+  const isMonthly = (frequency: string): frequency is 'monthly' => frequency === 'monthly';
+  const isWeekly = (frequency: string): frequency is 'weekly' => frequency === 'weekly';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsScheduling(true);
@@ -96,9 +99,16 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
     try {
       const schedule = {
         ...scheduleForm,
-        recipients: scheduleForm.recipients.split(',').map(email => email.trim()),
-        dateRange,
-        selectedMetrics
+        id: Date.now().toString(),
+        name: scheduleForm.name,
+        frequency: scheduleForm.frequency,
+        time: scheduleForm.time,
+        dayOfWeek: isWeekly(scheduleForm.frequency) ? scheduleForm.dayOfWeek : undefined,
+        dayOfMonth: isMonthly(scheduleForm.frequency) ? scheduleForm.dayOfMonth : undefined,
+        recipients: schedule.recipients,
+        format: scheduleForm.format,
+        status: 'active',
+        nextRun: calculateNextRun(scheduleForm.frequency, scheduleForm.time, scheduleForm.dayOfWeek, scheduleForm.dayOfMonth)
       };
       
       await onSchedule(schedule);

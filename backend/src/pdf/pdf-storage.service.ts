@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as fs from 'fs';
-import * as path from 'path';
+import { StorageFactoryService } from './services/storage-factory.service';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface PDFMetadata {
@@ -44,16 +43,15 @@ export interface CompanyBranding {
 @Injectable()
 export class PDFStorageService {
   private readonly logger = new Logger(PDFStorageService.name);
-  private readonly storageBasePath: string;
   private readonly maxFileSize: number; // in bytes
   private readonly allowedMimeTypes: string[];
 
-  constructor(private configService: ConfigService) {
-    this.storageBasePath = this.configService.get<string>('PDF_STORAGE_PATH', './storage/pdfs');
+  constructor(
+    private configService: ConfigService,
+    private storageFactory: StorageFactoryService,
+  ) {
     this.maxFileSize = this.configService.get<number>('PDF_MAX_FILE_SIZE', 50 * 1024 * 1024); // 50MB
     this.allowedMimeTypes = ['application/pdf'];
-    
-    this.ensureStorageDirectory();
   }
 
   /**
@@ -69,13 +67,14 @@ export class PDFStorageService {
 
       // Generate unique filename
       const filename = this.generateFilename(metadata.type, metadata.quotationId);
-      const filePath = this.getFilePath(filename);
 
-      // Ensure directory exists
-      await this.ensureDirectoryExists(path.dirname(filePath));
-
-      // Write file
-      await fs.promises.writeFile(filePath, pdfBuffer);
+      // Store file using storage provider
+      const storageProvider = this.storageFactory.getStorageProvider();
+      await storageProvider.storeFile(filename, pdfBuffer, {
+        type: metadata.type,
+        quotationId: metadata.quotationId,
+        companyId: metadata.companyId,
+      });
 
       // Create metadata
       const pdfMetadata: PDFMetadata = {
@@ -94,6 +93,7 @@ export class PDFStorageService {
         filename,
         size: pdfBuffer.length,
         type: metadata.type,
+        provider: this.storageFactory.getStorageConfig().provider,
       });
 
       return pdfMetadata;

@@ -380,6 +380,26 @@ This document breaks down the entire online quotation tool project into manageab
 - [ ] Implement machine learning model integration
 - [ ] Add AI-powered quote optimization
 
+#### 3.4.4 Project Phase Management 🔴 ⏱️ 10h 👤 Frontend Developer
+- [ ] Design phase breakdown interface
+- [ ] Create milestone tracking system
+- [ ] Implement resource allocation planning
+- [ ] Build visual project timeline with dependencies
+- [ ] Add phase-based progress tracking
+- [ ] Create phase management dashboard
+- [ ] Implement phase templates
+- [ ] Add phase collaboration features
+
+#### 3.4.5 Provisional Calendar System 🔴 ⏱️ 12h 👤 Frontend Developer
+- [ ] Design project scheduling interface
+- [ ] Implement automated timeline generation
+- [ ] Create resource planning calendar
+- [ ] Build deadline management system
+- [ ] Add external calendar integration
+- [ ] Create calendar dashboard widgets
+- [ ] Implement calendar synchronization
+- [ ] Add calendar sharing and collaboration
+
 ### 3.5 Quotation Management
 
 #### 3.5.1 Quotation List & Search 🔴 ⏱️ 12h 👤 Frontend Developer

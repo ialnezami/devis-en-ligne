@@ -19,6 +19,7 @@ import { FilesModule } from './files/files.module';
 import { CompaniesModule } from './companies/companies.module';
 import { TemplatesModule } from './templates/templates.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { PDFModule } from './pdf/pdf.module';
 
 // Common
 import { Logger } from './common/logger/logger.service';

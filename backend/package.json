@@ -58,6 +58,7 @@
     "twilio": "^4.10.0",
     "firebase-admin": "^11.11.0",
     "puppeteer": "^21.0.0",
+    "handlebars": "^4.7.8",
     "aws-sdk": "^2.1450.0",
     "speakeasy": "^2.0.0",
     "qrcode": "^1.5.3",

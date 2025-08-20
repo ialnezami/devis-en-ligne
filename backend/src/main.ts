@@ -8,9 +8,7 @@ import { AppModule } from './app.module';
 import { Logger } from './common/logger/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: new Logger(),
-  });
+  const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
 

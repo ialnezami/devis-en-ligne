@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Template } from '../../templates/entities/template.entity';
 
 @Entity('quotations')
 export class Quotation {
@@ -34,6 +35,13 @@ export class Quotation {
 
   @Column({ type: 'uuid' })
   createdById: string;
+
+  @ManyToOne(() => Template, (template) => template.quotations, { nullable: true })
+  @JoinColumn({ name: 'templateId' })
+  template?: Template;
+
+  @Column({ type: 'uuid', nullable: true })
+  templateId?: string;
 
   // Timestamps
   @CreateDateColumn()

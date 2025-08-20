@@ -82,24 +82,54 @@ export class Logger implements NestLoggerService {
     });
   }
 
-  log(message: any, context?: string) {
-    this.logger.info(message, { context });
+  log(message: any, contextOrMeta?: string | any) {
+    if (typeof contextOrMeta === 'string') {
+      this.logger.info(message, { context: contextOrMeta });
+    } else if (typeof contextOrMeta === 'object') {
+      this.logger.info(message, contextOrMeta);
+    } else {
+      this.logger.info(message);
+    }
   }
 
-  error(message: any, trace?: string, context?: string) {
-    this.logger.error(message, { trace, context });
+  error(message: any, traceOrMeta?: string | any, context?: string) {
+    if (typeof traceOrMeta === 'string') {
+      this.logger.error(message, { trace: traceOrMeta, context });
+    } else if (typeof traceOrMeta === 'object') {
+      this.logger.error(message, traceOrMeta);
+    } else {
+      this.logger.error(message, { context });
+    }
   }
 
-  warn(message: any, context?: string) {
-    this.logger.warn(message, { context });
+  warn(message: any, contextOrMeta?: string | any) {
+    if (typeof contextOrMeta === 'string') {
+      this.logger.warn(message, { context: contextOrMeta });
+    } else if (typeof contextOrMeta === 'object') {
+      this.logger.warn(message, contextOrMeta);
+    } else {
+      this.logger.warn(message);
+    }
   }
 
-  debug(message: any, context?: string) {
-    this.logger.debug(message, { context });
+  debug(message: any, contextOrMeta?: string | any) {
+    if (typeof contextOrMeta === 'string') {
+      this.logger.debug(message, { context: contextOrMeta });
+    } else if (typeof contextOrMeta === 'object') {
+      this.logger.debug(message, contextOrMeta);
+    } else {
+      this.logger.debug(message);
+    }
   }
 
-  verbose(message: any, context?: string) {
-    this.logger.verbose(message, { context });
+  verbose(message: any, contextOrMeta?: string | any) {
+    if (typeof contextOrMeta === 'string') {
+      this.logger.verbose(message, { context: contextOrMeta });
+    } else if (typeof contextOrMeta === 'object') {
+      this.logger.verbose(message, contextOrMeta);
+    } else {
+      this.logger.verbose(message);
+    }
   }
 
   // Additional methods for structured logging

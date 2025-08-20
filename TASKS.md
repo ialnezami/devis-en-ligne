@@ -182,12 +182,12 @@ This document breaks down the entire online quotation tool project into manageab
 - [ ] Implement expiration handling
 
 #### 2.4.2 Quotation Templates 🟡 ⏱️ 12h 👤 Backend Developer
-- [ ] Create Template entity
-- [ ] Implement template CRUD operations
-- [ ] Add template categorization
-- [ ] Create template-to-quotation conversion
-- [ ] Implement template sharing
-- [ ] Add template versioning
+- [x] Create Template entity
+- [x] Implement template CRUD operations
+- [x] Add template categorization
+- [x] Create template-to-quotation conversion
+- [x] Implement template sharing
+- [x] Add template versioning
 
 #### 2.4.3 Quotation Workflow 🔴 ⏱️ 14h 👤 Backend Developer
 - [ ] Create workflow state machine

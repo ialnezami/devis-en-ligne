@@ -1,380 +1,360 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import { createHash, randomBytes } from 'crypto';
-
-export interface ApiKey {
-  id: string;
-  name: string;
-  key: string;
-  hashedKey: string;
-  userId: string;
-  companyId: string;
-  permissions: string[];
-  isActive: boolean;
-  lastUsed?: Date;
-  expiresAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Injectable, Logger, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
+import { ApiKey } from '../entities/api-key.entity';
+import { User } from '../../users/entities/user.entity';
+import { Company } from '../../companies/entities/company.entity';
 
 export interface CreateApiKeyDto {
   name: string;
-  userId: string;
-  companyId: string;
+  description?: string;
   permissions: string[];
   expiresAt?: Date;
+  userId: string;
+  companyId: string;
 }
 
-export interface ApiKeyUsage {
-  keyId: string;
-  endpoint: string;
-  method: string;
-  timestamp: Date;
-  ipAddress: string;
-  userAgent: string;
-  responseTime: number;
-  statusCode: number;
+export interface ApiKeyPermissions {
+  quotations: {
+    read: boolean;
+    write: boolean;
+    delete: boolean;
+  };
+  clients: {
+    read: boolean;
+    write: boolean;
+    delete: boolean;
+  };
+  files: {
+    read: boolean;
+    write: boolean;
+    delete: boolean;
+  };
+  analytics: {
+    read: boolean;
+    write: boolean;
+  };
+  webhooks: {
+    read: boolean;
+    write: boolean;
+  };
 }
 
 @Injectable()
 export class ApiKeyService {
   private readonly logger = new Logger(ApiKeyService.name);
-  private readonly apiKeys = new Map<string, ApiKey>();
-  private readonly keyUsage = new Map<string, ApiKeyUsage[]>();
 
   constructor(
-    private readonly configService: ConfigService,
-    private readonly jwtService: JwtService,
-  ) {
-    this.initializeDefaultKeys();
+    @InjectRepository(ApiKey)
+    private readonly apiKeyRepository: Repository<ApiKey>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Company)
+    private readonly companyRepository: Repository<Company>,
+  ) {}
+
+  /**
+   * Create a new API key
+   */
+  async createApiKey(createApiKeyDto: CreateApiKeyDto): Promise<ApiKey> {
+    const { userId, companyId, name, description, permissions, expiresAt } = createApiKeyDto;
+
+    // Validate user and company
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    const company = await this.companyRepository.findOne({ where: { id: companyId } });
+    if (!company) {
+      throw new BadRequestException('Company not found');
+    }
+
+    // Generate API key
+    const apiKey = uuidv4().replace(/-/g, '');
+    const hashedApiKey = await this.hashApiKey(apiKey);
+
+    // Create API key entity
+    const newApiKey = this.apiKeyRepository.create({
+      name,
+      description,
+      key: hashedApiKey,
+      permissions: this.validatePermissions(permissions),
+      expiresAt,
+      userId,
+      companyId,
+      isActive: true,
+      lastUsedAt: null,
+      usageCount: 0,
+    });
+
+    const savedApiKey = await this.apiKeyRepository.save(newApiKey);
+
+    // Return the API key with the plain text key (only shown once)
+    return {
+      ...savedApiKey,
+      key: apiKey, // Return plain text key for user to copy
+    } as ApiKey;
   }
 
-  private initializeDefaultKeys(): void {
-    // Initialize with some default API keys for development
-    const defaultKeys = [
-      {
-        id: 'dev-key-1',
-        name: 'Development API Key',
-        key: 'dev_sk_test_1234567890abcdef',
-        hashedKey: this.hashApiKey('dev_sk_test_1234567890abcdef'),
-        userId: 'system',
-        companyId: 'system',
-        permissions: ['read:quotations', 'read:clients', 'read:analytics'],
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: 'webhook-key-1',
-        name: 'Webhook Integration Key',
-        key: 'webhook_sk_test_1234567890abcdef',
-        hashedKey: this.hashApiKey('webhook_sk_test_1234567890abcdef'),
-        userId: 'system',
-        companyId: 'system',
-        permissions: ['webhook:send', 'webhook:receive'],
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    ];
+  /**
+   * Validate API key and return associated user and permissions
+   */
+  async validateApiKey(apiKey: string): Promise<{
+    user: User;
+    company: Company;
+    permissions: ApiKeyPermissions;
+    apiKeyEntity: ApiKey;
+  }> {
+    const hashedApiKey = await this.hashApiKey(apiKey);
+    
+    const apiKeyEntity = await this.apiKeyRepository.findOne({
+      where: { key: hashedApiKey, isActive: true },
+      relations: ['user', 'company'],
+    });
 
-    defaultKeys.forEach(key => {
-      this.apiKeys.set(key.id, key);
+    if (!apiKeyEntity) {
+      throw new UnauthorizedException('Invalid API key');
+    }
+
+    if (apiKeyEntity.expiresAt && apiKeyEntity.expiresAt < new Date()) {
+      throw new UnauthorizedException('API key has expired');
+    }
+
+    // Update usage statistics
+    await this.updateApiKeyUsage(apiKeyEntity.id);
+
+    return {
+      user: apiKeyEntity.user,
+      company: apiKeyEntity.company,
+      permissions: apiKeyEntity.permissions as ApiKeyPermissions,
+      apiKeyEntity,
+    };
+  }
+
+  /**
+   * Get all API keys for a user/company
+   */
+  async getApiKeys(userId: string, companyId: string): Promise<ApiKey[]> {
+    return this.apiKeyRepository.find({
+      where: { userId, companyId },
+      order: { createdAt: 'DESC' },
     });
   }
 
-  private hashApiKey(key: string): string {
-    return createHash('sha256').update(key).digest('hex');
-  }
+  /**
+   * Get API key by ID
+   */
+  async getApiKeyById(id: string, userId: string, companyId: string): Promise<ApiKey> {
+    const apiKey = await this.apiKeyRepository.findOne({
+      where: { id, userId, companyId },
+    });
 
-  private generateApiKey(): string {
-    const prefix = 'sk_live_';
-    const randomPart = randomBytes(24).toString('hex');
-    return prefix + randomPart;
-  }
-
-  async createApiKey(createDto: CreateApiKeyDto): Promise<ApiKey> {
-    const key = this.generateApiKey();
-    const hashedKey = this.hashApiKey(key);
-
-    const apiKey: ApiKey = {
-      id: `key_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      name: createDto.name,
-      key,
-      hashedKey,
-      userId: createDto.userId,
-      companyId: createDto.companyId,
-      permissions: createDto.permissions,
-      isActive: true,
-      expiresAt: createDto.expiresAt,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    this.apiKeys.set(apiKey.id, apiKey);
-    
-    // Return the API key with the plain text key (only shown once)
-    const response = { ...apiKey };
-    delete response.hashedKey;
-    
-    this.logger.log(`API key created: ${apiKey.name} for user ${apiKey.userId}`);
-    
-    return response;
-  }
-
-  async validateApiKey(apiKey: string): Promise<ApiKey | null> {
-    const hashedKey = this.hashApiKey(apiKey);
-    
-    for (const key of this.apiKeys.values()) {
-      if (key.hashedKey === hashedKey && key.isActive) {
-        // Check if key has expired
-        if (key.expiresAt && key.expiresAt < new Date()) {
-          this.logger.warn(`API key expired: ${key.name}`);
-          return null;
-        }
-        
-        // Update last used timestamp
-        key.lastUsed = new Date();
-        this.apiKeys.set(key.id, key);
-        
-        return key;
-      }
-    }
-    
-    return null;
-  }
-
-  async getApiKeyById(id: string): Promise<ApiKey | null> {
-    return this.apiKeys.get(id) || null;
-  }
-
-  async getApiKeysByUser(userId: string, companyId: string): Promise<ApiKey[]> {
-    const userKeys: ApiKey[] = [];
-    
-    for (const key of this.apiKeys.values()) {
-      if (key.userId === userId && key.companyId === companyId) {
-        // Don't include the hashed key in the response
-        const { hashedKey, ...safeKey } = key;
-        userKeys.push(safeKey as ApiKey);
-      }
-    }
-    
-    return userKeys;
-  }
-
-  async updateApiKey(id: string, updates: Partial<ApiKey>): Promise<ApiKey | null> {
-    const key = this.apiKeys.get(id);
-    if (!key) {
-      return null;
+    if (!apiKey) {
+      throw new BadRequestException('API key not found');
     }
 
-    const updatedKey = {
-      ...key,
-      ...updates,
-      updatedAt: new Date(),
-    };
-
-    this.apiKeys.set(id, updatedKey);
-    
-    // Don't include the hashed key in the response
-    const { hashedKey, ...safeKey } = updatedKey;
-    
-    this.logger.log(`API key updated: ${updatedKey.name}`);
-    
-    return safeKey as ApiKey;
+    return apiKey;
   }
 
-  async deactivateApiKey(id: string): Promise<boolean> {
-    const key = this.apiKeys.get(id);
-    if (!key) {
-      return false;
-    }
+  /**
+   * Update API key
+   */
+  async updateApiKey(
+    id: string,
+    userId: string,
+    companyId: string,
+    updates: Partial<ApiKey>,
+  ): Promise<ApiKey> {
+    const apiKey = await this.getApiKeyById(id, userId, companyId);
 
-    key.isActive = false;
-    key.updatedAt = new Date();
-    this.apiKeys.set(id, key);
-    
-    this.logger.log(`API key deactivated: ${key.name}`);
-    
-    return true;
+    // Remove sensitive fields from updates
+    delete updates.key;
+    delete updates.userId;
+    delete updates.companyId;
+
+    Object.assign(apiKey, updates);
+    return this.apiKeyRepository.save(apiKey);
   }
 
-  async deleteApiKey(id: string): Promise<boolean> {
-    const key = this.apiKeys.get(id);
-    if (!key) {
-      return false;
-    }
-
-    this.apiKeys.delete(id);
-    
-    // Clean up usage data
-    this.keyUsage.delete(id);
-    
-    this.logger.log(`API key deleted: ${key.name}`);
-    
-    return true;
+  /**
+   * Deactivate API key
+   */
+  async deactivateApiKey(id: string, userId: string, companyId: string): Promise<void> {
+    const apiKey = await this.getApiKeyById(id, userId, companyId);
+    apiKey.isActive = false;
+    await this.apiKeyRepository.save(apiKey);
   }
 
-  async checkPermission(apiKey: string, permission: string): Promise<boolean> {
-    const key = await this.validateApiKey(apiKey);
-    if (!key) {
-      return false;
-    }
-
-    return key.permissions.includes(permission) || key.permissions.includes('*');
+  /**
+   * Delete API key
+   */
+  async deleteApiKey(id: string, userId: string, companyId: string): Promise<void> {
+    const apiKey = await this.getApiKeyById(id, userId, companyId);
+    await this.apiKeyRepository.remove(apiKey);
   }
 
-  async logApiKeyUsage(usage: Omit<ApiKeyUsage, 'timestamp'>): Promise<void> {
-    const usageEntry: ApiKeyUsage = {
-      ...usage,
-      timestamp: new Date(),
-    };
-
-    const existingUsage = this.keyUsage.get(usage.keyId) || [];
-    existingUsage.push(usageEntry);
+  /**
+   * Regenerate API key
+   */
+  async regenerateApiKey(id: string, userId: string, companyId: string): Promise<ApiKey> {
+    const apiKey = await this.getApiKeyById(id, userId, companyId);
     
-    // Keep only last 1000 usage entries per key
-    if (existingUsage.length > 1000) {
-      existingUsage.splice(0, existingUsage.length - 1000);
-    }
+    // Generate new key
+    const newApiKey = uuidv4().replace(/-/g, '');
+    const hashedApiKey = await this.hashApiKey(newApiKey);
     
-    this.keyUsage.set(usage.keyId, existingUsage);
-  }
-
-  async getApiKeyUsage(keyId: string, limit: number = 100): Promise<ApiKeyUsage[]> {
-    const usage = this.keyUsage.get(keyId) || [];
-    return usage.slice(-limit);
-  }
-
-  async getApiKeyStats(keyId: string): Promise<{
-    totalRequests: number;
-    lastUsed: Date | null;
-    averageResponseTime: number;
-    successRate: number;
-  }> {
-    const usage = this.keyUsage.get(keyId) || [];
+    apiKey.key = hashedApiKey;
+    apiKey.updatedAt = new Date();
     
-    if (usage.length === 0) {
-      return {
-        totalRequests: 0,
-        lastUsed: null,
-        averageResponseTime: 0,
-        successRate: 0,
-      };
-    }
-
-    const totalRequests = usage.length;
-    const lastUsed = usage[usage.length - 1]?.timestamp || null;
-    const averageResponseTime = usage.reduce((sum, entry) => sum + entry.responseTime, 0) / totalRequests;
-    const successCount = usage.filter(entry => entry.statusCode < 400).length;
-    const successRate = (successCount / totalRequests) * 100;
-
+    const savedApiKey = await this.apiKeyRepository.save(apiKey);
+    
+    // Return with plain text key
     return {
-      totalRequests,
-      lastUsed,
-      averageResponseTime,
-      successRate,
-    };
+      ...savedApiKey,
+      key: newApiKey,
+    } as ApiKey;
   }
 
-  async rotateApiKey(id: string): Promise<{ oldKey: string; newKey: string } | null> {
-    const key = this.apiKeys.get(id);
-    if (!key) {
-      return null;
-    }
-
-    const oldKey = key.key;
-    const newKey = this.generateApiKey();
-    const newHashedKey = this.hashApiKey(newKey);
-
-    // Create new key entry
-    const rotatedKey: ApiKey = {
-      ...key,
-      key: newKey,
-      hashedKey: newHashedKey,
-      updatedAt: new Date(),
-    };
-
-    this.apiKeys.set(id, rotatedKey);
-    
-    this.logger.log(`API key rotated: ${key.name}`);
-    
-    return {
-      oldKey,
-      newKey,
-    };
-  }
-
-  async getApiKeyPermissions(apiKey: string): Promise<string[]> {
-    const key = await this.validateApiKey(apiKey);
-    return key?.permissions || [];
-  }
-
-  async validateApiKeyWithPermissions(apiKey: string, requiredPermissions: string[]): Promise<boolean> {
-    const key = await this.validateApiKey(apiKey);
-    if (!key) {
-      return false;
-    }
-
-    return requiredPermissions.every(permission => 
-      key.permissions.includes(permission) || key.permissions.includes('*')
-    );
-  }
-
-  async getApiKeyInfo(apiKey: string): Promise<Omit<ApiKey, 'key' | 'hashedKey'> | null> {
-    const key = await this.validateApiKey(apiKey);
-    if (!key) {
-      return null;
-    }
-
-    const { key: _, hashedKey: __, ...keyInfo } = key;
-    return keyInfo;
-  }
-
-  async searchApiKeys(query: string, userId?: string, companyId?: string): Promise<Omit<ApiKey, 'key' | 'hashedKey'>[]> {
-    const results: Omit<ApiKey, 'key' | 'hashedKey'>[] = [];
-    
-    for (const key of this.apiKeys.values()) {
-      // Apply filters
-      if (userId && key.userId !== userId) continue;
-      if (companyId && key.companyId !== companyId) continue;
-      
-      // Apply search query
-      if (query && !key.name.toLowerCase().includes(query.toLowerCase())) continue;
-      
-      const { key: _, hashedKey: __, ...keyInfo } = key;
-      results.push(keyInfo);
-    }
-    
-    return results;
-  }
-
-  async getApiKeyCounts(): Promise<{
+  /**
+   * Get API key usage statistics
+   */
+  async getApiKeyStats(userId: string, companyId: string): Promise<{
     total: number;
     active: number;
-    inactive: number;
     expired: number;
+    totalUsage: number;
+    lastUsed: Date | null;
   }> {
-    let total = 0;
-    let active = 0;
-    let inactive = 0;
-    let expired = 0;
+    const apiKeys = await this.apiKeyRepository.find({
+      where: { userId, companyId },
+    });
 
-    for (const key of this.apiKeys.values()) {
-      total++;
+    const now = new Date();
+    const active = apiKeys.filter(key => key.isActive && (!key.expiresAt || key.expiresAt > now)).length;
+    const expired = apiKeys.filter(key => key.expiresAt && key.expiresAt <= now).length;
+    const totalUsage = apiKeys.reduce((sum, key) => sum + key.usageCount, 0);
+    const lastUsed = apiKeys.length > 0 
+      ? new Date(Math.max(...apiKeys.map(key => key.lastUsedAt?.getTime() || 0)))
+      : null;
+
+    return {
+      total: apiKeys.length,
+      active,
+      expired,
+      totalUsage,
+      lastUsed,
+    };
+  }
+
+  /**
+   * Check if API key has specific permission
+   */
+  async checkPermission(
+    apiKey: string,
+    resource: string,
+    action: string,
+  ): Promise<boolean> {
+    try {
+      const { permissions } = await this.validateApiKey(apiKey);
       
-      if (key.isActive) {
-        if (key.expiresAt && key.expiresAt < new Date()) {
-          expired++;
-        } else {
-          active++;
-        }
-      } else {
-        inactive++;
+      if (!permissions[resource]) {
+        return false;
       }
+      
+      return permissions[resource][action] === true;
+    } catch (error) {
+      return false;
     }
+  }
 
-    return { total, active, inactive, expired };
+  /**
+   * Hash API key for storage
+   */
+  private async hashApiKey(apiKey: string): Promise<string> {
+    // In production, use a proper hashing library like bcrypt
+    // For now, using a simple hash for demonstration
+    const crypto = require('crypto');
+    return crypto.createHash('sha256').update(apiKey).digest('hex');
+  }
+
+  /**
+   * Validate permissions structure
+   */
+  private validatePermissions(permissions: string[]): ApiKeyPermissions {
+    const defaultPermissions: ApiKeyPermissions = {
+      quotations: { read: false, write: false, delete: false },
+      clients: { read: false, write: false, delete: false },
+      files: { read: false, write: false, delete: false },
+      analytics: { read: false, write: false },
+      webhooks: { read: false, write: false },
+    };
+
+    // Parse permission strings like "quotations:read", "clients:write"
+    permissions.forEach(permission => {
+      const [resource, action] = permission.split(':');
+      if (defaultPermissions[resource] && defaultPermissions[resource][action] !== undefined) {
+        defaultPermissions[resource][action] = true;
+      }
+    });
+
+    return defaultPermissions;
+  }
+
+  /**
+   * Update API key usage statistics
+   */
+  private async updateApiKeyUsage(apiKeyId: string): Promise<void> {
+    await this.apiKeyRepository.update(apiKeyId, {
+      lastUsedAt: new Date(),
+      usageCount: () => 'usage_count + 1',
+    });
+  }
+
+  /**
+   * Clean up expired API keys
+   */
+  async cleanupExpiredApiKeys(): Promise<number> {
+    const result = await this.apiKeyRepository
+      .createQueryBuilder()
+      .delete()
+      .where('expiresAt < :now', { now: new Date() })
+      .execute();
+    
+    this.logger.log(`Cleaned up ${result.affected} expired API keys`);
+    return result.affected || 0;
+  }
+
+  /**
+   * Get API key audit log
+   */
+  async getApiKeyAuditLog(
+    apiKeyId: string,
+    userId: string,
+    companyId: string,
+    limit: number = 100,
+  ): Promise<any[]> {
+    // This would typically query an audit log table
+    // For now, returning basic usage information
+    const apiKey = await this.getApiKeyById(apiKeyId, userId, companyId);
+    
+    return [
+      {
+        timestamp: apiKey.createdAt,
+        action: 'created',
+        details: 'API key created',
+      },
+      ...(apiKey.lastUsedAt ? [{
+        timestamp: apiKey.lastUsedAt,
+        action: 'used',
+        details: `Used ${apiKey.usageCount} times`,
+      }] : []),
+      ...(apiKey.updatedAt && apiKey.updatedAt !== apiKey.createdAt ? [{
+        timestamp: apiKey.updatedAt,
+        action: 'updated',
+        details: 'API key updated',
+      }] : []),
+    ];
   }
 }

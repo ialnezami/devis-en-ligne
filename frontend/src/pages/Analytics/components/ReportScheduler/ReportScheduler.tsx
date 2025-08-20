@@ -95,8 +95,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
     setIsScheduling(true);
     
     try {
-      const newReport = {
-        ...scheduleForm,
+      const newReport: ScheduledReport = {
         id: Date.now().toString(),
         name: scheduleForm.name,
         frequency: scheduleForm.frequency,
@@ -105,7 +104,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
         dayOfMonth: isMonthly(scheduleForm.frequency) ? scheduleForm.dayOfMonth : undefined,
         recipients: scheduleForm.recipients.split(',').map(email => email.trim()),
         format: scheduleForm.format,
-        status: 'active' as const,
+        status: 'active',
         nextRun: calculateNextRun(scheduleForm.frequency, scheduleForm.time, scheduleForm.dayOfWeek, scheduleForm.dayOfMonth)
       };
       

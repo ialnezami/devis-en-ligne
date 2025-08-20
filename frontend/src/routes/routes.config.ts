@@ -9,51 +9,20 @@ export interface RouteConfig {
   children?: RouteConfig[];
 }
 
-// Lazy load all page components
+// Lazy load page components
 const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
 const Quotations = lazy(() => import('@/pages/Quotations/Quotations'));
+const QuotationList = lazy(() => import('@/pages/Quotations/QuotationList/QuotationList'));
 const QuotationCreate = lazy(() => import('@/pages/Quotations/QuotationCreate/QuotationCreate'));
-const QuotationTemplates = lazy(() => import('@/pages/Quotations/QuotationTemplates/QuotationTemplates'));
-const Clients = lazy(() => import('@/pages/Clients/Clients'));
+const QuotationEdit = lazy(() => import('@/pages/Quotations/QuotationEdit/QuotationEdit'));
+const QuotationView = lazy(() => import('@/pages/Quotations/QuotationView/QuotationView'));
+const ClientList = lazy(() => import('@/pages/Clients/ClientList/ClientList'));
 const ClientCreate = lazy(() => import('@/pages/Clients/ClientCreate/ClientCreate'));
 const Analytics = lazy(() => import('@/pages/Analytics/Analytics'));
-const AnalyticsReports = lazy(() => import('@/pages/Analytics/AnalyticsReports/AnalyticsReports'));
-const AnalyticsExport = lazy(() => import('@/pages/Analytics/AnalyticsExport/AnalyticsExport'));
-const Files = lazy(() => import('@/pages/Files/Files'));
-const Settings = lazy(() => import('@/pages/Settings/Settings'));
-const Profile = lazy(() => import('@/pages/Settings/Profile/Profile'));
-const Company = lazy(() => import('@/pages/Settings/Company/Company'));
-const Notifications = lazy(() => import('@/pages/Settings/Notifications/Notifications'));
-const Integrations = lazy(() => import('@/pages/Settings/Integrations/Integrations'));
-const Login = lazy(() => import('@/pages/Auth/Login/Login'));
-const Register = lazy(() => import('@/pages/Auth/Register/Register'));
-const ForgotPassword = lazy(() => import('@/pages/Auth/ForgotPassword/ForgotPassword'));
-const ResetPassword = lazy(() => import('@/pages/Auth/ResetPassword/ResetPassword'));
 const NotFound = lazy(() => import('@/pages/Error/NotFound/NotFound'));
 
 // Public routes configuration
-export const publicRoutes: RouteConfig[] = [
-  {
-    path: '/login',
-    component: Login,
-    protected: false
-  },
-  {
-    path: '/register',
-    component: Register,
-    protected: false
-  },
-  {
-    path: '/forgot-password',
-    component: ForgotPassword,
-    protected: false
-  },
-  {
-    path: '/reset-password',
-    component: ResetPassword,
-    protected: false
-  }
-];
+export const publicRoutes: RouteConfig[] = [];
 
 // Protected routes configuration
 export const protectedRoutes: RouteConfig[] = [
@@ -72,18 +41,12 @@ export const protectedRoutes: RouteConfig[] = [
         component: QuotationCreate,
         protected: true,
         requiredRoles: ['admin', 'manager', 'sales_rep']
-      },
-      {
-        path: '/quotations/templates',
-        component: QuotationTemplates,
-        protected: true,
-        requiredRoles: ['admin', 'manager']
       }
     ]
   },
   {
     path: '/clients',
-    component: Clients,
+    component: ClientList,
     protected: true,
     children: [
       {
@@ -97,55 +60,7 @@ export const protectedRoutes: RouteConfig[] = [
   {
     path: '/analytics',
     component: Analytics,
-    protected: true,
-    children: [
-      {
-        path: '/analytics/reports',
-        component: AnalyticsReports,
-        protected: true,
-        requiredRoles: ['admin', 'manager']
-      },
-      {
-        path: '/analytics/export',
-        component: AnalyticsExport,
-        protected: true,
-        requiredRoles: ['admin', 'manager']
-      }
-    ]
-  },
-  {
-    path: '/files',
-    component: Files,
     protected: true
-  },
-  {
-    path: '/settings',
-    component: Settings,
-    protected: true,
-    children: [
-      {
-        path: '/settings/profile',
-        component: Profile,
-        protected: true
-      },
-      {
-        path: '/settings/company',
-        component: Company,
-        protected: true,
-        requiredRoles: ['admin', 'manager']
-      },
-      {
-        path: '/settings/notifications',
-        component: Notifications,
-        protected: true
-      },
-      {
-        path: '/settings/integrations',
-        component: Integrations,
-        protected: true,
-        requiredRoles: ['admin']
-      }
-    ]
   }
 ];
 

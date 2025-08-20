@@ -29,12 +29,14 @@ export const useRoutes = () => {
     const breadcrumbData = [{ label: 'Home', path: '/dashboard' }];
     
     let currentPath = '';
+    const allRoutes = [...protectedRoutes, ...publicRoutes];
+    const flattened = flattenRoutes(allRoutes);
     
-    pathSegments.forEach((segment, index) => {
+    pathSegments.forEach((segment) => {
       currentPath += `/${segment}`;
       
       // Find route for this path
-      const route = flattenedRoutes.find(r => r.path === currentPath);
+      const route = flattened.find(r => r.path === currentPath);
       
       if (route) {
         // Convert segment to readable label
@@ -65,8 +67,7 @@ export const useRoutes = () => {
         
         breadcrumbData.push({
           label,
-          path: currentPath,
-          isActive: index === pathSegments.length - 1
+          path: currentPath
         });
       }
     });
@@ -140,7 +141,7 @@ export const useRoutes = () => {
 
   // Check if user can access a specific route
   const canAccessRoute = (routePath: string, userRoles: string[] = []) => {
-    const route = flattenedRoutes.find(r => r.path === routePath);
+    const route = flattenRoutes(protectedRoutes).find(r => r.path === routePath);
     
     if (!route) return false;
     if (!route.protected) return true;

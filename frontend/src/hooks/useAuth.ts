@@ -33,7 +33,7 @@ export const useAuth = () => {
     setIsLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string) => {
     try {
       setIsLoading(true);
       // TODO: Implement actual login API call
@@ -63,12 +63,7 @@ export const useAuth = () => {
     setIsAuthenticated(false);
   };
 
-  const register = async (userData: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-  }) => {
+  const register = async () => {
     try {
       setIsLoading(true);
       // TODO: Implement actual registration API call

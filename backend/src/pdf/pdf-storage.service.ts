@@ -113,10 +113,14 @@ export class PDFStorageService {
         throw new Error(`PDF with ID ${id} not found`);
       }
 
-      const filePath = this.getFilePath(metadata.filename);
-      const buffer = await fs.promises.readFile(filePath);
+      const storageProvider = this.storageFactory.getStorageProvider();
+      const buffer = await storageProvider.getFile(metadata.filename);
 
-      this.logger.log('PDF retrieved successfully', { id, filename: metadata.filename });
+      this.logger.log('PDF retrieved successfully', { 
+        id, 
+        filename: metadata.filename,
+        provider: this.storageFactory.getStorageConfig().provider,
+      });
 
       return { buffer, metadata };
     } catch (error) {
@@ -143,13 +147,15 @@ export class PDFStorageService {
 
       // Generate new filename for version
       const filename = this.generateVersionFilename(originalMetadata.filename, version);
-      const filePath = this.getFilePath(filename);
 
-      // Ensure directory exists
-      await this.ensureDirectoryExists(path.dirname(filePath));
-
-      // Write new version
-      await fs.promises.writeFile(filePath, pdfBuffer);
+      // Store new version using storage provider
+      const storageProvider = this.storageFactory.getStorageProvider();
+      await storageProvider.storeFile(filename, pdfBuffer, {
+        type: originalMetadata.type,
+        quotationId: originalMetadata.quotationId,
+        companyId: originalMetadata.companyId,
+        version,
+      });
 
       // Create version metadata
       const versionMetadata: PDFMetadata = {
@@ -179,6 +185,7 @@ export class PDFStorageService {
         originalId,
         version,
         filename,
+        provider: this.storageFactory.getStorageConfig().provider,
       });
 
       return versionMetadata;
@@ -195,11 +202,11 @@ export class PDFStorageService {
     try {
       const historyPath = this.getVersionHistoryPath(id);
       
-      if (!fs.existsSync(historyPath)) {
+      if (!this.fileExists(historyPath)) {
         return [];
       }
 
-      const historyData = await fs.promises.readFile(historyPath, 'utf8');
+      const historyData = await this.readFile(historyPath);
       return JSON.parse(historyData);
     } catch (error) {
       this.logger.error('Error retrieving version history', { id, error: error.message });
@@ -217,22 +224,24 @@ export class PDFStorageService {
         throw new Error(`PDF with ID ${id} not found`);
       }
 
-      // Delete file
-      const filePath = this.getFilePath(metadata.filename);
-      if (fs.existsSync(filePath)) {
-        await fs.promises.unlink(filePath);
-      }
+      // Delete file using storage provider
+      const storageProvider = this.storageFactory.getStorageProvider();
+      await storageProvider.deleteFile(metadata.filename);
 
       // Delete metadata
       await this.deleteMetadata(id);
 
       // Delete version history
       const historyPath = this.getVersionHistoryPath(id);
-      if (fs.existsSync(historyPath)) {
-        await fs.promises.unlink(historyPath);
+      if (this.fileExists(historyPath)) {
+        await this.deleteFile(historyPath);
       }
 
-      this.logger.log('PDF deleted successfully', { id, filename: metadata.filename });
+      this.logger.log('PDF deleted successfully', { 
+        id, 
+        filename: metadata.filename,
+        provider: this.storageFactory.getStorageConfig().provider,
+      });
     } catch (error) {
       this.logger.error('Error deleting PDF', { id, error: error.message });
       throw error;
@@ -285,11 +294,11 @@ export class PDFStorageService {
     try {
       const brandingPath = this.getCompanyBrandingPath(companyId);
       
-      if (!fs.existsSync(brandingPath)) {
+      if (!this.fileExists(brandingPath)) {
         return this.getDefaultBranding();
       }
 
-      const brandingData = await fs.promises.readFile(brandingPath, 'utf8');
+      const brandingData = await this.readFile(brandingPath);
       return JSON.parse(brandingData);
     } catch (error) {
       this.logger.error('Error retrieving company branding', { companyId, error: error.message });
@@ -305,10 +314,10 @@ export class PDFStorageService {
       const brandingPath = this.getCompanyBrandingPath(companyId);
       
       // Ensure directory exists
-      await this.ensureDirectoryExists(path.dirname(brandingPath));
+      await this.ensureDirectoryExists(this.getDirectoryPath(brandingPath));
       
       // Save branding configuration
-      await fs.promises.writeFile(brandingPath, JSON.stringify(branding, null, 2));
+      await this.writeFile(brandingPath, JSON.stringify(branding, null, 2));
 
       this.logger.log('Company branding updated successfully', { companyId });
     } catch (error) {
@@ -362,6 +371,28 @@ export class PDFStorageService {
     }
   }
 
+  /**
+   * Get storage statistics
+   */
+  async getStorageStats(): Promise<{
+    provider: string;
+    totalFiles: number;
+    totalSize: number;
+    connectionStatus: string;
+  }> {
+    try {
+      return await this.storageFactory.getStorageStats();
+    } catch (error) {
+      this.logger.error('Error getting storage stats', { error: error.message });
+      return {
+        provider: 'unknown',
+        totalFiles: 0,
+        totalSize: 0,
+        connectionStatus: 'error',
+      };
+    }
+  }
+
   // Private helper methods
 
   private validatePDFFile(buffer: Buffer): void {
@@ -387,58 +418,47 @@ export class PDFStorageService {
   }
 
   private generateVersionFilename(originalFilename: string, version: string): string {
-    const nameWithoutExt = path.parse(originalFilename).name;
+    const nameWithoutExt = originalFilename.replace(/\.pdf$/, '');
     return `${nameWithoutExt}_v${version}.pdf`;
   }
 
-  private getFilePath(filename: string): string {
-    return path.join(this.storageBasePath, filename);
-  }
-
   private getMetadataPath(id: string): string {
-    return path.join(this.storageBasePath, 'metadata', `${id}.json`);
+    return `metadata/${id}.json`;
   }
 
   private getVersionHistoryPath(id: string): string {
-    return path.join(this.storageBasePath, 'versions', `${id}.json`);
+    return `versions/${id}.json`;
   }
 
   private getCompanyBrandingPath(companyId: string): string {
-    return path.join(this.storageBasePath, 'branding', `${companyId}.json`);
+    return `branding/${companyId}.json`;
   }
 
-  private async ensureStorageDirectory(): Promise<void> {
-    const dirs = [
-      this.storageBasePath,
-      path.join(this.storageBasePath, 'metadata'),
-      path.join(this.storageBasePath, 'versions'),
-      path.join(this.storageBasePath, 'branding'),
-    ];
-
-    for (const dir of dirs) {
-      await this.ensureDirectoryExists(dir);
-    }
+  private getDirectoryPath(filePath: string): string {
+    const parts = filePath.split('/');
+    parts.pop();
+    return parts.join('/');
   }
 
   private async ensureDirectoryExists(dirPath: string): Promise<void> {
-    if (!fs.existsSync(dirPath)) {
-      await fs.promises.mkdir(dirPath, { recursive: true });
-    }
+    // This is handled by the storage provider
+    // For local storage, it will create directories
+    // For S3, it's not needed
   }
 
   private async saveMetadata(metadata: PDFMetadata): Promise<void> {
     const metadataPath = this.getMetadataPath(metadata.id);
-    await fs.promises.writeFile(metadataPath, JSON.stringify(metadata, null, 2));
+    await this.writeFile(metadataPath, JSON.stringify(metadata, null, 2));
   }
 
   private async getMetadata(id: string): Promise<PDFMetadata | null> {
     try {
       const metadataPath = this.getMetadataPath(id);
-      if (!fs.existsSync(metadataPath)) {
+      if (!this.fileExists(metadataPath)) {
         return null;
       }
 
-      const metadataData = await fs.promises.readFile(metadataPath, 'utf8');
+      const metadataData = await this.readFile(metadataPath);
       return JSON.parse(metadataData);
     } catch (error) {
       return null;
@@ -447,18 +467,14 @@ export class PDFStorageService {
 
   private async getAllMetadata(): Promise<PDFMetadata[]> {
     try {
-      const metadataDir = path.join(this.storageBasePath, 'metadata');
-      if (!fs.existsSync(metadataDir)) {
-        return [];
-      }
-
-      const files = await fs.promises.readdir(metadataDir);
+      const metadataDir = 'metadata';
+      const storageProvider = this.storageFactory.getStorageProvider();
+      const files = await storageProvider.listFiles(metadataDir);
       const metadata: PDFMetadata[] = [];
 
       for (const file of files) {
         if (file.endsWith('.json')) {
-          const filePath = path.join(metadataDir, file);
-          const fileData = await fs.promises.readFile(filePath, 'utf8');
+          const fileData = await this.readFile(file);
           metadata.push(JSON.parse(fileData));
         }
       }
@@ -471,8 +487,8 @@ export class PDFStorageService {
 
   private async deleteMetadata(id: string): Promise<void> {
     const metadataPath = this.getMetadataPath(id);
-    if (fs.existsSync(metadataPath)) {
-      await fs.promises.unlink(metadataPath);
+    if (this.fileExists(metadataPath)) {
+      await this.deleteFile(metadataPath);
     }
   }
 
@@ -481,7 +497,7 @@ export class PDFStorageService {
     history.push(version);
     
     const historyPath = this.getVersionHistoryPath(originalId);
-    await fs.promises.writeFile(historyPath, JSON.stringify(history, null, 2));
+    await this.writeFile(historyPath, JSON.stringify(history, null, 2));
   }
 
   private getDefaultBranding(): CompanyBranding {
@@ -496,5 +512,32 @@ export class PDFStorageService {
         .secondary-button { background-color: #64748b; }
       `,
     };
+  }
+
+  // File operations using storage provider
+  private async readFile(filePath: string): Promise<string> {
+    const storageProvider = this.storageFactory.getStorageProvider();
+    const buffer = await storageProvider.getFile(filePath);
+    return buffer.toString('utf8');
+  }
+
+  private async writeFile(filePath: string, content: string): Promise<void> {
+    const storageProvider = this.storageFactory.getStorageProvider();
+    await storageProvider.storeFile(filePath, Buffer.from(content), { contentType: 'text/plain' });
+  }
+
+  private async deleteFile(filePath: string): Promise<void> {
+    const storageProvider = this.storageFactory.getStorageProvider();
+    await storageProvider.deleteFile(filePath);
+  }
+
+  private fileExists(filePath: string): boolean {
+    // This is a simplified check - in production you'd want to use the storage provider
+    try {
+      const storageProvider = this.storageFactory.getStorageProvider();
+      return storageProvider.fileExists(filePath);
+    } catch {
+      return false;
+    }
   }
 }

@@ -171,15 +171,15 @@ This document breaks down the entire online quotation tool project into manageab
 ### 2.4 Quotation System
 
 #### 2.4.1 Core Quotation Management 🔴 ⏱️ 20h 👤 Backend Developer
-- [ ] Create Quotation entity and relationships
-- [ ] Create QuotationItem entity
-- [ ] Implement quotation CRUD operations
-- [ ] Add quotation numbering system
-- [ ] Create quotation status management
-- [ ] Implement quotation calculations
-- [ ] Add tax calculation system
-- [ ] Create discount management
-- [ ] Implement expiration handling
+- [x] Create Quotation entity and relationships
+- [x] Create QuotationItem entity
+- [x] Implement quotation CRUD operations
+- [x] Add quotation numbering system
+- [x] Create quotation status management
+- [x] Implement quotation calculations
+- [x] Add tax calculation system
+- [x] Create discount management
+- [x] Implement expiration handling
 
 #### 2.4.2 Quotation Templates 🟡 ⏱️ 12h 👤 Backend Developer
 - [x] Create Template entity

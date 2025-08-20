@@ -7,6 +7,8 @@ import { QuotationsController } from './quotations.controller';
 import { WorkflowStateMachineService } from './services/workflow-state-machine.service';
 import { ApprovalService } from './services/approval.service';
 import { RevisionService } from './services/revision.service';
+import { TaxCalculationService } from './services/tax-calculation.service';
+import { DiscountService } from './services/discount.service';
 import { Logger } from '../common/logger/logger.service';
 
 @Module({
@@ -17,6 +19,8 @@ import { Logger } from '../common/logger/logger.service';
     WorkflowStateMachineService,
     ApprovalService,
     RevisionService,
+    TaxCalculationService,
+    DiscountService,
     Logger,
   ],
   exports: [
@@ -24,6 +28,8 @@ import { Logger } from '../common/logger/logger.service';
     WorkflowStateMachineService,
     ApprovalService,
     RevisionService,
+    TaxCalculationService,
+    DiscountService,
   ],
 })
 export class QuotationsModule {}

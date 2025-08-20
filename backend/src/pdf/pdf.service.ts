@@ -64,7 +64,10 @@ export class PDFService {
   private readonly logger = new Logger(PDFService.name);
   private browser: puppeteer.Browser | null = null;
 
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private pdfStorageService: PDFStorageService,
+  ) {}
 
   async generateQuotationPDF(
     quotation: Quotation,
@@ -85,8 +88,25 @@ export class PDFService {
       // Generate PDF from HTML
       const pdfBuffer = await this.generatePDFFromHTML(htmlContent, options);
 
-      this.logger.log('PDF generated successfully', {
+      // Store PDF with metadata
+      const pdfMetadata = await this.pdfStorageService.storePDF(pdfBuffer, {
+        originalName: `quotation_${quotation.quotationNumber}.pdf`,
         quotationId: quotation.id,
+        templateId: template.id,
+        companyId: company.id,
+        type: 'quotation',
+        version: quotation.version || '1.0',
+        generatedBy: createdBy.id,
+        tags: ['quotation', 'pdf'],
+        metadata: {
+          pageCount: pdfData.metadata.pageCount,
+          template: template.name,
+        },
+      });
+
+      this.logger.log('PDF generated and stored successfully', {
+        quotationId: quotation.id,
+        pdfId: pdfMetadata.id,
         size: pdfBuffer.length,
         pageCount: pdfData.metadata.pageCount,
       });

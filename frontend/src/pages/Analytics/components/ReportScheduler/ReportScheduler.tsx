@@ -27,9 +27,7 @@ interface ScheduledReport {
 }
 
 const ReportScheduler: React.FC<ReportSchedulerProps> = ({
-  onSchedule,
-  dateRange,
-  selectedMetrics
+  onSchedule
 }) => {
   const [isScheduling, setIsScheduling] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -97,7 +95,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
     setIsScheduling(true);
     
     try {
-      const schedule = {
+      const newReport = {
         ...scheduleForm,
         id: Date.now().toString(),
         name: scheduleForm.name,
@@ -105,28 +103,15 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
         time: scheduleForm.time,
         dayOfWeek: isWeekly(scheduleForm.frequency) ? scheduleForm.dayOfWeek : undefined,
         dayOfMonth: isMonthly(scheduleForm.frequency) ? scheduleForm.dayOfMonth : undefined,
-        recipients: schedule.recipients,
+        recipients: scheduleForm.recipients.split(',').map(email => email.trim()),
         format: scheduleForm.format,
-        status: 'active',
+        status: 'active' as const,
         nextRun: calculateNextRun(scheduleForm.frequency, scheduleForm.time, scheduleForm.dayOfWeek, scheduleForm.dayOfMonth)
       };
       
-      await onSchedule(schedule);
+      await onSchedule(newReport);
       
       // Add new scheduled report
-      const newReport: ScheduledReport = {
-        id: Date.now().toString(),
-        name: scheduleForm.name,
-        frequency: scheduleForm.frequency,
-        time: scheduleForm.time,
-        dayOfWeek: scheduleForm.frequency === 'weekly' ? scheduleForm.dayOfWeek : undefined,
-        dayOfMonth: scheduleForm.frequency === 'monthly' ? scheduleForm.dayOfMonth : undefined,
-        recipients: schedule.recipients,
-        format: scheduleForm.format,
-        status: 'active',
-        nextRun: calculateNextRun(scheduleForm.frequency, scheduleForm.time, scheduleForm.dayOfWeek, scheduleForm.dayOfMonth)
-      };
-      
       setScheduledReports(prev => [newReport, ...prev]);
       setShowForm(false);
       setScheduleForm({
@@ -290,7 +275,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
             </div>
           </div>
 
-          {scheduleForm.frequency === 'weekly' && (
+          {isWeekly(scheduleForm.frequency) && (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Day of Week
@@ -311,7 +296,7 @@ const ReportScheduler: React.FC<ReportSchedulerProps> = ({
             </div>
           )}
 
-          {scheduleForm.frequency === 'monthly' && (
+          {isMonthly(scheduleForm.frequency) && (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Day of Month

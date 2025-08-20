@@ -517,6 +517,16 @@ This document breaks down the entire online quotation tool project into manageab
 - [ ] Implement branding configuration
 - [ ] Add tax rate management
 - [ ] Create user role management
+
+#### 3.9.2 Free Trial & Onboarding 🔴 ⏱️ 8h 👤 Frontend Developer
+- [ ] Design free trial signup flow
+- [ ] Implement trial period management
+- [ ] Create guided onboarding system
+- [ ] Add tutorial and help system
+- [ ] Implement trial feature limitations
+- [ ] Create upgrade prompts
+- [ ] Add trial expiration notifications
+- [ ] Implement trial-to-paid conversion flow
 - [ ] Implement backup and restore
 
 ### 3.10 Testing & Quality

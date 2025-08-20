@@ -6,11 +6,11 @@ import {
   BellIcon, 
   UserCircleIcon, 
   CogIcon, 
-  LogoutIcon,
+  ArrowRightOnRectangleIcon,
   SunIcon,
   MoonIcon,
-  MenuIcon
-} from '@heroicons/react/outline';
+  Bars3Icon
+} from '@heroicons/react/24/outline';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
               onClick={onMenuClick}
               className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              <MenuIcon className="h-6 w-6" />
+              <Bars3Icon className="h-6 w-6" />
             </button>
           )}
           
@@ -181,7 +181,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isMobile }) => {
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
                     >
-                      <LogoutIcon className="h-4 w-4" />
+                      <ArrowRightOnRectangleIcon className="h-4 w-4" />
                       <span>Sign out</span>
                     </button>
                   </div>

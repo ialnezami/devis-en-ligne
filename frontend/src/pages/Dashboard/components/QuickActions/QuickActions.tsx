@@ -6,9 +6,9 @@ import {
   UserGroupIcon,
   ChartBarIcon,
   CogIcon,
-  DownloadIcon,
+  ArrowDownTrayIcon,
   BellIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 
 interface QuickAction {
   id: string;
@@ -61,7 +61,7 @@ const QuickActions: React.FC = () => {
       id: 'export-data',
       title: 'Export Data',
       description: 'Download reports and data',
-      icon: DownloadIcon,
+      icon: ArrowDownTrayIcon,
       href: '/analytics/export',
       color: 'blue'
     },

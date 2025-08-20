@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { 
-  DocumentDownloadIcon, 
+  DocumentArrowDownIcon, 
   DocumentTextIcon, 
-  TableIcon, 
+  TableCellsIcon, 
   ChartBarIcon,
   ClockIcon,
   CheckCircleIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 
 interface ExportPanelProps {
   onExport: (format: 'pdf' | 'excel' | 'csv') => Promise<void>;
@@ -57,7 +57,7 @@ const ExportPanel: React.FC<ExportPanelProps> = ({
       value: 'excel' as const,
       label: 'Excel Spreadsheet',
       description: 'Data in spreadsheet format for analysis',
-      icon: TableIcon,
+      icon: TableCellsIcon,
       color: 'text-green-600',
       bgColor: 'bg-green-50 dark:bg-green-900/20'
     },
@@ -133,7 +133,7 @@ const ExportPanel: React.FC<ExportPanelProps> = ({
     <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
       <div className="mb-6">
         <h3 className="text-lg font-medium text-gray-900 dark:text-white flex items-center">
-          <DocumentDownloadIcon className="h-5 w-5 mr-2 text-gray-500" />
+          <DocumentArrowDownIcon className="h-5 w-5 mr-2 text-gray-500" />
           Export Analytics Data
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -214,7 +214,7 @@ const ExportPanel: React.FC<ExportPanelProps> = ({
           </>
         ) : (
           <>
-            <DocumentDownloadIcon className="h-5 w-5 mr-2" />
+            <DocumentArrowDownIcon className="h-5 w-5 mr-2" />
             Export {exportFormat.toUpperCase()}
           </>
         )}

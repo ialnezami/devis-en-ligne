@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlusIcon, SearchIcon, FilterIcon, EyeIcon, PencilIcon, TrashIcon, MailIcon, PhoneIcon } from '@heroicons/react/outline';
+import { PlusIcon, MagnifyingGlassIcon, FunnelIcon, EyeIcon, PencilIcon, TrashIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import { Client } from '@/types';
 
@@ -177,7 +177,7 @@ const ClientList: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search clients..."
@@ -266,7 +266,7 @@ const ClientList: React.FC = () => {
 
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                    <MailIcon className="h-4 w-4 mr-2" />
+                    <EnvelopeIcon className="h-4 w-4 mr-2" />
                     <a href={`mailto:${client.email}`} className="hover:text-blue-600 dark:hover:text-blue-400">
                       {client.email}
                     </a>
@@ -321,7 +321,7 @@ const ClientList: React.FC = () => {
         {sortedClients.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 dark:text-gray-500 mb-4">
-              <FilterIcon className="mx-auto h-12 w-12" />
+              <FunnelIcon className="mx-auto h-12 w-12" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
               No clients found

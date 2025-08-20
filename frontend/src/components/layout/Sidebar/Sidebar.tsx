@@ -13,16 +13,16 @@ import {
   DocumentIcon,
   PlusIcon,
   UsersIcon,
-  UserAddIcon,
+  UserPlusIcon,
   ChartPieIcon,
-  DocumentReportIcon,
-  DownloadIcon,
+  DocumentChartBarIcon,
+  ArrowDownTrayIcon,
   UserIcon,
-  OfficeBuildingIcon,
+  BuildingOfficeIcon,
   BellIcon,
-  XIcon,
-  PuzzleIcon
-} from '@heroicons/react/outline';
+  XMarkIcon,
+  PuzzlePieceIcon
+} from '@heroicons/react/24/outline';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       path: '/clients',
       children: [
         { id: 'clients-list', label: 'All Clients', path: '/clients', icon: UsersIcon },
-        { id: 'clients-create', label: 'Add Client', path: '/clients/create', icon: UserAddIcon }
+        { id: 'clients-create', label: 'Add Client', path: '/clients/create', icon: UserPlusIcon }
       ]
     },
     {
@@ -78,8 +78,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       path: '/analytics',
       children: [
         { id: 'analytics-overview', label: 'Overview', path: '/analytics', icon: ChartPieIcon },
-        { id: 'analytics-reports', label: 'Reports', path: '/analytics/reports', icon: DocumentReportIcon },
-        { id: 'analytics-export', label: 'Export Data', path: '/analytics/export', icon: DownloadIcon }
+        { id: 'analytics-reports', label: 'Reports', path: '/analytics/reports', icon: DocumentChartBarIcon },
+        { id: 'analytics-export', label: 'Export Data', path: '/analytics/export', icon: ArrowDownTrayIcon }
       ]
     },
     {
@@ -95,9 +95,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
       path: '/settings',
       children: [
         { id: 'settings-profile', label: 'Profile', path: '/settings/profile', icon: UserIcon },
-        { id: 'settings-company', label: 'Company', path: '/settings/company', icon: OfficeBuildingIcon },
+        { id: 'settings-company', label: 'Company', path: '/settings/company', icon: BuildingOfficeIcon },
         { id: 'settings-notifications', label: 'Notifications', path: '/settings/notifications', icon: BellIcon },
-        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations', icon: PuzzleIcon }
+        { id: 'settings-integrations', label: 'Integrations', path: '/settings/integrations', icon: PuzzlePieceIcon }
       ]
     }
   ];
@@ -203,7 +203,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, isMobile }) => {
               onClick={onClose}
               className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <XIcon className="h-6 w-6" />
+              <XMarkIcon className="h-6 w-6" />
             </button>
           </div>
           

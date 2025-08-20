@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarIcon, ChartBarIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/outline';
+import { CalendarIcon, ChartBarIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 interface DateRangeFiltersProps {
   selectedRange: string;

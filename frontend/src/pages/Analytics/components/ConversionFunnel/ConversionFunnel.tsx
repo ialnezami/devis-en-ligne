@@ -1,5 +1,5 @@
 import React from 'react';
-import { EyeIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon, CurrencyDollarIcon } from '@heroicons/react/outline';
+import { EyeIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
 
 interface ConversionFunnelData {
   stages: Array<{

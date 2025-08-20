@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/solid';
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
 
 interface BreadcrumbItem {
   label: string;

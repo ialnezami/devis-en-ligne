@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeftIcon, PlusIcon, TrashIcon, EyeIcon } from '@heroicons/react/outline';
+import { ArrowLeftIcon, PlusIcon, TrashIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { QuotationItem, Client, Quotation, QuotationStatus } from '@/types';
 

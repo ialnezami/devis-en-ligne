@@ -4,7 +4,7 @@ import {
   CalendarIcon, 
   CheckCircleIcon,
   XCircleIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 
 interface ReportSchedulerProps {
   onSchedule: (schedule: any) => Promise<void>;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlusIcon, SearchIcon, FilterIcon } from '@heroicons/react/outline';
+import { PlusIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import { Quotation, QuotationStatus } from '@/types';
 
@@ -206,7 +206,7 @@ const Quotations: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Search */}
             <div className="relative">
-              <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search quotations..."
@@ -236,7 +236,7 @@ const Quotations: React.FC = () => {
             {/* Additional Filters */}
             <div>
               <button className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex items-center justify-center">
-                <FilterIcon className="h-5 w-5 mr-2" />
+                <FunnelIcon className="h-5 w-5 mr-2" />
                 More Filters
               </button>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CogIcon, EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
+import { CogIcon, EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 interface DashboardCustomizationProps {
   customizations: {
@@ -93,7 +93,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
                     {customizations.showStatistics ? (
                       <EyeIcon className="h-4 w-4 text-green-500 ml-auto" />
                     ) : (
-                      <EyeOffIcon className="h-4 w-4 text-gray-400 ml-auto" />
+                      <EyeSlashIcon className="h-4 w-4 text-gray-400 ml-auto" />
                     )}
                   </label>
 
@@ -110,7 +110,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
                     {customizations.showCharts ? (
                       <EyeIcon className="h-4 w-4 text-green-500 ml-auto" />
                     ) : (
-                      <EyeOffIcon className="h-4 w-4 text-gray-400 ml-auto" />
+                      <EyeSlashIcon className="h-4 w-4 text-gray-400 ml-auto" />
                     )}
                   </label>
 
@@ -127,7 +127,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
                     {customizations.showActivityFeed ? (
                       <EyeIcon className="h-4 w-4 text-green-500 ml-auto" />
                     ) : (
-                      <EyeOffIcon className="h-4 w-4 text-gray-400 ml-auto" />
+                      <EyeSlashIcon className="h-4 w-4 text-gray-400 ml-auto" />
                     )}
                   </label>
 
@@ -144,7 +144,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
                     {customizations.showQuickActions ? (
                       <EyeIcon className="h-4 w-4 text-green-500 ml-auto" />
                     ) : (
-                      <EyeOffIcon className="h-4 w-4 text-gray-400 ml-auto" />
+                      <EyeSlashIcon className="h-4 w-4 text-gray-400 ml-auto" />
                     )}
                   </label>
                 </div>

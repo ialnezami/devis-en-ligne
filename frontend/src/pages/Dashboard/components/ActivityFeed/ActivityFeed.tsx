@@ -6,8 +6,8 @@ import {
   CheckCircleIcon,
   XCircleIcon,
   ClockIcon,
-  ExclamationIcon
-} from '@heroicons/react/outline';
+  ExclamationTriangleIcon
+} from '@heroicons/react/24/outline';
 
 interface Activity {
   id: string;
@@ -34,7 +34,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities }) => {
       CheckCircleIcon,
       XCircleIcon,
       ClockIcon,
-      ExclamationIcon
+      ExclamationTriangleIcon
     };
 
     if (activity.icon && iconMap[activity.icon as keyof typeof iconMap]) {
@@ -51,7 +51,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ activities }) => {
       case 'payment':
         return <CurrencyDollarIcon className="h-5 w-5" />;
       case 'system':
-        return <ExclamationIcon className="h-5 w-5" />;
+        return <ExclamationTriangleIcon className="h-5 w-5" />;
       default:
         return <ClockIcon className="h-5 w-5" />;
     }

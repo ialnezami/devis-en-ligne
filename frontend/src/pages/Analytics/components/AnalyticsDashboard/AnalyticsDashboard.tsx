@@ -1,6 +1,6 @@
 import React from 'react';
 import ChartCard from '../../../Dashboard/components/ChartCard/ChartCard';
-import { TrendingUpIcon, TrendingDownIcon, MinusIcon } from '@heroicons/react/outline';
+import { ArrowTrendingUpIcon, ArrowTrendingDownIcon, MinusIcon } from '@heroicons/react/24/outline';
 
 interface AnalyticsData {
   overview: {
@@ -47,9 +47,9 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
 }) => {
   const getChangeIcon = (change: number) => {
     if (change > 0) {
-      return <TrendingUpIcon className="h-4 w-4 text-green-500" />;
+      return <ArrowTrendingUpIcon className="h-4 w-4 text-green-500" />;
     } else if (change < 0) {
-      return <TrendingDownIcon className="h-4 w-4 text-red-500" />;
+      return <ArrowTrendingDownIcon className="h-4 w-4 text-red-500" />;
     }
     return <MinusIcon className="h-4 w-4 text-gray-500" />;
   };
@@ -105,7 +105,7 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
               </div>
             </div>
             <div className="bg-green-100 dark:bg-green-900/20 p-3 rounded-lg">
-              <TrendingUpIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <ArrowTrendingUpIcon className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
               </div>
             </div>
             <div className="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-lg">
-              <TrendingUpIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <ArrowTrendingUpIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
               </div>
             </div>
             <div className="bg-purple-100 dark:bg-purple-900/20 p-3 rounded-lg">
-              <TrendingUpIcon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+              <ArrowTrendingUpIcon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@ const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({
               </div>
             </div>
             <div className="bg-orange-100 dark:bg-orange-900/20 p-3 rounded-lg">
-              <TrendingUpIcon className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+              <ArrowTrendingUpIcon className="h-6 w-6 text-orange-600 dark:text-orange-400" />
             </div>
           </div>
         </div>

@@ -4,9 +4,9 @@ import {
   UserGroupIcon, 
   CurrencyDollarIcon, 
   ChartBarIcon,
-  TrendingUpIcon,
-  TrendingDownIcon
-} from '@heroicons/react/outline';
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon
+} from '@heroicons/react/24/outline';
 
 interface StatisticsCardProps {
   title: string;
@@ -65,9 +65,9 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
 
   const getChangeIcon = () => {
     if (changeType === 'increase') {
-      return <TrendingUpIcon className="h-4 w-4 text-green-500" />;
+      return <ArrowTrendingUpIcon className="h-4 w-4 text-green-500" />;
     } else if (changeType === 'decrease') {
-      return <TrendingDownIcon className="h-4 w-4 text-red-500" />;
+      return <ArrowTrendingDownIcon className="h-4 w-4 text-red-500" />;
     }
     return null;
   };

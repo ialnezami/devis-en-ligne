@@ -27,6 +27,9 @@ export class Quotation {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
+  @Column({ type: 'varchar', length: 50, unique: true })
+  quotationNumber: string;
+
   @Column({ type: 'text', nullable: true })
   description?: string;
 
@@ -64,6 +67,13 @@ export class Quotation {
 
   @Column({ type: 'uuid', nullable: true })
   templateId?: string;
+
+  // Items relationship
+  @OneToMany(() => QuotationItem, (item) => item.quotation, {
+    cascade: true,
+    eager: false,
+  })
+  items: QuotationItem[];
 
   // Client Information
   @Column({ type: 'varchar', length: 255, nullable: true })

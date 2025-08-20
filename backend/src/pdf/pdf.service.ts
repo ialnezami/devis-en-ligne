@@ -4,11 +4,12 @@ import * as puppeteer from 'puppeteer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
-import { PDFDocument, PDFForm, PDFTextField, PDFCheckBox, PDFDropdown, PDFOptionList, PDFSignature, PDFWidgetAnnotation, rgb } from 'pdf-lib';
+import { PDFDocument, rgb } from 'pdf-lib';
 import { Quotation } from '../quotations/entities/quotation.entity';
 import { Template } from '../templates/entities/template.entity';
 import { User } from '../users/entities/user.entity';
 import { Company } from '../companies/entities/company.entity';
+import { PDFStorageService, PDFMetadata, CompanyBranding } from './pdf-storage.service';
 
 export interface PDFOptions {
   format?: 'A4' | 'A3' | 'Letter' | 'Legal';

@@ -217,13 +217,13 @@ This document breaks down the entire online quotation tool project into manageab
 
 ### 2.6 Notification System
 
-#### 2.6.1 Email Notifications 🔴 ⏱️ 10h 👤 Backend Developer
-- [ ] Configure email service (Nodemailer/SendGrid)
-- [ ] Create email templates
-- [ ] Implement notification queue system
-- [ ] Add email tracking
-- [ ] Create unsubscribe mechanism
-- [ ] Implement bulk email handling
+#### 2.6.1 Email Notifications ✅ ⏱️ 10h 👤 Backend Developer
+- [x] Configure email service (Nodemailer/SendGrid)
+- [x] Create email templates
+- [x] Implement notification queue system
+- [x] Add email tracking
+- [x] Create unsubscribe mechanism
+- [x] Implement bulk email handling
 
 #### 2.6.2 Push Notifications 🟡 ⏱️ 8h 👤 Backend Developer
 - [ ] Integrate Firebase Cloud Messaging

@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
     customizations
   } = useDashboard();
 
-  const [refreshInterval, setRefreshInterval] = useState(30000); // 30 seconds
+  const [refreshInterval] = useState(30000); // 30 seconds
 
   // Set up real-time data updates
   useEffect(() => {

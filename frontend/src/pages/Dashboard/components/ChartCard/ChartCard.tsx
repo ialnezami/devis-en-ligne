@@ -56,7 +56,6 @@ const ChartCard: React.FC<ChartCardProps> = ({
   height = 300
 }) => {
   const [chartOptions, setChartOptions] = useState<any>({});
-  const chartRef = useRef<ChartJS>(null);
 
   useEffect(() => {
     const baseOptions = {

@@ -200,12 +200,12 @@ This document breaks down the entire online quotation tool project into manageab
 ### 2.5 PDF Generation & Documents
 
 #### 2.5.1 PDF Service 🔴 ⏱️ 10h 👤 Backend Developer
-- [ ] Install and configure PDF library (Puppeteer/PDFKit)
-- [ ] Create PDF templates
-- [ ] Implement quotation PDF generation
-- [ ] Add company branding to PDFs
-- [ ] Create PDF storage system
-- [ ] Implement PDF versioning
+- [x] Install and configure PDF library (Puppeteer/PDFKit)
+- [x] Create PDF templates
+- [x] Implement quotation PDF generation
+- [x] Add company branding to PDFs
+- [x] Create PDF storage system
+- [x] Implement PDF versioning
 
 #### 2.5.2 File Management 🟡 ⏱️ 8h 👤 Backend Developer
 - [ ] Create file upload service

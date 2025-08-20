@@ -207,13 +207,13 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Create PDF storage system
 - [x] Implement PDF versioning
 
-#### 2.5.2 File Management 🟡 ⏱️ 8h 👤 Backend Developer
-- [ ] Create file upload service
-- [ ] Implement S3 integration
-- [ ] Add file validation and security
-- [ ] Create file attachment system
-- [ ] Implement file versioning
-- [ ] Add file compression
+#### 2.5.2 File Management ✅ ⏱️ 8h 👤 Backend Developer
+- [x] Create file upload service
+- [x] Implement S3 integration
+- [x] Add file validation and security
+- [x] Create file attachment system
+- [x] Implement file versioning
+- [x] Add file compression
 
 ### 2.6 Notification System
 

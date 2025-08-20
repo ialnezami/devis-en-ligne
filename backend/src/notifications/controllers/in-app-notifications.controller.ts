@@ -184,7 +184,7 @@ export class InAppNotificationsController {
   }
 
   @Put('bulk/read')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Mark multiple notifications as read' })
   @ApiResponse({ status: 200, description: 'Notifications marked as read successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -210,7 +210,7 @@ export class InAppNotificationsController {
   }
 
   @Put('all/read')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Mark all user notifications as read' })
   @ApiResponse({ status: 200, description: 'All notifications marked as read successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -235,7 +235,7 @@ export class InAppNotificationsController {
   }
 
   @Put(':id/archive')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Archive a notification' })
   @ApiResponse({ status: 200, description: 'Notification archived successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -265,7 +265,7 @@ export class InAppNotificationsController {
   }
 
   @Put(':id/unarchive')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Unarchive a notification' })
   @ApiResponse({ status: 200, description: 'Notification unarchived successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -295,7 +295,7 @@ export class InAppNotificationsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Delete a notification' })
   @ApiResponse({ status: 200, description: 'Notification deleted successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -363,7 +363,7 @@ export class InAppNotificationsController {
   }
 
   @Get('stats/overview')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Get user notification statistics' })
   @ApiResponse({ status: 200, description: 'Statistics retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -389,7 +389,7 @@ export class InAppNotificationsController {
 
   // Notification Preferences Management
   @Post('preferences')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Create notification preferences for user' })
   @ApiResponse({ status: 201, description: 'Preferences created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -418,7 +418,7 @@ export class InAppNotificationsController {
   }
 
   @Get('preferences')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Get user notification preferences' })
   @ApiResponse({ status: 200, description: 'Preferences retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -443,7 +443,7 @@ export class InAppNotificationsController {
   }
 
   @Put('preferences')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Update user notification preferences' })
   @ApiResponse({ status: 200, description: 'Preferences updated successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -472,7 +472,7 @@ export class InAppNotificationsController {
   }
 
   @Put('preferences/reset')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Reset user notification preferences to defaults' })
   @ApiResponse({ status: 200, description: 'Preferences reset successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -497,7 +497,7 @@ export class InAppNotificationsController {
   }
 
   @Get('preferences/export')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Export user notification preferences' })
   @ApiResponse({ status: 200, description: 'Preferences exported successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -522,7 +522,7 @@ export class InAppNotificationsController {
   }
 
   @Post('preferences/import')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Import user notification preferences' })
   @ApiResponse({ status: 200, description: 'Preferences imported successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })

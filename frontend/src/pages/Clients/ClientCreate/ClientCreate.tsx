@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeftIcon, PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
-import { Client } from '@/types';
 
 interface ClientFormData {
   name: string;

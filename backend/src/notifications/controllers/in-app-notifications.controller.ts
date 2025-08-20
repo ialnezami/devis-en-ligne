@@ -154,7 +154,7 @@ export class InAppNotificationsController {
   }
 
   @Put(':id/read')
-  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.USER)
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.SALES_REP, UserRole.CLIENT)
   @ApiOperation({ summary: 'Mark a notification as read' })
   @ApiResponse({ status: 200, description: 'Notification marked as read successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

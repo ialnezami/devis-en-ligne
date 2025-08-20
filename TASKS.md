@@ -125,23 +125,23 @@ This document breaks down the entire online quotation tool project into manageab
 ### 2.2 Authentication & Authorization
 
 #### 2.2.1 JWT Authentication 🔴 ⏱️ 12h 👤 Backend Developer
-- [ ] Create User entity and migration
-- [ ] Implement JWT strategy with Passport
-- [ ] Create authentication service
-- [ ] Build registration endpoint
-- [ ] Build login endpoint
-- [ ] Implement password hashing (bcrypt)
-- [ ] Create refresh token mechanism
-- [ ] Add logout functionality
-- [ ] Implement password reset flow
+- [x] Create User entity and migration
+- [x] Implement JWT strategy with Passport
+- [x] Create authentication service
+- [x] Build registration endpoint
+- [x] Build login endpoint
+- [x] Implement password hashing (bcrypt)
+- [x] Create refresh token mechanism
+- [x] Add logout functionality
+- [x] Implement password reset flow
 
 #### 2.2.2 Role-Based Access Control 🔴 ⏱️ 8h 👤 Backend Developer
-- [ ] Create Role entity and relationships
-- [ ] Implement role-based guards
-- [ ] Create permission system
-- [ ] Add role decorators
-- [ ] Configure route-level permissions
-- [ ] Create admin role management
+- [x] Create Role entity and relationships
+- [x] Implement role-based guards
+- [x] Create permission system
+- [x] Add role decorators
+- [x] Configure route-level permissions
+- [x] Create admin role management
 
 #### 2.2.3 Two-Factor Authentication 🟡 ⏱️ 6h 👤 Backend Developer
 - [ ] Implement TOTP generation
@@ -153,18 +153,18 @@ This document breaks down the entire online quotation tool project into manageab
 ### 2.3 User Management
 
 #### 2.3.1 User CRUD Operations 🔴 ⏱️ 10h 👤 Backend Developer
-- [ ] Create User controller
-- [ ] Implement user profile endpoints
-- [ ] Add user search and filtering
-- [ ] Create user update functionality
-- [ ] Implement user deactivation
-- [ ] Add user avatar upload
-- [ ] Create user preferences system
+- [x] Create User controller
+- [x] Implement user profile endpoints
+- [x] Add user search and filtering
+- [x] Create user update functionality
+- [x] Implement user deactivation
+- [x] Add user avatar upload
+- [x] Create user preferences system
 
 #### 2.3.2 Company Management 🟡 ⏱️ 8h 👤 Backend Developer
-- [ ] Create Company entity
+- [x] Create Company entity
 - [ ] Implement company CRUD operations
-- [ ] Add company-user relationships
+- [x] Add company-user relationships
 - [ ] Create company settings
 - [ ] Implement company branding options
 

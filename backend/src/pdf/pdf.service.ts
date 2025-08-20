@@ -518,6 +518,12 @@ export class PDFService {
       templateHTML = this.getDefaultQuotationTemplate();
     }
 
+    // Get company branding
+    const branding = await this.pdfStorageService.getCompanyBranding(pdfData.company.id);
+
+    // Apply company branding to template
+    templateHTML = this.applyCompanyBranding(templateHTML, branding);
+
     // Compile template with data
     const compiledTemplate = handlebars.compile(templateHTML);
     return compiledTemplate(pdfData);

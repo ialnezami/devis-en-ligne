@@ -769,6 +769,39 @@ export class PDFService {
     }
   }
 
+  private applyCompanyBranding(templateHTML: string, branding: CompanyBranding): string {
+    // Apply company colors
+    if (branding.primaryColor) {
+      templateHTML = templateHTML.replace(/#2563eb/g, branding.primaryColor);
+    }
+    if (branding.secondaryColor) {
+      templateHTML = templateHTML.replace(/#64748b/g, branding.secondaryColor);
+    }
+
+    // Apply custom CSS
+    if (branding.customCSS) {
+      const styleTag = `<style>${branding.customCSS}</style>`;
+      templateHTML = templateHTML.replace('</head>', `${styleTag}\n</head>`);
+    }
+
+    // Apply custom header/footer templates
+    if (branding.headerTemplate) {
+      templateHTML = templateHTML.replace(
+        /<div class="header">[\s\S]*?<\/div>/,
+        branding.headerTemplate
+      );
+    }
+
+    if (branding.footerTemplate) {
+      templateHTML = templateHTML.replace(
+        /<div class="footer">[\s\S]*?<\/div>/,
+        branding.footerTemplate
+      );
+    }
+
+    return templateHTML;
+  }
+
   private hexToRgb(hex: string): { r: number; g: number; b: number } {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (result) {

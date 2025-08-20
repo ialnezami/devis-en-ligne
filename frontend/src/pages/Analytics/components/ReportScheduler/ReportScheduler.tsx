@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { 
   ClockIcon, 
   CalendarIcon, 
-  MailIcon, 
-  BellIcon,
   CheckCircleIcon,
   XCircleIcon
 } from '@heroicons/react/outline';

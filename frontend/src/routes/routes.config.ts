@@ -12,10 +12,7 @@ export interface RouteConfig {
 // Lazy load page components
 const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'));
 const Quotations = lazy(() => import('@/pages/Quotations/Quotations'));
-const QuotationList = lazy(() => import('@/pages/Quotations/QuotationList/QuotationList'));
 const QuotationCreate = lazy(() => import('@/pages/Quotations/QuotationCreate/QuotationCreate'));
-const QuotationEdit = lazy(() => import('@/pages/Quotations/QuotationEdit/QuotationEdit'));
-const QuotationView = lazy(() => import('@/pages/Quotations/QuotationView/QuotationView'));
 const ClientList = lazy(() => import('@/pages/Clients/ClientList/ClientList'));
 const ClientCreate = lazy(() => import('@/pages/Clients/ClientCreate/ClientCreate'));
 const Analytics = lazy(() => import('@/pages/Analytics/Analytics'));

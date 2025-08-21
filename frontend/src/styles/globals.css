@@ -154,7 +154,8 @@
 
   /* Selection Styles */
   ::selection {
-    @apply bg-primary/20 text-primary-900;
+    background-color: rgba(var(--color-primary-500), 0.2);
+    color: rgb(var(--color-primary-900));
   }
 
   /* Reduced Motion Support */
@@ -205,11 +206,21 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    background-color: rgb(var(--color-primary-600));
+    color: white;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: rgb(var(--color-primary-700));
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    background-color: rgb(var(--color-secondary-100));
+    color: rgb(var(--color-secondary-900));
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    background-color: rgb(var(--color-secondary-200));
   }
 
   .btn-outline {
@@ -268,11 +279,24 @@
   }
 
   .badge-default {
-    @apply border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80;
+    border-color: transparent;
+    background-color: rgb(var(--color-primary-600));
+    color: white;
+    box-shadow: var(--tw-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06));
+  }
+  
+  .badge-default:hover {
+    background-color: rgb(var(--color-primary-700));
   }
 
   .badge-secondary {
-    @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    border-color: transparent;
+    background-color: rgb(var(--color-secondary-100));
+    color: rgb(var(--color-secondary-900));
+  }
+  
+  .badge-secondary:hover {
+    background-color: rgb(var(--color-secondary-200));
   }
 
   .badge-outline {
@@ -280,7 +304,14 @@
   }
 
   .badge-destructive {
-    @apply border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80;
+    border-color: transparent;
+    background-color: rgb(var(--color-destructive));
+    color: rgb(var(--color-destructive-foreground));
+    box-shadow: var(--tw-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06));
+  }
+  
+  .badge-destructive:hover {
+    background-color: rgba(var(--color-destructive), 0.8);
   }
 
   /* Avatar Components */

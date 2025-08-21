@@ -10,8 +10,6 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
-  storageKey = 'ui-theme',
 }: ThemeProviderProps) {
   const dispatch = useAppDispatch();
   const theme = useAppSelector(state => state.theme);

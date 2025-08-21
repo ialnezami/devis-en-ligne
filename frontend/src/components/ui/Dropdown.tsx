@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
 interface DropdownItem {
-  label: string;
+  label?: string;
   value?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
@@ -108,7 +108,7 @@ export function Dropdown({
 }
 
 // Predefined dropdown button with chevron
-interface DropdownButtonProps extends DropdownProps {
+interface DropdownButtonProps extends Omit<DropdownProps, 'trigger'> {
   children: React.ReactNode;
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
@@ -119,7 +119,9 @@ export function DropdownButton({
   items, 
   variant = 'outline',
   size = 'md',
-  ...props 
+  align,
+  width,
+  className
 }: DropdownButtonProps) {
   const buttonClasses = clsx(
     'btn inline-flex items-center gap-2',
@@ -140,7 +142,9 @@ export function DropdownButton({
         </div>
       }
       items={items}
-      {...props}
+      align={align}
+      width={width}
+      className={className}
     />
   );
 }

@@ -27,3 +27,5 @@ export {
   Shimmer, 
   LoadingOverlay 
 } from './Loading';
+
+export { Grid, GridItem, Container, Flex } from './Grid';

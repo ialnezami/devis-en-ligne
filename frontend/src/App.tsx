@@ -13,6 +13,7 @@ import QuotationView from './pages/Quotations/QuotationView';
 import QuotationEdit from './pages/Quotations/QuotationEdit';
 import ClientList from './pages/Clients/ClientList';
 import ClientCreate from './pages/Clients/ClientCreate';
+import UIDemo from './pages/Demo/UIDemo';
 
 const App: React.FC = () => {
   return (
@@ -39,6 +40,9 @@ const App: React.FC = () => {
                   {/* Clients */}
                   <Route path="/clients" element={<ClientList />} />
                   <Route path="/clients/create" element={<ClientCreate />} />
+                  
+                  {/* Demo */}
+                  <Route path="/demo" element={<UIDemo />} />
                   
                   {/* Catch all route */}
                   <Route path="*" element={<Navigate to="/dashboard" replace />} />

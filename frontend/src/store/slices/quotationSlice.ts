@@ -176,7 +176,7 @@ export const quotationApi = createApi({
         method: 'POST',
         body: { reason },
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'Quotation', id },
         'Quotations'
       ],

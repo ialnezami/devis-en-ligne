@@ -89,7 +89,7 @@ export const userApi = createApi({
     }),
     getUserById: builder.query<User, string>({
       query: (id) => `/users/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: (_result, _error, id) => [{ type: 'User', id }],
     }),
     createUser: builder.mutation<User, Omit<User, 'id' | 'createdAt'>>({
       query: (userData) => ({
@@ -105,7 +105,7 @@ export const userApi = createApi({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'User', id },
         'Users'
       ],
@@ -122,7 +122,7 @@ export const userApi = createApi({
         url: `/users/${id}/deactivate`,
         method: 'PATCH',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'User', id },
         'Users'
       ],
@@ -132,7 +132,7 @@ export const userApi = createApi({
         url: `/users/${id}/activate`,
         method: 'PATCH',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'User', id },
         'Users'
       ],

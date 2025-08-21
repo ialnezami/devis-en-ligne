@@ -138,7 +138,7 @@ export const quotationApi = createApi({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'Quotation', id },
         'Quotations'
       ],
@@ -155,7 +155,7 @@ export const quotationApi = createApi({
         url: `/quotations/${id}/send`,
         method: 'POST',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'Quotation', id },
         'Quotations'
       ],
@@ -165,7 +165,7 @@ export const quotationApi = createApi({
         url: `/quotations/${id}/accept`,
         method: 'POST',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'Quotation', id },
         'Quotations'
       ],

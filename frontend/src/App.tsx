@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { StoreProvider } from './store/Provider';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
-import { NotificationProvider } from './contexts/NotificationProvider';
-import Layout from './components/Layout/Layout';
+import { NotificationProvider } from './contexts/NotificationContext';
+import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Analytics from './pages/Analytics/Analytics';
 import QuotationList from './pages/Quotations/QuotationList';

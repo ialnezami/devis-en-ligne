@@ -122,7 +122,7 @@ export const quotationApi = createApi({
     }),
     getQuotationById: builder.query<Quotation, string>({
       query: (id) => `/quotations/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Quotation', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Quotation', id }],
     }),
     createQuotation: builder.mutation<Quotation, CreateQuotationData>({
       query: (data) => ({

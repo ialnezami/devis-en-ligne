@@ -34,7 +34,7 @@ export const store = configureStore({
       clientApi.middleware,
       analyticsApi.middleware
     ),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.MODE !== 'production',
 });
 
 setupListeners(store.dispatch);

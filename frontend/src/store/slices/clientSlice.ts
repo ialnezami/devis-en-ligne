@@ -130,7 +130,7 @@ export const clientApi = createApi({
     }),
     getClientById: builder.query<Client, string>({
       query: (id) => `/clients/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Client', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Client', id }],
     }),
     createClient: builder.mutation<Client, CreateClientData>({
       query: (data) => ({
@@ -146,7 +146,7 @@ export const clientApi = createApi({
         method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'Client', id },
         'Clients'
       ],
@@ -163,7 +163,7 @@ export const clientApi = createApi({
         url: `/clients/${id}/deactivate`,
         method: 'PATCH',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'Client', id },
         'Clients'
       ],
@@ -173,7 +173,7 @@ export const clientApi = createApi({
         url: `/clients/${id}/activate`,
         method: 'PATCH',
       }),
-      invalidatesTags: (result, error, id) => [
+      invalidatesTags: (_result, _error, id) => [
         { type: 'Client', id },
         'Clients'
       ],
@@ -184,7 +184,7 @@ export const clientApi = createApi({
         method: 'POST',
         body: { tag },
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'Client', id },
         'Clients'
       ],
@@ -194,7 +194,7 @@ export const clientApi = createApi({
         url: `/clients/${id}/tags/${encodeURIComponent(tag)}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: (_result, _error, { id }) => [
         { type: 'Client', id },
         'Clients'
       ],

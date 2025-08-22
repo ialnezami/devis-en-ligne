@@ -18,3 +18,10 @@ export { QuoteAnalyticsDashboard } from './QuoteAnalyticsDashboard';
 export { QuoteCollaboration } from './QuoteCollaboration';
 export { QuoteBackupRecovery } from './QuoteBackupRecovery';
 export { default as CentralizedQuoteManagementDemo } from './CentralizedQuoteManagementDemo';
+
+// Template Management Components
+export { TemplateManagementDashboard } from './TemplateManagementDashboard';
+export { TemplateLibrary } from './TemplateLibrary';
+export { TemplateCreationForm } from './TemplateCreationForm';
+export { TemplatePreview } from './TemplatePreview';
+export { default as TemplateManagementDemo } from './TemplateManagementDemo';

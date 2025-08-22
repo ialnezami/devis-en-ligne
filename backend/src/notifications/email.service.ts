@@ -134,6 +134,41 @@ export class EmailService {
     await this.sendEmail(mailOptions);
   }
 
+  async send2FARecoveryEmail(email: string, recoveryToken: string): Promise<void> {
+    const recoveryUrl = `${this.configService.get<string>('FRONTEND_URL', 'http://localhost:3000')}/recovery/verify?token=${recoveryToken}`;
+    
+    const mailOptions = {
+      from: this.configService.get<string>('FROM_EMAIL', 'noreply@example.com'),
+      to: email,
+      subject: 'Two-Factor Authentication Recovery',
+      html: `
+        <h2>Two-Factor Authentication Recovery</h2>
+        <p>You have requested to recover access to your account.</p>
+        <p>Click the link below to disable 2FA and regain access:</p>
+        <a href="${recoveryUrl}">Recover Account Access</a>
+        <p><strong>Warning:</strong> This will disable two-factor authentication for your account.</p>
+        <p>This link will expire in 24 hours.</p>
+        <p>If you didn't request this, please ignore this email and ensure your 2FA device is secure.</p>
+        <p>For security reasons, we recommend re-enabling 2FA after regaining access.</p>
+      `,
+      text: `
+        Two-Factor Authentication Recovery
+        
+        You have requested to recover access to your account.
+        Click the link below to disable 2FA and regain access:
+        ${recoveryUrl}
+        
+        WARNING: This will disable two-factor authentication for your account.
+        This link will expire in 24 hours.
+        
+        If you didn't request this, please ignore this email and ensure your 2FA device is secure.
+        For security reasons, we recommend re-enabling 2FA after regaining access.
+      `,
+    };
+
+    await this.sendEmail(mailOptions);
+  }
+
   private async sendEmail(mailOptions: nodemailer.SendMailOptions): Promise<void> {
     try {
       if (this.transporter) {

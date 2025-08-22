@@ -10,14 +10,15 @@ import {
   Bars3Icon,
   XMarkIcon,
   ChartBarIcon,
-  CalendarIcon
+  CalendarIcon,
+  ClockIcon
 } from '@heroicons/react/24/outline';
 import { ThemeToggle } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
 const Header: React.FC = () => {
   const { user, logout } = useAuth();
-  const { notifications, markAsRead, clearAll } = useNotifications();
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -26,8 +27,6 @@ const Header: React.FC = () => {
     logout();
     setUserMenuOpen(false);
   };
-
-  const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
     <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
@@ -67,6 +66,12 @@ const Header: React.FC = () => {
                 Phase Management
               </Link>
               <Link
+                to="/calendar"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Calendar
+              </Link>
+              <Link
                 to="/demo"
                 className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
               >
@@ -104,7 +109,7 @@ const Header: React.FC = () => {
                       </h3>
                       {unreadCount > 0 && (
                         <button
-                          onClick={clearAll}
+                          onClick={markAllAsRead}
                           className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                         >
                           Mark all as read
@@ -123,8 +128,8 @@ const Header: React.FC = () => {
                           <div
                             key={notification.id}
                             className={cn(
-                              "px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer",
-                              !notification.read && "bg-blue-50 dark:bg-blue-900/20"
+                              "px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer",
+                              !notification.isRead && "bg-blue-50 dark:bg-blue-900/20"
                             )}
                             onClick={() => markAsRead(notification.id)}
                           >
@@ -139,8 +144,8 @@ const Header: React.FC = () => {
                                 <p className="text-sm text-gray-500 dark:text-gray-400">
                                   {notification.message}
                                 </p>
-                                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                                  {notification.timestamp}
+                                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                                  {notification.createdAt}
                                 </p>
                               </div>
                             </div>
@@ -226,6 +231,14 @@ const Header: React.FC = () => {
             >
               <CalendarIcon className="h-5 w-5" />
               <span>Phase Management</span>
+            </Link>
+            <Link
+              to="/calendar"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <ClockIcon className="h-5 w-5" />
+              <span>Calendar</span>
             </Link>
             <Link
               to="/profile"

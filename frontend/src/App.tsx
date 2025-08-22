@@ -6,9 +6,10 @@ import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import GlobalStyles from './styles/global';
 import Layout from './components/layout/MainLayout';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';
 import PhaseDashboard from './pages/PhaseManagement/PhaseDashboard';
+import CalendarDashboard from './pages/Calendar/CalendarDashboard';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
 import { Profile } from './pages/Profile';
@@ -75,6 +76,14 @@ const App: React.FC = () => {
                   <ProtectedRoute>
                     <Layout>
                       <PhaseDashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                } />
+                
+                <Route path="/calendar" element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <CalendarDashboard />
                     </Layout>
                   </ProtectedRoute>
                 } />

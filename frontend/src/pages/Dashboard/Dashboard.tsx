@@ -131,7 +131,7 @@ const Dashboard: React.FC = () => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'critical': return 'destructive';
-      case 'high': return 'error';
+      case 'high': return 'destructive';
       case 'medium': return 'warning';
       case 'low': return 'success';
       default: return 'default';
@@ -299,14 +299,16 @@ const Dashboard: React.FC = () => {
               </Button>
             </Link>
             
+            <Link to="/calendar">
+              <Button variant="outline" className="w-full h-20 flex-col space-y-2">
+                <ClockIcon className="h-8 w-8" />
+                <span>Calendar & Scheduling</span>
+              </Button>
+            </Link>
+            
             <Button variant="outline" className="w-full h-20 flex-col space-y-2">
               <UserGroupIcon className="h-8 w-8" />
               <span>Team Management</span>
-            </Button>
-            
-            <Button variant="outline" className="w-full h-20 flex-col space-y-2">
-              <ChartBarIcon className="h-8 w-8" />
-              <span>Reports & Analytics</span>
             </Button>
           </div>
         </CardContent>

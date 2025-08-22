@@ -315,15 +315,15 @@ This document breaks down the entire online quotation tool project into manageab
 
 ### 3.2 Authentication & User Management
 
-#### 3.2.1 Authentication System 🔴 ⏱️ 12h 👤 Frontend Developer
-- [ ] Create login page
-- [ ] Build registration form
-- [ ] Implement password reset flow
-- [ ] Add JWT token management
-- [ ] Create protected route system
-- [ ] Implement auto-logout on token expiry
-- [ ] Add remember me functionality
-- [ ] Create session management
+#### 3.2.1 Authentication System ✅ ⏱️ 12h 👤 Frontend Developer
+- [x] Create login page
+- [x] Build registration form
+- [x] Implement password reset flow
+- [x] Add JWT token management
+- [x] Create protected route system
+- [x] Implement auto-logout on token expiry
+- [x] Add remember me functionality
+- [x] Create session management
 
 #### 3.2.2 User Profile Management 🟡 ⏱️ 8h 👤 Frontend Developer
 - [ ] Create user profile page

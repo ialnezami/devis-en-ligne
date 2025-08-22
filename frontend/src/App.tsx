@@ -17,6 +17,7 @@ import ClientList from './pages/Clients/ClientList';
 import ClientCreate from './pages/Clients/ClientCreate';
 import UIDemo from './pages/Demo/UIDemo';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
+import { Unauthorized } from './pages/Error';
 
 const App: React.FC = () => {
   return (
@@ -47,6 +48,9 @@ const App: React.FC = () => {
                     <ResetPassword />
                   </PublicRoute>
                 } />
+
+                {/* Error Routes */}
+                <Route path="/unauthorized" element={<Unauthorized />} />
 
                 {/* Protected Routes */}
                 <Route path="/" element={

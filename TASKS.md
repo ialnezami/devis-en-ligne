@@ -325,13 +325,13 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Add remember me functionality
 - [x] Create session management
 
-#### 3.2.2 User Profile Management 🟡 ⏱️ 8h 👤 Frontend Developer
-- [ ] Create user profile page
-- [ ] Build profile edit form
-- [ ] Implement avatar upload
-- [ ] Add password change functionality
-- [ ] Create user preferences
-- [ ] Implement 2FA setup
+#### 3.2.2 User Profile Management ✅ ⏱️ 8h 👤 Frontend Developer
+- [x] Create user profile page
+- [x] Build profile edit form
+- [x] Implement avatar upload
+- [x] Add password change functionality
+- [x] Create user preferences
+- [x] Implement 2FA setup
 
 ### 3.3 Layout & Navigation
 

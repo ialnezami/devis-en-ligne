@@ -18,6 +18,7 @@ import ClientCreate from './pages/Clients/ClientCreate';
 import UIDemo from './pages/Demo/UIDemo';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
+import { Profile } from './pages/Profile';
 
 const App: React.FC = () => {
   return (
@@ -121,18 +122,26 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } />
                 
-                <Route path="/demo" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <UIDemo />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
-                
-                {/* Catch all route */}
-                <Route path="*" element={
-                  <Navigate to="/dashboard" replace />
-                } />
+                                 <Route path="/demo" element={
+                   <ProtectedRoute>
+                     <Layout>
+                       <UIDemo />
+                     </Layout>
+                   </ProtectedRoute>
+                 } />
+                 
+                 <Route path="/profile" element={
+                   <ProtectedRoute>
+                     <Layout>
+                       <Profile />
+                     </Layout>
+                   </ProtectedRoute>
+                 } />
+                 
+                 {/* Catch all route */}
+                 <Route path="*" element={
+                   <Navigate to="/dashboard" replace />
+                 } />
               </Routes>
             </Router>
           </NotificationProvider>

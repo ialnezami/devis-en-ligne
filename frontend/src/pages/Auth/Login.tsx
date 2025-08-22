@@ -11,6 +11,7 @@ const Login: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [successMessage, setSuccessMessage] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +32,14 @@ const Login: React.FC = () => {
       setEmail(savedEmail);
       setRememberMe(true);
     }
-  }, []);
+
+    // Check for success message from password reset
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      // Clear the message from location state
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, navigate, location.pathname]);
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -100,6 +108,12 @@ const Login: React.FC = () => {
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {successMessage && (
+            <div className="rounded-md bg-green-50 p-4">
+              <div className="text-sm text-green-700">{successMessage}</div>
+            </div>
+          )}
+
           {errors.general && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="text-sm text-red-700">{errors.general}</div>

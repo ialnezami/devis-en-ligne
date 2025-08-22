@@ -242,4 +242,92 @@ export class UsersService {
   async countByRole(role: UserRole): Promise<number> {
     return this.usersRepository.count({ where: { roles: role } });
   }
+
+  // 2FA Methods
+  async storeTemporary2FASecret(id: string, secret: string, backupCodes: string[]): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        twoFactorSecret: secret,
+        backupCodes: backupCodes,
+      });
+
+      this.logger.log('Temporary 2FA secret stored', { userId: id });
+    } catch (error) {
+      this.logger.error('Error storing temporary 2FA secret', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async enable2FA(id: string, secret: string, backupCodes: string[]): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        twoFactorEnabled: true,
+        twoFactorSecret: secret,
+        backupCodes: backupCodes,
+      });
+
+      this.logger.log('2FA enabled', { userId: id });
+    } catch (error) {
+      this.logger.error('Error enabling 2FA', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async disable2FA(id: string): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        twoFactorEnabled: false,
+        twoFactorSecret: null,
+        backupCodes: [],
+      });
+
+      this.logger.log('2FA disabled', { userId: id });
+    } catch (error) {
+      this.logger.error('Error disabling 2FA', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async removeBackupCode(id: string, backupCode: string): Promise<void> {
+    try {
+      const user = await this.findById(id);
+      if (user.backupCodes) {
+        const updatedBackupCodes = user.backupCodes.filter(code => code !== backupCode);
+        await this.usersRepository.update(id, {
+          backupCodes: updatedBackupCodes,
+        });
+      }
+
+      this.logger.log('Backup code removed', { userId: id });
+    } catch (error) {
+      this.logger.error('Error removing backup code', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async updateBackupCodes(id: string, backupCodes: string[]): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        backupCodes: backupCodes,
+      });
+
+      this.logger.log('Backup codes updated', { userId: id });
+    } catch (error) {
+      this.logger.error('Error updating backup codes', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async get2FAStatus(id: string): Promise<{ enabled: boolean; backupCodesCount: number }> {
+    try {
+      const user = await this.findById(id);
+      return {
+        enabled: user.twoFactorEnabled,
+        backupCodesCount: user.backupCodes?.length || 0,
+      };
+    } catch (error) {
+      this.logger.error('Error getting 2FA status', { userId: id, error: error.message });
+      throw error;
+    }
+  }
 }

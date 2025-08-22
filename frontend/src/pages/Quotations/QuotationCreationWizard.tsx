@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -17,6 +17,10 @@ import {
   TrashIcon
 } from '@heroicons/react/24/outline';
 import { QuotationFormData, QuotationItem, QuotationService } from '@/types/quotationCreation';
+import { useAutoSave } from '@/hooks/useAutoSave';
+import { AutoSaveStatus } from '@/components/quotation/AutoSaveStatus';
+import { validateQuotationData, sanitizeQuotationData, hasMinimumContent } from '@/utils/quotationValidation';
+import { toast } from 'react-hot-toast';
 
 const QuotationCreationWizard: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -79,6 +83,43 @@ const QuotationCreationWizard: React.FC = () => {
     versionHistory: []
   });
 
+  // Auto-save functionality
+  const [autoSaveState, manualSave, loadFromStorage, clearSavedData] = useAutoSave(
+    sanitizeQuotationData(formData),
+    {
+      key: 'quotation_creation',
+      delay: 2000, // 2 seconds
+      enabled: true,
+      validate: (data) => {
+        const validation = validateQuotationData(data as QuotationFormData);
+        return validation.isValid && hasMinimumContent(data as QuotationFormData);
+      },
+      onSave: (data) => {
+        console.log('Auto-saved quotation data:', data);
+        // Update the updatedAt timestamp
+        setFormData(prev => ({
+          ...prev,
+          updatedAt: new Date()
+        }));
+      },
+      onLoad: (data) => {
+        // Check if user wants to recover data
+        if (window.confirm('Recovery data found. Would you like to restore your previous work?')) {
+          setFormData(prev => ({
+            ...prev,
+            ...data,
+            updatedAt: new Date()
+          }));
+          toast.success('Recovery data restored successfully');
+        }
+      },
+      onError: (error) => {
+        console.error('Auto-save error:', error);
+        toast.error('Auto-save failed. Please save manually.');
+      }
+    }
+  );
+
   const steps = [
     { id: 1, title: 'Basic Info', icon: DocumentTextIcon, description: 'Quotation details and client information' },
     { id: 2, title: 'Items & Services', icon: CogIcon, description: 'Add products, services, and pricing' },
@@ -87,12 +128,35 @@ const QuotationCreationWizard: React.FC = () => {
     { id: 5, title: 'Review & Send', icon: CheckCircleIcon, description: 'Review and send quotation' }
   ];
 
+  // Update form data and trigger auto-save
+  // Update form data and trigger auto-save
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
+      updatedAt: new Date()
     }));
   };
+
+  // Update auto-save when form data changes
+  useEffect(() => {
+    // This will trigger the auto-save hook to update its data
+    // The hook will handle the debouncing and saving
+  }, [formData]);
+
+  // Handle form abandonment warning
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (autoSaveState.hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return 'You have unsaved changes. Are you sure you want to leave?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [autoSaveState.hasUnsavedChanges]);
 
   const handleClientChange = (field: string, value: any) => {
     setFormData(prev => ({
@@ -179,6 +243,8 @@ const QuotationCreationWizard: React.FC = () => {
   const nextStep = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
+      // Trigger auto-save when moving to next step
+      manualSave();
     }
   };
 
@@ -598,6 +664,32 @@ const QuotationCreationWizard: React.FC = () => {
         </p>
       </div>
 
+      {/* Auto-save Status */}
+      <AutoSaveStatus
+        state={autoSaveState}
+              onRecover={() => {
+        const recoveredData = loadFromStorage();
+        if (recoveredData) {
+          setFormData(prev => ({
+            ...prev,
+            ...recoveredData,
+            updatedAt: new Date()
+          }));
+          toast.success('Recovery data restored successfully');
+          
+          // Move to first step to show the restored data
+          setCurrentStep(1);
+        }
+      }}
+        onClear={() => {
+          if (window.confirm('Are you sure you want to clear all saved data? This cannot be undone.')) {
+            clearSavedData();
+            toast.success('Saved data cleared');
+          }
+        }}
+        onManualSave={manualSave}
+      />
+
       {/* Progress Steps */}
       <Card>
         <CardContent className="p-6">
@@ -664,8 +756,12 @@ const QuotationCreationWizard: React.FC = () => {
         </Button>
         
         <div className="flex space-x-3">
-          <Button variant="outline">
-            Save Draft
+          <Button 
+            variant="outline"
+            onClick={manualSave}
+            disabled={autoSaveState.isSaving}
+          >
+            {autoSaveState.isSaving ? 'Saving...' : 'Save Draft'}
           </Button>
           {currentStep < steps.length ? (
             <Button onClick={nextStep}>
@@ -673,7 +769,15 @@ const QuotationCreationWizard: React.FC = () => {
               <ArrowRightIcon className="h-4 w-4 ml-2" />
             </Button>
           ) : (
-            <Button>
+            <Button
+              onClick={() => {
+                // Clear auto-save data when form is completed
+                clearSavedData();
+                toast.success('Quotation completed! Auto-save data cleared.');
+                // Here you would typically submit the form to your backend
+                console.log('Submitting quotation:', formData);
+              }}
+            >
               <CheckCircleIcon className="h-4 w-4 mr-2" />
               Complete
             </Button>

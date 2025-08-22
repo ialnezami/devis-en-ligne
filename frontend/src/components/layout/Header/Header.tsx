@@ -8,7 +8,9 @@ import {
   Cog6ToothIcon, 
   ArrowRightOnRectangleIcon,
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  ChartBarIcon,
+  CalendarIcon
 } from '@heroicons/react/24/outline';
 import { ThemeToggle } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -49,6 +51,28 @@ const Header: React.FC = () => {
                 Devis en Ligne
               </h1>
             </div>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex ml-10 space-x-8">
+              <Link
+                to="/dashboard"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/phases"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Phase Management
+              </Link>
+              <Link
+                to="/demo"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                UI Demo
+              </Link>
+            </nav>
           </div>
 
           {/* Right side - Theme toggle, notifications, user menu */}
@@ -189,17 +213,27 @@ const Header: React.FC = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
             <Link
               to="/dashboard"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Dashboard
+              <ChartBarIcon className="h-5 w-5" />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              to="/phases"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <CalendarIcon className="h-5 w-5" />
+              <span>Phase Management</span>
             </Link>
             <Link
               to="/profile"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Profile
+              <UserCircleIcon className="h-5 w-5" />
+              <span>Profile</span>
             </Link>
           </div>
         </div>

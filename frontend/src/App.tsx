@@ -8,6 +8,7 @@ import GlobalStyles from './styles/global';
 import Layout from './components/layout/MainLayout';
 import Dashboard from './pages/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';
+import PhaseDashboard from './pages/PhaseManagement/PhaseDashboard';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
 import { Profile } from './pages/Profile';
@@ -66,6 +67,14 @@ const App: React.FC = () => {
                   <ProtectedRoute>
                     <Layout>
                       <Profile />
+                    </Layout>
+                  </ProtectedRoute>
+                } />
+                
+                <Route path="/phases" element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <PhaseDashboard />
                     </Layout>
                   </ProtectedRoute>
                 } />

@@ -1,471 +1,449 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Input,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-  Badge,
+import { 
+  Button, 
+  buttonVariants,
+  Input, 
+  inputVariants,
+  Card, 
+  CardHeader, 
+  CardFooter, 
+  CardTitle, 
+  CardDescription, 
+  CardContent, 
+  cardVariants,
+  Badge, 
+  badgeVariants,
   Modal,
-  Dropdown,
-  DropdownButton,
-  LoadingSpinner,
-  LoadingSkeleton,
-  Shimmer,
-  LoadingOverlay,
+  Select,
+  Textarea,
+  Checkbox,
+  RadioGroup,
+  ThemeToggle
 } from '@/components/ui';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleTheme, setPrimaryColor } from '@/store/slices/themeSlice';
-import { showSuccess, showError, showWarning } from '@/store/slices/notificationSlice';
-import {
+import { 
+  HeartIcon, 
+  StarIcon, 
+  UserIcon, 
+  EnvelopeIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
   PlusIcon,
-  CogIcon,
   TrashIcon,
   PencilIcon,
-  EyeIcon,
-  SunIcon,
-  MoonIcon,
+  CheckIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
+import { cn } from '@/lib/utils';
 
 const UIDemo: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const theme = useAppSelector(state => state.theme);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [selectedOption, setSelectedOption] = useState<{ value: string; label: string } | undefined>();
+  const [textareaValue, setTextareaValue] = useState('');
+  const [checkboxValue, setCheckboxValue] = useState(false);
+  const [radioValue, setRadioValue] = useState('option1');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleThemeToggle = () => {
-    dispatch(toggleTheme());
-  };
+  const selectOptions = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
 
-  const handleColorChange = (color: string) => {
-    dispatch(setPrimaryColor(color));
-  };
-
-  const handleNotification = (type: 'success' | 'error' | 'warning') => {
-    switch (type) {
-      case 'success':
-        dispatch(showSuccess({ 
-          title: 'Success!', 
-          message: 'This is a success notification' 
-        }));
-        break;
-      case 'error':
-        dispatch(showError({ 
-          title: 'Error!', 
-          message: 'This is an error notification' 
-        }));
-        break;
-      case 'warning':
-        dispatch(showWarning({ 
-          title: 'Warning!', 
-          message: 'This is a warning notification' 
-        }));
-        break;
-    }
-  };
-
-  const simulateLoading = () => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 3000);
-  };
-
-  const dropdownItems = [
-    { label: 'Edit', icon: <PencilIcon className="h-4 w-4" />, onClick: () => console.log('Edit') },
-    { label: 'View', icon: <EyeIcon className="h-4 w-4" />, onClick: () => console.log('View') },
-    { divider: true },
-    { label: 'Delete', icon: <TrashIcon className="h-4 w-4" />, onClick: () => console.log('Delete') },
+  const radioOptions = [
+    { value: 'option1', label: 'Option 1', description: 'This is the first option' },
+    { value: 'option2', label: 'Option 2', description: 'This is the second option' },
+    { value: 'option3', label: 'Option 3', description: 'This is the third option' },
   ];
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-foreground">UI Component Demo</h1>
-          <p className="text-muted-foreground text-lg">
-            Comprehensive showcase of our design system components
-          </p>
-        </div>
+    <div className="space-y-8 p-6">
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          UI Component Library
+        </h1>
+        <p className="text-xl text-gray-600 dark:text-gray-400">
+          A comprehensive collection of reusable UI components built with Tailwind CSS and React
+        </p>
+      </div>
 
-        {/* Theme Controls */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Theme Controls</CardTitle>
-            <CardDescription>
-              Switch between light/dark modes and color themes
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <span className="text-sm font-medium">Mode:</span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleThemeToggle}
-                icon={theme.isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
-              >
-                {theme.isDark ? 'Light' : 'Dark'}
+      {/* Buttons Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Buttons</CardTitle>
+          <CardDescription>Various button styles and variants</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Button Variants */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Variants</h3>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="default">Default</Button>
+              <Button variant="destructive">Destructive</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="link">Link</Button>
+              <Button variant="success">Success</Button>
+              <Button variant="warning">Warning</Button>
+            </div>
+          </div>
+
+          {/* Button Sizes */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Sizes</h3>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button size="sm">Small</Button>
+              <Button size="default">Default</Button>
+              <Button size="lg">Large</Button>
+              <Button size="xl">Extra Large</Button>
+            </div>
+          </div>
+
+          {/* Button with Icons */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">With Icons</h3>
+            <div className="flex flex-wrap gap-3">
+              <Button>
+                <PlusIcon className="h-4 w-4 mr-2" />
+                Add Item
               </Button>
-              <Badge variant="secondary">
-                Current: {theme.mode}
-              </Badge>
+              <Button variant="outline">
+                <PencilIcon className="h-4 w-4 mr-2" />
+                Edit
+              </Button>
+              <Button variant="destructive">
+                <TrashIcon className="h-4 w-4 mr-2" />
+                Delete
+              </Button>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm font-medium">Colors:</span>
-              <div className="flex gap-2">
-                {['blue', 'green', 'purple', 'orange'].map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => handleColorChange(`${color}-500`)}
-                    className={`w-8 h-8 rounded-full border-2 ${
-                      theme.primaryColor.includes(color) ? 'ring-2 ring-offset-2 ring-ring' : ''
-                    }`}
-                    style={{
-                      backgroundColor: {
-                        blue: '#3b82f6',
-                        green: '#22c55e',
-                        purple: '#a855f7',
-                        orange: '#f59e0b',
-                      }[color],
-                    }}
-                  />
-                ))}
+          </div>
+
+          {/* Icon Buttons */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Icon Only</h3>
+            <div className="flex flex-wrap gap-3">
+              <Button size="icon" variant="outline">
+                <HeartIcon className="h-4 w-4" />
+              </Button>
+              <Button size="icon" variant="outline">
+                <StarIcon className="h-4 w-4" />
+              </Button>
+              <Button size="icon" variant="outline">
+                <UserIcon className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Loading States */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Loading States</h3>
+            <div className="flex flex-wrap gap-3">
+              <Button loading>Loading</Button>
+              <Button variant="outline" loading>Loading</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Form Components Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Form Components</CardTitle>
+          <CardDescription>Input fields, selects, and form controls</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Input Variants */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Input Fields</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Default Input</label>
+                <Input placeholder="Enter text..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">With Icon</label>
+                <Input 
+                  placeholder="Enter email..." 
+                  leftIcon={<EnvelopeIcon className="h-4 w-4" />}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Password Input</label>
+                <Input 
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter password..." 
+                  leftIcon={<LockClosedIcon className="h-4 w-4" />}
+                  rightIcon={
+                    <button onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <EyeSlashIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+                    </button>
+                  }
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Error State</label>
+                <Input 
+                  placeholder="Error input..." 
+                  error="This field has an error"
+                />
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Buttons */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Buttons</CardTitle>
-            <CardDescription>
-              Different button variants and states
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <h4 className="font-medium">Variants</h4>
-              <div className="flex flex-wrap gap-3">
-                <Button variant="primary">Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="outline">Outline</Button>
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="destructive">Destructive</Button>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-medium">Sizes</h4>
-              <div className="flex items-center gap-3">
-                <Button size="sm">Small</Button>
-                <Button size="md">Medium</Button>
-                <Button size="lg">Large</Button>
-                <Button size="xl">Extra Large</Button>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">With Icons</h4>
-              <div className="flex gap-3">
-                <Button icon={<PlusIcon className="h-4 w-4" />}>
-                  Add Item
-                </Button>
-                <Button 
-                  variant="outline" 
-                  icon={<CogIcon className="h-4 w-4" />}
-                  iconPosition="right"
-                >
-                  Settings
-                </Button>
-                <Button loading>
-                  Loading
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inputs */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Form Elements</CardTitle>
-            <CardDescription>
-              Input fields with various states and configurations
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Input
-                label="Basic Input"
-                placeholder="Enter some text..."
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              
-              <Input
-                label="With Icon"
-                placeholder="Search..."
-                leftIcon={<CogIcon className="h-4 w-4" />}
-              />
-              
-              <Input
-                label="With Error"
-                placeholder="This field has an error"
-                error="This field is required"
-              />
-              
-              <Input
-                label="With Description"
-                placeholder="Enter your email"
-                description="We'll never share your email with anyone else."
-                type="email"
+          {/* Select Component */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Select Dropdown</h3>
+            <div className="max-w-xs">
+              <Select
+                options={selectOptions}
+                value={selectedOption}
+                onChange={setSelectedOption}
+                placeholder="Choose an option..."
               />
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Badges */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Badges</CardTitle>
-            <CardDescription>
-              Status indicators and labels
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+          {/* Textarea Component */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Textarea</h3>
+            <div className="max-w-md">
+              <Textarea
+                placeholder="Enter your message..."
+                value={textareaValue}
+                onChange={(e) => setTextareaValue(e.target.value)}
+                rows={4}
+              />
+            </div>
+          </div>
+
+          {/* Checkbox Component */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Checkbox</h3>
+            <div className="space-y-3">
+              <Checkbox
+                checked={checkboxValue}
+                onChange={(e) => setCheckboxValue(e.target.checked)}
+                label="Accept terms and conditions"
+                description="You must accept the terms to continue"
+              />
+              <Checkbox
+                label="Subscribe to newsletter"
+              />
+            </div>
+          </div>
+
+          {/* Radio Group Component */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Radio Group</h3>
+            <div className="max-w-md">
+              <RadioGroup
+                options={radioOptions}
+                value={radioValue}
+                onChange={setRadioValue}
+                label="Choose your preferred option"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Cards Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Cards</CardTitle>
+          <CardDescription>Different card styles and layouts</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card variant="default">
+              <CardHeader>
+                <CardTitle>Default Card</CardTitle>
+                <CardDescription>This is a default card variant</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Card content goes here. This demonstrates the default card styling.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm">Action</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="elevated">
+              <CardHeader>
+                <CardTitle>Elevated Card</CardTitle>
+                <CardDescription>This card has elevated shadows</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Elevated cards have more prominent shadows for better visual hierarchy.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="outline">Cancel</Button>
+                <Button size="sm">Confirm</Button>
+              </CardFooter>
+            </Card>
+
+            <Card variant="outlined">
+              <CardHeader>
+                <CardTitle>Outlined Card</CardTitle>
+                <CardDescription>This card has a border outline</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Outlined cards use borders instead of shadows for a cleaner look.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button size="sm" variant="ghost">View</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Badges Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Badges</CardTitle>
+          <CardDescription>Status indicators and labels</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Badge Variants */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Variants</h3>
             <div className="flex flex-wrap gap-3">
               <Badge variant="default">Default</Badge>
               <Badge variant="secondary">Secondary</Badge>
-              <Badge variant="outline">Outline</Badge>
               <Badge variant="destructive">Destructive</Badge>
+              <Badge variant="outline">Outline</Badge>
               <Badge variant="success">Success</Badge>
               <Badge variant="warning">Warning</Badge>
+              <Badge variant="info">Info</Badge>
+              <Badge variant="muted">Muted</Badge>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Dropdowns */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Dropdowns</CardTitle>
-            <CardDescription>
-              Context menus and action dropdowns
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-4">
-              <DropdownButton items={dropdownItems}>
-                Actions
-              </DropdownButton>
-              
-              <Dropdown
-                trigger={
-                  <Button variant="outline">
-                    Custom Trigger
-                  </Button>
-                }
-                items={dropdownItems}
-                align="right"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Loading States */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Loading States</CardTitle>
-            <CardDescription>
-              Spinners, skeletons, and loading overlays
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
-              <h4 className="font-medium">Spinners</h4>
-              <div className="flex items-center gap-4">
-                <LoadingSpinner size="sm" />
-                <LoadingSpinner size="md" />
-                <LoadingSpinner size="lg" />
-                <LoadingSpinner size="xl" />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Skeletons</h4>
-              <LoadingSkeleton lines={3} />
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Loading State</h4>
-              <div className="space-y-4">
-                <Button onClick={simulateLoading}>
-                  Simulate Loading
-                </Button>
-                <LoadingOverlay isLoading={isLoading}>
-                  <div className="p-8 border border-border rounded-lg">
-                    <h3 className="font-medium">Content Area</h3>
-                    <p className="text-muted-foreground">
-                      This content will be overlaid with a loading spinner.
-                    </p>
-                  </div>
-                </LoadingOverlay>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium">Shimmer Effect</h4>
-              <Shimmer className="h-20 w-full" />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Notifications */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-            <CardDescription>
-              Toast notifications (check Redux DevTools)
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex gap-3">
-              <Button 
-                variant="outline"
-                onClick={() => handleNotification('success')}
-              >
-                Success
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => handleNotification('warning')}
-              >
-                Warning
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => handleNotification('error')}
-              >
-                Error
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Modal */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Modal</CardTitle>
-            <CardDescription>
-              Dialog and modal components
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => setIsModalOpen(true)}>
-              Open Modal
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Cards Layout Example */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Layouts</CardTitle>
-            <CardDescription>
-              Examples of different card layouts and compositions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="hover:shadow-medium transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-lg">Feature Card</CardTitle>
-                  <CardDescription>
-                    A card showcasing a feature with hover effects
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    This card demonstrates how content can be organized within cards.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button size="sm" className="w-full">
-                    Learn More
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">Statistics</CardTitle>
-                    <Badge variant="success">+12%</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">1,234</div>
-                  <p className="text-sm text-muted-foreground">
-                    Total users this month
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                      <CogIcon className="h-6 w-6 text-primary-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Settings</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Manage your preferences
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Modal */}
-      <Modal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Example Modal"
-        description="This is a demonstration of the modal component"
-        size="md"
-      >
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            This modal demonstrates the various features available:
-          </p>
-          <ul className="text-sm space-y-1 text-muted-foreground">
-            <li>• Backdrop blur and overlay</li>
-            <li>• Smooth animations</li>
-            <li>• Accessible keyboard navigation</li>
-            <li>• Multiple size options</li>
-          </ul>
-          <div className="flex justify-end gap-2 pt-4">
-            <Button 
-              variant="outline" 
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button onClick={() => setIsModalOpen(false)}>
-              Confirm
-            </Button>
           </div>
-        </div>
-      </Modal>
+
+          {/* Badge Sizes */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Sizes</h3>
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge size="sm">Small</Badge>
+              <Badge size="default">Default</Badge>
+              <Badge size="lg">Large</Badge>
+              <Badge size="xl">Extra Large</Badge>
+            </div>
+          </div>
+
+          {/* Badges with Icons */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">With Icons</h3>
+            <div className="flex flex-wrap gap-3">
+              <Badge leftIcon={<StarIcon className="h-3 w-3" />}>
+                Featured
+              </Badge>
+              <Badge variant="success" rightIcon={<CheckIcon className="h-3 w-3" />}>
+                Completed
+              </Badge>
+              <Badge variant="warning" leftIcon={<ExclamationTriangleIcon className="h-3 w-3" />}>
+                Warning
+              </Badge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Modal Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Modal</CardTitle>
+          <CardDescription>Overlay dialogs and popups</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button onClick={() => setIsModalOpen(true)}>
+            Open Modal
+          </Button>
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title="Example Modal"
+          >
+            <div className="space-y-4">
+              <p className="text-gray-600 dark:text-gray-400">
+                This is an example modal dialog. It demonstrates the modal component's functionality.
+              </p>
+              <div className="flex justify-end space-x-3">
+                <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => setIsModalOpen(false)}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </CardContent>
+      </Card>
+
+      {/* Theme Toggle Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Theme Toggle</CardTitle>
+          <CardDescription>Switch between light and dark modes</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center space-x-4">
+            <ThemeToggle size="lg" />
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Click the button above to toggle between light and dark themes
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Utility Classes Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Utility Classes</CardTitle>
+          <CardDescription>Common utility functions and classes</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Class Merging with `cn`</h3>
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <code className="text-sm">
+                {`const combinedClasses = cn(
+  "base-class",
+  conditional && "conditional-class",
+  variant === "primary" ? "primary-class" : "secondary-class"
+);`}
+              </code>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Component Variants</h3>
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <code className="text-sm">
+                {`const buttonVariants = cva(
+  "base-button-classes",
+  {
+    variants: {
+      variant: { default: "...", outline: "..." },
+      size: { sm: "...", default: "...", lg: "..." }
+    }
+  }
+);`}
+              </code>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

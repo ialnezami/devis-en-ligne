@@ -11,7 +11,8 @@ import {
   XMarkIcon,
   ChartBarIcon,
   CalendarIcon,
-  ClockIcon
+  ClockIcon,
+  DocumentDuplicateIcon
 } from '@heroicons/react/24/outline';
 import { ThemeToggle } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -70,6 +71,12 @@ const Header: React.FC = () => {
                 className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
               >
                 Calendar
+              </Link>
+              <Link
+                to="/quotations"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Quotations
               </Link>
               <Link
                 to="/demo"
@@ -239,6 +246,14 @@ const Header: React.FC = () => {
             >
               <ClockIcon className="h-5 w-5" />
               <span>Calendar</span>
+            </Link>
+            <Link
+              to="/quotations"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <DocumentDuplicateIcon className="h-5 w-5" />
+              <span>Quotations</span>
             </Link>
             <Link
               to="/profile"

@@ -402,14 +402,14 @@ This document breaks down the entire online quotation tool project into manageab
 
 ### 3.5 Quotation Management
 
-#### 3.5.1 Quotation List & Search 🔴 ⏱️ 12h 👤 Frontend Developer
-- [ ] Create quotation list page
-- [ ] Implement data table with sorting
-- [ ] Add search and filtering
-- [ ] Create pagination system
-- [ ] Implement bulk actions
-- [ ] Add status indicators
-- [ ] Create quick preview modal
+#### 3.5.1 Quotation List & Search ✅ ⏱️ 12h 👤 Frontend Developer
+- [x] Create quotation list page
+- [x] Implement data table with sorting
+- [x] Add search and filtering
+- [x] Create pagination system
+- [x] Implement bulk actions
+- [x] Add status indicators
+- [x] Create quick preview modal
 
 #### 3.5.2 Quick Quote Creation 🔴 ⏱️ 16h 👤 Frontend Developer
 - [ ] Design intuitive quote creation interface

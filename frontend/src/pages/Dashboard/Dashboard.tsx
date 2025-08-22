@@ -306,10 +306,12 @@ const Dashboard: React.FC = () => {
               </Button>
             </Link>
             
-            <Button variant="outline" className="w-full h-20 flex-col space-y-2">
-              <UserGroupIcon className="h-8 w-8" />
-              <span>Team Management</span>
-            </Button>
+            <Link to="/quotations">
+              <Button variant="outline" className="w-full h-20 flex-col space-y-2">
+                <DocumentTextIcon className="h-8 w-8" />
+                <span>Quotations</span>
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

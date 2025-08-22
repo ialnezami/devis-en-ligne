@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';
 import PhaseDashboard from './pages/PhaseManagement/PhaseDashboard';
 import CalendarDashboard from './pages/Calendar/CalendarDashboard';
+import QuotationList from './pages/Quotations/QuotationList';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
 import { Profile } from './pages/Profile';
@@ -84,6 +85,14 @@ const App: React.FC = () => {
                   <ProtectedRoute>
                     <Layout>
                       <CalendarDashboard />
+                    </Layout>
+                  </ProtectedRoute>
+                } />
+                
+                <Route path="/quotations" element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <QuotationList />
                     </Layout>
                   </ProtectedRoute>
                 } />

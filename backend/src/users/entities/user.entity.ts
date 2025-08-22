@@ -115,6 +115,13 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   passwordResetExpiresAt?: Date;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Exclude()
+  recoveryToken?: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  recoveryTokenExpiresAt?: Date;
+
   @Column({ type: 'varchar', length: 500, nullable: true })
   suspensionReason?: string;
 

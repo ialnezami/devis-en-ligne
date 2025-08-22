@@ -263,6 +263,14 @@ const Header: React.FC = () => {
               <span>Quotations</span>
             </Link>
             <Link
+              to="/estimates"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <PaintBrushIcon className="h-5 w-5" />
+              <span>Estimates</span>
+            </Link>
+            <Link
               to="/profile"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center space-x-2"
               onClick={() => setMobileMenuOpen(false)}

@@ -330,4 +330,55 @@ export class UsersService {
       throw error;
     }
   }
+
+  // Recovery Methods
+  async updateRecoveryToken(id: string, token: string, expiresAt: Date): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        recoveryToken: token,
+        recoveryTokenExpiresAt: expiresAt,
+      });
+
+      this.logger.log('Recovery token updated', { userId: id });
+    } catch (error) {
+      this.logger.error('Error updating recovery token', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async findByRecoveryToken(token: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { recoveryToken: token },
+    });
+  }
+
+  async clearRecoveryToken(id: string): Promise<void> {
+    try {
+      await this.usersRepository.update(id, {
+        recoveryToken: null,
+        recoveryTokenExpiresAt: null,
+      });
+
+      this.logger.log('Recovery token cleared', { userId: id });
+    } catch (error) {
+      this.logger.error('Error clearing recovery token', { userId: id, error: error.message });
+      throw error;
+    }
+  }
+
+  async countUsersWith2FA(): Promise<number> {
+    return this.usersRepository.count({
+      where: { twoFactorEnabled: true, status: 'active' },
+    });
+  }
+
+  async countUsersWithBackupCodes(): Promise<number> {
+    return this.usersRepository.count({
+      where: { 
+        twoFactorEnabled: true, 
+        status: 'active',
+        backupCodes: { $not: { $eq: [] } } as any,
+      },
+    });
+  }
 }

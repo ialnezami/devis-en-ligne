@@ -312,6 +312,13 @@ const Dashboard: React.FC = () => {
                 <span>Quotations</span>
               </Button>
             </Link>
+            
+            <Link to="/estimates">
+              <Button variant="outline" className="w-full h-20 flex-col space-y-2">
+                <PaintBrushIcon className="h-8 w-8" />
+                <span>Customizable Estimates</span>
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

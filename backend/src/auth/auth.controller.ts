@@ -15,6 +15,7 @@ import { RegisterDto } from './dto/register.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Verify2FADto } from './dto/verify-2fa.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Public } from './decorators/public.decorator';
@@ -47,6 +48,7 @@ export class AuthController {
             lastName: { type: 'string' },
             roles: { type: 'array', items: { type: 'string' } },
             status: { type: 'string' },
+            twoFactorEnabled: { type: 'boolean' },
           },
         },
         accessToken: { type: 'string' },
@@ -54,9 +56,55 @@ export class AuthController {
       },
     },
   })
+  @ApiResponse({
+    status: 200,
+    description: '2FA code required',
+    schema: {
+      type: 'object',
+      properties: {
+        requires2FA: { type: 'boolean' },
+        userId: { type: 'string' },
+        message: { type: 'string' },
+      },
+    },
+  })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   async login(@Request() req, @Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Public()
+  @Post('verify-2fa')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify 2FA code and complete login' })
+  @ApiResponse({
+    status: 200,
+    description: '2FA verified and login completed successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        user: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            email: { type: 'string' },
+            username: { type: 'string' },
+            firstName: { type: 'string' },
+            lastName: { type: 'string' },
+            roles: { type: 'array', items: { type: 'string' } },
+            status: { type: 'string' },
+            twoFactorEnabled: { type: 'boolean' },
+          },
+        },
+        accessToken: { type: 'string' },
+        refreshToken: { type: 'string' },
+      },
+    },
+  })
+  @ApiResponse({ status: 400, description: '2FA not enabled' })
+  @ApiResponse({ status: 401, description: 'Invalid 2FA code' })
+  async verify2FA(@Body() verify2FADto: Verify2FADto) {
+    return this.authService.verify2FAAndLogin(verify2FADto.userId, verify2FADto);
   }
 
   @Public()
@@ -79,6 +127,7 @@ export class AuthController {
             lastName: { type: 'string' },
             roles: { type: 'array', items: { type: 'string' } },
             status: { type: 'string' },
+            twoFactorEnabled: { type: 'boolean' },
           },
         },
         accessToken: { type: 'string' },

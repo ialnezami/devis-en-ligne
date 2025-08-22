@@ -8,8 +8,10 @@ import { RegisterDto } from './dto/register.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Verify2FADto } from './dto/verify-2fa.dto';
 import { EmailService } from '../notifications/email.service';
 import { Logger } from '../common/logger/logger.service';
+import { TwoFactorAuthService } from './two-factor-auth.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,7 @@ export class AuthService {
     private configService: ConfigService,
     private emailService: EmailService,
     private logger: Logger,
+    private twoFactorAuthService: TwoFactorAuthService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<User | null> {
@@ -48,6 +51,16 @@ export class AuthService {
       throw new UnauthorizedException('Account is not active');
     }
 
+    // Check if 2FA is enabled
+    if (user.twoFactorEnabled) {
+      // Return a special response indicating 2FA is required
+      return {
+        requires2FA: true,
+        userId: user.id,
+        message: 'Two-factor authentication code required',
+      };
+    }
+
     const tokens = await this.generateTokens(user);
     
     // Update last login
@@ -65,6 +78,56 @@ export class AuthService {
         roles: user.roles,
         status: user.status,
         company: user.company,
+        twoFactorEnabled: user.twoFactorEnabled,
+      },
+      ...tokens,
+    };
+  }
+
+  async verify2FAAndLogin(userId: string, verify2FADto: Verify2FADto) {
+    const user = await this.usersService.findById(userId);
+    
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    if (!user.twoFactorEnabled) {
+      throw new BadRequestException('2FA is not enabled for this user');
+    }
+
+    // Verify 2FA code
+    const verificationResult = await this.twoFactorAuthService.verify2FA(
+      userId,
+      verify2FADto.code,
+      verify2FADto.backupCode,
+    );
+
+    if (!verificationResult.verified) {
+      throw new UnauthorizedException('Invalid 2FA code');
+    }
+
+    const tokens = await this.generateTokens(user);
+    
+    // Update last login
+    await this.usersService.updateLastLogin(user.id);
+    
+    this.logger.log('User logged in with 2FA successfully', { 
+      userId: user.id, 
+      email: user.email,
+      usedBackupCode: verificationResult.usedBackupCode 
+    });
+    
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        roles: user.roles,
+        status: user.status,
+        company: user.company,
+        twoFactorEnabled: user.twoFactorEnabled,
       },
       ...tokens,
     };
@@ -99,6 +162,7 @@ export class AuthService {
         lastName: user.lastName,
         roles: user.roles,
         status: user.status,
+        twoFactorEnabled: user.twoFactorEnabled,
       },
       ...tokens,
     };
@@ -168,6 +232,7 @@ export class AuthService {
       email: user.email, 
       sub: user.id,
       roles: user.roles,
+      twoFactorEnabled: user.twoFactorEnabled,
     };
 
     const [accessToken, refreshToken] = await Promise.all([

@@ -640,7 +640,7 @@ const QuotationCreationWizard: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <steps[currentStep - 1].icon className="h-5 w-5" />
+            {React.createElement(steps[currentStep - 1].icon, { className: "h-5 w-5" })}
             <span>{steps[currentStep - 1].title}</span>
             <Badge variant="outline" size="sm">
               Step {currentStep} of {steps.length}

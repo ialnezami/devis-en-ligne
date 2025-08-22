@@ -12,7 +12,8 @@ import {
   ChartBarIcon,
   CalendarIcon,
   ClockIcon,
-  DocumentDuplicateIcon
+  DocumentDuplicateIcon,
+  PaintBrushIcon
 } from '@heroicons/react/24/outline';
 import { ThemeToggle } from '@/components/ui';
 import { cn } from '@/lib/utils';

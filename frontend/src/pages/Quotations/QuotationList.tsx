@@ -398,10 +398,12 @@ const QuotationList: React.FC = () => {
             <DocumentDuplicateIcon className="h-5 w-5 mr-2" />
             Import
           </Button>
-          <Button size="lg">
-            <PlusIcon className="h-5 w-5 mr-2" />
-            New Quotation
-          </Button>
+          <Link to="/quotations/create">
+            <Button size="lg">
+              <PlusIcon className="h-5 w-5 mr-2" />
+              New Quotation
+            </Button>
+          </Link>
         </div>
       </div>
 

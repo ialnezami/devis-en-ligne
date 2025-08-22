@@ -11,6 +11,7 @@ import UIDemo from './pages/Demo/UIDemo';
 import PhaseDashboard from './pages/PhaseManagement/PhaseDashboard';
 import CalendarDashboard from './pages/Calendar/CalendarDashboard';
 import QuotationList from './pages/Quotations/QuotationList';
+import QuotationCreationWizard from './pages/Quotations/QuotationCreationWizard';
 import CustomizableEstimates from './pages/Estimates/CustomizableEstimates';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
@@ -94,6 +95,14 @@ const App: React.FC = () => {
                   <ProtectedRoute>
                     <Layout>
                       <QuotationList />
+                    </Layout>
+                  </ProtectedRoute>
+                } />
+                
+                <Route path="/quotations/create" element={
+                  <ProtectedRoute>
+                    <Layout>
+                      <QuotationCreationWizard />
                     </Layout>
                   </ProtectedRoute>
                 } />

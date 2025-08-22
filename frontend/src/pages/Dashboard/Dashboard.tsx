@@ -11,7 +11,8 @@ import {
   ClockIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  PaintBrushIcon
 } from '@heroicons/react/24/outline';
 import { cn } from '@/lib/utils';
 

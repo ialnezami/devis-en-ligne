@@ -431,15 +431,15 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Create estimate personalization dashboard
 - [x] Add industry-specific template categories
 
-#### 3.5.2 Quotation Creation & Editing 🔴 ⏱️ 20h 👤 Frontend Developer
-- [ ] Build quotation creation form
-- [ ] Implement dynamic item addition
-- [ ] Create price calculation system
-- [ ] Add tax and discount handling
-- [ ] Implement form validation
-- [ ] Create save as draft functionality
-- [ ] Add template selection
-- [ ] Implement form auto-save
+#### 3.5.2 Quotation Creation & Editing ✅ ⏱️ 20h 👤 Frontend Developer
+- [x] Build quotation creation form
+- [x] Implement dynamic item addition
+- [x] Create price calculation system
+- [x] Add tax and discount handling
+- [x] Implement form validation
+- [x] Create save as draft functionality
+- [x] Add template selection
+- [x] Implement form auto-save
 
 #### 3.5.3 Quotation Details & Actions ✅ ⏱️ 10h 👤 Frontend Developer
 - [x] Create quotation detail view
@@ -450,15 +450,15 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Add revision history
 - [x] Create comparison view
 
-#### 3.5.4 Advanced PDF Export 🔴 ⏱️ 12h 👤 Frontend Developer
-- [ ] Implement professional PDF formatting
-- [ ] Create custom styling and branding system
-- [ ] Add digital signature functionality
-- [ ] Build batch export capabilities
-- [ ] Implement PDF template customization
-- [ ] Add watermark and security features
-- [ ] Create PDF preview system
-- [ ] Implement export history tracking
+#### 3.5.4 Advanced PDF Export ✅ ⏱️ 12h 👤 Frontend Developer
+- [x] Implement professional PDF formatting
+- [x] Create custom styling and branding system
+- [x] Add digital signature functionality
+- [x] Build batch export capabilities
+- [x] Implement PDF template customization
+- [x] Add watermark and security features
+- [x] Create PDF preview system
+- [x] Implement export history tracking
 
 #### 3.5.5 Centralized Quote Management 🔴 ⏱️ 10h 👤 Frontend Developer
 - [ ] Build centralized quote repository

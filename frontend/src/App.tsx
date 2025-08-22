@@ -4,7 +4,7 @@ import { StoreProvider } from './store/Provider';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
-import GlobalStyles from './styles/global';
+import { GlobalStyles } from './styles';
 import Layout from './components/layout/MainLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';

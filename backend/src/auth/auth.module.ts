@@ -8,6 +8,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TwoFactorAuthService } from './two-factor-auth.service';
 import { TwoFactorAuthController } from './two-factor-auth.controller';
+import { RecoveryService } from './recovery.service';
+import { RecoveryController } from './recovery.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -31,16 +33,17 @@ import { User } from '../users/entities/user.entity';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController, TwoFactorAuthController],
+  controllers: [AuthController, TwoFactorAuthController, RecoveryController],
   providers: [
     AuthService,
     TwoFactorAuthService,
+    RecoveryService,
     LocalStrategy,
     JwtStrategy,
     JwtAuthGuard,
     LocalAuthGuard,
     RolesGuard,
   ],
-  exports: [AuthService, TwoFactorAuthService, JwtAuthGuard, LocalAuthGuard, RolesGuard],
+  exports: [AuthService, TwoFactorAuthService, RecoveryService, JwtAuthGuard, LocalAuthGuard, RolesGuard],
 })
 export class AuthModule {}

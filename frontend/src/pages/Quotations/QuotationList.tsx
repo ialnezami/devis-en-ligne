@@ -621,13 +621,14 @@ const QuotationList: React.FC = () => {
                     </td>
                     <td className="py-4 px-4">
                       <div className="flex items-center space-x-2">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handlePreview(quotation)}
-                        >
-                          <EyeIcon className="h-4 w-4" />
-                        </Button>
+                        <Link to={`/quotations/${quotation.id}`}>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                          >
+                            <EyeIcon className="h-4 w-4" />
+                          </Button>
+                        </Link>
                         <Button
                           size="sm"
                           variant="ghost"

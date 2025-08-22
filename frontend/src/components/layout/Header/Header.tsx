@@ -80,6 +80,12 @@ const Header: React.FC = () => {
                 Quotations
               </Link>
               <Link
+                to="/estimates"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Estimates
+              </Link>
+              <Link
                 to="/demo"
                 className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors"
               >

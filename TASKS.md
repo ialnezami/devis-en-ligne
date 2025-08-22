@@ -143,12 +143,12 @@ This document breaks down the entire online quotation tool project into manageab
 - [x] Configure route-level permissions
 - [x] Create admin role management
 
-#### 2.2.3 Two-Factor Authentication 🟡 ⏱️ 6h 👤 Backend Developer
-- [ ] Implement TOTP generation
-- [ ] Create 2FA setup endpoints
-- [ ] Add 2FA verification
-- [ ] Create backup codes system
-- [ ] Implement recovery procedures
+#### 2.2.3 Two-Factor Authentication ✅ ⏱️ 6h 👤 Backend Developer
+- [x] Implement TOTP generation
+- [x] Create 2FA setup endpoints
+- [x] Add 2FA verification
+- [x] Create backup codes system
+- [x] Implement recovery procedures
 
 ### 2.3 User Management
 

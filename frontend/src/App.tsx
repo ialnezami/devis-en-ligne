@@ -4,31 +4,26 @@ import { StoreProvider } from './store/Provider';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
-import Layout from './components/layout/Layout';
-import ProtectedRoute from './routes/ProtectedRoute';
-import PublicRoute from './routes/PublicRoute';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Analytics from './pages/Analytics/Analytics';
-import QuotationList from './pages/Quotations/QuotationList';
-import QuotationCreate from './pages/Quotations/QuotationCreate';
-import QuotationView from './pages/Quotations/QuotationView';
-import QuotationEdit from './pages/Quotations/QuotationEdit';
-import ClientList from './pages/Clients/ClientList';
-import ClientCreate from './pages/Clients/ClientCreate';
+import GlobalStyles from './styles/global';
+import Layout from './components/layout/MainLayout';
+import Dashboard from './pages/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
 import { Unauthorized } from './pages/Error';
 import { Profile } from './pages/Profile';
+import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from './routes/PublicRoute';
 
 const App: React.FC = () => {
   return (
     <StoreProvider>
       <ThemeProvider>
-        <AuthProvider>
-          <NotificationProvider>
+        <GlobalStyles />
+        <NotificationProvider>
+          <AuthProvider>
             <Router>
               <Routes>
-                {/* Public Auth Routes */}
+                {/* Public routes */}
                 <Route path="/login" element={
                   <PublicRoute>
                     <Login />
@@ -49,19 +44,8 @@ const App: React.FC = () => {
                     <ResetPassword />
                   </PublicRoute>
                 } />
-
-                {/* Error Routes */}
-                <Route path="/unauthorized" element={<Unauthorized />} />
-
-                {/* Protected Routes */}
-                <Route path="/" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <Navigate to="/dashboard" replace />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
                 
+                {/* Protected routes */}
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Layout>
@@ -70,82 +54,30 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } />
                 
-                <Route path="/analytics" element={
+                <Route path="/demo" element={
                   <ProtectedRoute>
                     <Layout>
-                      <Analytics />
+                      <UIDemo />
                     </Layout>
                   </ProtectedRoute>
                 } />
                 
-                <Route path="/quotations" element={
+                <Route path="/profile" element={
                   <ProtectedRoute>
                     <Layout>
-                      <QuotationList />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
-                <Route path="/quotations/create" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <QuotationCreate />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
-                <Route path="/quotations/:id" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <QuotationView />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
-                <Route path="/quotations/:id/edit" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <QuotationEdit />
+                      <Profile />
                     </Layout>
                   </ProtectedRoute>
                 } />
                 
-                <Route path="/clients" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <ClientList />
-                    </Layout>
-                  </ProtectedRoute>
+                {/* Catch all route */}
+                <Route path="*" element={
+                  <Navigate to="/dashboard" replace />
                 } />
-                <Route path="/clients/create" element={
-                  <ProtectedRoute>
-                    <Layout>
-                      <ClientCreate />
-                    </Layout>
-                  </ProtectedRoute>
-                } />
-                
-                                 <Route path="/demo" element={
-                   <ProtectedRoute>
-                     <Layout>
-                       <UIDemo />
-                     </Layout>
-                   </ProtectedRoute>
-                 } />
-                 
-                 <Route path="/profile" element={
-                   <ProtectedRoute>
-                     <Layout>
-                       <Profile />
-                     </Layout>
-                   </ProtectedRoute>
-                 } />
-                 
-                 {/* Catch all route */}
-                 <Route path="*" element={
-                   <Navigate to="/dashboard" replace />
-                 } />
               </Routes>
             </Router>
-          </NotificationProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </NotificationProvider>
       </ThemeProvider>
     </StoreProvider>
   );

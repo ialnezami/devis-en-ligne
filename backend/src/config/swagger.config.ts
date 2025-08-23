@@ -374,45 +374,9 @@ export const swaggerConfig = new DocumentBuilder()
     'MIT License',
     'https://opensource.org/licenses/MIT'
   )
-  .addServer(
-    'http://localhost:3001',
-    'Development Server',
-    {
-      description: 'Local development environment',
-      variables: {
-        environment: {
-          default: 'development',
-          enum: ['development', 'testing']
-        }
-      }
-    }
-  )
-  .addServer(
-    'https://staging-api.company.com',
-    'Staging Server',
-    {
-      description: 'Staging environment for testing',
-      variables: {
-        environment: {
-          default: 'staging',
-          enum: ['staging', 'testing']
-        }
-      }
-    }
-  )
-  .addServer(
-    'https://api.company.com',
-    'Production Server',
-    {
-      description: 'Production environment',
-      variables: {
-        environment: {
-          default: 'production',
-          enum: ['production']
-        }
-      }
-    }
-  )
+  .addServer('http://localhost:3001', 'Development Server')
+  .addServer('https://staging-api.company.com', 'Staging Server')
+  .addServer('https://api.company.com', 'Production Server')
   .addBearerAuth(
     {
       type: 'http',

@@ -81,6 +81,14 @@ export interface TypingIndicator {
   startedAt: Date;
 }
 
+export interface MessageSearchFilters {
+  dateRange: 'all' | 'today' | 'week' | 'month' | 'year';
+  conversationId: string;
+  senderId: string;
+  hasAttachments: boolean;
+  messageType: 'all' | 'text' | 'file' | 'image' | 'document' | 'quote';
+}
+
 export interface MessageSearchResult {
   message: Message;
   conversation: Conversation;

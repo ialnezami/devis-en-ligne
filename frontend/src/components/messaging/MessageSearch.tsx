@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Message, MessageSearchResult, MessageSearchFilters } from '../../services/messagingService';
+import { MessageSearchResult, MessageSearchFilters } from '../../services/messagingService';
 
 interface MessageSearchProps {
   onSearchResultClick: (result: MessageSearchResult) => void;

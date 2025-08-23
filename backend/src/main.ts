@@ -35,7 +35,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document, swaggerCustomOptions);
 
   // API Health Check
-  app.use('/health', (req, res) => {
+  app.getHttpAdapter().get('/health', (req, res) => {
     res.json({
       status: 'ok',
       timestamp: new Date().toISOString(),
@@ -46,7 +46,7 @@ async function bootstrap() {
   });
 
   // API Status Endpoint
-  app.use('/api/status', (req, res) => {
+  app.getHttpAdapter().get('/api/status', (req, res) => {
     res.json({
       status: 'operational',
       version: '1.0.0',

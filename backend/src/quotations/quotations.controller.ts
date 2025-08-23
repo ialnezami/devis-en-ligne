@@ -7,10 +7,10 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
   Query,
   ParseUUIDPipe,
   ParseEnumPipe,
-  Req,
 } from '@nestjs/common';
 import { QuotationsService } from './quotations.service';
 import { CreateQuotationDto } from './dto/create-quotation.dto';
@@ -35,7 +35,7 @@ export class QuotationsController {
   @ApiResponse({ status: 201, description: 'Quotation created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  create(@Body() createQuotationDto: CreateQuotationDto, @Req() req) {
+  create(@Body() createQuotationDto: CreateQuotationDto, @Request() req) {
     return this.quotationsService.create(createQuotationDto, req.user.id);
   }
 
@@ -94,7 +94,7 @@ export class QuotationsController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateQuotationDto: UpdateQuotationDto,
-    @Req() req,
+    @Request() req,
   ) {
     return this.quotationsService.update(id, updateQuotationDto, req.user.id);
   }
@@ -106,7 +106,7 @@ export class QuotationsController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 404, description: 'Quotation not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  remove(@Param('id', ParseUUIDPipe) id: string, @Req() req) {
+  remove(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
     return this.quotationsService.remove(id, req.user.id);
   }
 

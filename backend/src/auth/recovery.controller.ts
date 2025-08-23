@@ -15,6 +15,7 @@ import { RolesGuard } from './guards/roles.guard';
 import { Roles } from './decorators/roles.decorator';
 import { RecoveryService } from './recovery.service';
 import { Public } from './decorators/public.decorator';
+import { UserRole } from '../users/entities/user.entity';
 
 @ApiTags('2FA Recovery')
 @Controller('auth/recovery')
@@ -61,7 +62,7 @@ export class RecoveryController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(UserRole.ADMIN)
   @Get('backup-codes-status/:userId')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Check backup codes status for a user (Admin only)' })
@@ -85,7 +86,7 @@ export class RecoveryController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(UserRole.ADMIN)
   @Post('emergency-disable/:userId')
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
@@ -115,7 +116,7 @@ export class RecoveryController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(UserRole.ADMIN)
   @Get('stats')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get recovery statistics (Admin only)' })

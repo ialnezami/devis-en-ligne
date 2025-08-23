@@ -2,6 +2,7 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { EmailService } from '../notifications/email.service';
+import { UserRole, UserStatus } from '../users/entities/user.entity';
 import { Logger } from '../common/logger/logger.service';
 import * as crypto from 'crypto';
 
@@ -29,7 +30,7 @@ export class RecoveryService {
       throw new BadRequestException('2FA is not enabled for this account');
     }
 
-    if (user.status !== 'active') {
+    if (user.status !== UserStatus.ACTIVE) {
       throw new BadRequestException('Account is not active');
     }
 
@@ -117,7 +118,7 @@ export class RecoveryService {
   async emergencyDisable2FA(userId: string, adminUserId: string, reason: string) {
     const adminUser = await this.usersService.findById(adminUserId);
     
-    if (!adminUser || !adminUser.roles.includes('admin')) {
+    if (!adminUser || !adminUser.roles.includes(UserRole.ADMIN)) {
       throw new UnauthorizedException('Admin privileges required');
     }
 
@@ -153,7 +154,7 @@ export class RecoveryService {
    * Get recovery statistics for admin dashboard
    */
   async getRecoveryStats() {
-    const totalUsers = await this.usersService.countByStatus('active');
+    const totalUsers = await this.usersService.countByStatus(UserStatus.ACTIVE);
     const usersWith2FA = await this.usersService.countUsersWith2FA();
     const usersWithBackupCodes = await this.usersService.countUsersWithBackupCodes();
     

@@ -130,8 +130,8 @@ export class QuotationsController {
   changeStatus(
     @Param('id', ParseUUIDPipe) id: string,
     @Param('status', new ParseEnumPipe(QuotationStatus)) status: QuotationStatus,
-    @Body('notes') notes?: string,
     @Request() req,
+    @Body('notes') notes?: string,
   ) {
     return this.quotationsService.changeStatus(id, status, req.user.id, notes);
   }

@@ -80,15 +80,15 @@ import { DatabaseModule } from './database/database.module';
       inject: [ConfigService],
     }),
 
-    // Rate Limiting
-    ThrottlerModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService) => ({
-        ttl: configService.get('throttler.ttl', 60),
-        limit: configService.get('throttler.limit', 100),
-      }),
-      inject: [ConfigService],
-    }),
+    // Rate Limiting - Temporarily disabled due to configuration issues
+    // ThrottlerModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService) => ({
+    //     ttl: configService.get('throttler.ttl', 60),
+    //     limit: configService.get('throttler.limit', 100),
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
     // Scheduling
     ScheduleModule.forRoot(),

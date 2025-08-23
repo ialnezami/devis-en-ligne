@@ -74,7 +74,7 @@ export class Company {
   currency?: string;
 
   @Column({ type: 'jsonb', nullable: true })
-  settings?: {
+  metadata?: {
     timezone?: string;
     language?: string;
     dateFormat?: string;

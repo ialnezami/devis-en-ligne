@@ -93,4 +93,14 @@ export class NotificationFilterDto {
   @IsOptional()
   @IsBoolean()
   notScheduledOnly?: boolean;
+
+  @ApiPropertyOptional({ description: 'Sort field for notifications' })
+  @IsOptional()
+  @IsString()
+  sortBy?: string;
+
+  @ApiPropertyOptional({ description: 'Sort order (ASC or DESC)' })
+  @IsOptional()
+  @IsString()
+  sortOrder?: 'ASC' | 'DESC';
 }

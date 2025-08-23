@@ -35,7 +35,7 @@ export class QuotationsController {
   @ApiResponse({ status: 201, description: 'Quotation created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  create(@Body() createQuotationDto: CreateQuotationDto, @Request() req) {
+  create(@Body() createQuotationDto: CreateQuotationDto, @Req() req) {
     return this.quotationsService.create(createQuotationDto, req.user.id);
   }
 

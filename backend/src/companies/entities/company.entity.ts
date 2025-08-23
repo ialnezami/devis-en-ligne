@@ -9,6 +9,8 @@ import {
   Index,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { CompanySettings } from './company-settings.entity';
+import { CompanyBranding } from './company-branding.entity';
 
 @Entity('companies')
 @Index(['name'], { unique: true })
@@ -52,6 +54,15 @@ export class Company {
   @Column({ type: 'varchar', length: 50, nullable: true })
   industry?: string;
 
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  size?: string;
+
+  @Column({ type: 'varchar', length: 20, default: 'active' })
+  status: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  createdBy?: string;
+
   @Column({ type: 'int', nullable: true })
   employeeCount?: number;
 
@@ -76,6 +87,12 @@ export class Company {
   // Relationships
   @OneToMany(() => User, (user) => user.company)
   users: User[];
+
+  @OneToOne(() => CompanySettings, (settings) => settings.company)
+  settings: CompanySettings;
+
+  @OneToOne(() => CompanyBranding, (branding) => branding.company)
+  branding: CompanyBranding;
 
   // Timestamps
   @CreateDateColumn()

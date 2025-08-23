@@ -1,7 +1,7 @@
 import { VersioningOptions } from '@nestjs/common';
 
 export const apiVersioningConfig: VersioningOptions = {
-  type: 'uri',
+  type: VersioningType.URI,
   defaultVersion: '1',
   prefix: 'api',
 };

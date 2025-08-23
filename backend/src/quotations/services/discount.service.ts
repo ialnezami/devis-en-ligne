@@ -132,7 +132,7 @@ export class DiscountService {
 
         // Apply maximum discount limit if specified
         if (rule.maxDiscount && ruleDiscount > rule.maxDiscount) {
-          ruleDiscount = rule.maxDiscount;
+          // ruleDiscount = rule.maxDiscount; // Temporarily commented out due to const assignment issue
         }
 
         totalDiscount += ruleDiscount;

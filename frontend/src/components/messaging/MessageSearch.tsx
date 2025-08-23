@@ -58,30 +58,66 @@ export default function MessageSearch({ onSearchResultClick, onClose, className 
       // Simulate API call - replace with actual messagingService.searchMessages call
       const results: MessageSearchResult[] = [
         {
-          id: '1',
-          messageId: 'msg1',
-          conversationId: 'conv1',
-          conversationName: 'Project Discussion',
-          senderName: 'John Doe',
-          senderId: 'user1',
-          content: query,
-          timestamp: new Date().toISOString(),
-          relevanceScore: 0.95,
-          context: 'Previous message about project requirements...',
-          attachments: []
+          message: {
+            id: 'msg1',
+            conversationId: 'conv1',
+            senderId: 'user1',
+            senderName: 'John Doe',
+            content: query,
+            messageType: 'text',
+            isEdited: false,
+            isDeleted: false,
+            readBy: [],
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          conversation: {
+            id: 'conv1',
+            title: 'Project Discussion',
+            type: 'project',
+            participants: [],
+            unreadCount: 0,
+            isArchived: false,
+            isPinned: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          highlight: {
+            content: query,
+            sender: 'John Doe'
+          },
+          relevance: 0.95
         },
         {
-          id: '2',
-          messageId: 'msg2',
-          conversationId: 'conv2',
-          conversationName: 'Client Meeting',
-          senderName: 'Jane Smith',
-          senderId: 'user2',
-          content: `We discussed ${query} during the meeting`,
-          timestamp: new Date(Date.now() - 86400000).toISOString(),
-          relevanceScore: 0.87,
-          context: 'Meeting notes and action items...',
-          attachments: [{ name: 'meeting-notes.pdf', type: 'pdf', size: 1024000 }]
+          message: {
+            id: 'msg2',
+            conversationId: 'conv2',
+            senderId: 'user2',
+            senderName: 'Jane Smith',
+            content: `We discussed ${query} during the meeting`,
+            messageType: 'text',
+            isEdited: false,
+            isDeleted: false,
+            readBy: [],
+            createdAt: new Date(Date.now() - 86400000),
+            updatedAt: new Date(Date.now() - 86400000)
+          },
+          conversation: {
+            id: 'conv2',
+            title: 'Client Meeting',
+            type: 'project',
+            participants: [],
+            unreadCount: 0,
+            isArchived: false,
+            isPinned: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          },
+          highlight: {
+            content: `We discussed ${query} during the meeting`,
+            sender: 'Jane Smith'
+          },
+          relevance: 0.87
         }
       ];
 

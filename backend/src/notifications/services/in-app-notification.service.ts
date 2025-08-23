@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Notification, NotificationType, NotificationPriority, NotificationStatus, NotificationChannel } from '../entities/notification.entity';
 import { NotificationPreferences } from '../entities/notification-preferences.entity';
 import { CreateNotificationDto } from '../dto/create-notification.dto';
@@ -477,7 +477,7 @@ export class InAppNotificationService {
 
       // Calculate average read time (simplified)
       const readNotifications = await this.notificationRepository.find({
-        where: { userId, isRead: true, isDeleted: false, readAt: { not: null } },
+        where: { userId, isRead: true, isDeleted: false, readAt: IsNull() },
         select: ['createdAt', 'readAt'],
       });
 

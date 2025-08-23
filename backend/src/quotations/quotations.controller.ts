@@ -94,7 +94,7 @@ export class QuotationsController {
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateQuotationDto: UpdateQuotationDto,
-    @Request() req,
+    @Req() req,
   ) {
     return this.quotationsService.update(id, updateQuotationDto, req.user.id);
   }
@@ -106,7 +106,7 @@ export class QuotationsController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 404, description: 'Quotation not found' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  remove(@Param('id', ParseUUIDPipe) id: string, @Request() req) {
+  remove(@Param('id', ParseUUIDPipe) id: string, @Req() req) {
     return this.quotationsService.remove(id, req.user.id);
   }
 

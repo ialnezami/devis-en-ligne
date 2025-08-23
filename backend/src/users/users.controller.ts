@@ -18,7 +18,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { User, UserRole } from './entities/user.entity';
+import { User, UserRole, UserStatus } from './entities/user.entity';
 
 @ApiTags('users')
 @Controller('users')
@@ -206,10 +206,10 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Forbidden - insufficient permissions' })
   async getUserStats() {
     const [active, inactive, suspended, pendingVerification] = await Promise.all([
-      this.usersService.countByStatus('active'),
-      this.usersService.countByStatus('inactive'),
-      this.usersService.countByStatus('suspended'),
-      this.usersService.countByStatus('pending_verification'),
+      this.usersService.countByStatus(UserStatus.ACTIVE),
+              this.usersService.countByStatus(UserStatus.INACTIVE),
+              this.usersService.countByStatus(UserStatus.SUSPENDED),
+              this.usersService.countByStatus(UserStatus.PENDING_VERIFICATION),
     ]);
 
     const [client, salesRep, manager, admin, superAdmin] = await Promise.all([

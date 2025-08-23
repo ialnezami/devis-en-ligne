@@ -30,7 +30,7 @@ export class QuotationsController {
   constructor(private readonly quotationsService: QuotationsService) {}
 
   @Post()
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Create a new quotation' })
   @ApiResponse({ status: 201, description: 'Quotation created successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -40,7 +40,7 @@ export class QuotationsController {
   }
 
   @Get()
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Get all quotations with optional filters' })
   @ApiResponse({ status: 200, description: 'Quotations retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
@@ -65,7 +65,7 @@ export class QuotationsController {
   }
 
   @Get(':id')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Get a quotation by ID' })
   @ApiResponse({ status: 200, description: 'Quotation retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Quotation not found' })
@@ -75,7 +75,7 @@ export class QuotationsController {
   }
 
   @Get('number/:quotationNumber')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Get a quotation by quotation number' })
   @ApiResponse({ status: 200, description: 'Quotation retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Quotation not found' })
@@ -85,7 +85,7 @@ export class QuotationsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Update a quotation' })
   @ApiResponse({ status: 200, description: 'Quotation updated successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -100,7 +100,7 @@ export class QuotationsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Cancel a quotation' })
   @ApiResponse({ status: 200, description: 'Quotation cancelled successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
@@ -111,7 +111,7 @@ export class QuotationsController {
   }
 
   @Post(':id/duplicate')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Duplicate a quotation' })
   @ApiResponse({ status: 201, description: 'Quotation duplicated successfully' })
   @ApiResponse({ status: 404, description: 'Quotation not found' })
@@ -121,7 +121,7 @@ export class QuotationsController {
   }
 
   @Post(':id/status/:status')
-  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.ADMIN)
+  @Roles(UserRole.SALES_REP, UserRole.MANAGER, UserRole.ADMIN)
   @ApiOperation({ summary: 'Change quotation status' })
   @ApiResponse({ status: 200, description: 'Quotation status changed successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })

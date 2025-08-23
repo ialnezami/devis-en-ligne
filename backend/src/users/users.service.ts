@@ -23,7 +23,7 @@ export class UsersService {
       }
 
       // Set default status
-      createUserDto.status = UserStatus.PENDING_VERIFICATION;
+      // Status will be set by the entity default
 
       const user = this.usersRepository.create(createUserDto);
       const savedUser = await this.usersRepository.save(user);
@@ -368,7 +368,7 @@ export class UsersService {
 
   async countUsersWith2FA(): Promise<number> {
     return this.usersRepository.count({
-      where: { twoFactorEnabled: true, status: 'active' },
+      where: { twoFactorEnabled: true, status: UserStatus.ACTIVE },
     });
   }
 
@@ -376,7 +376,7 @@ export class UsersService {
     return this.usersRepository.count({
       where: { 
         twoFactorEnabled: true, 
-        status: 'active',
+        status: UserStatus.ACTIVE,
         backupCodes: { $not: { $eq: [] } } as any,
       },
     });

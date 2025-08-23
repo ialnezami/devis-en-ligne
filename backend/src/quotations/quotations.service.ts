@@ -359,7 +359,7 @@ export class QuotationsService {
     return [
       QuotationStatus.DRAFT,
       QuotationStatus.PENDING_APPROVAL,
-      QuotationStatus.REVISION_REQUESTED,
+      QuotationStatus.PENDING_REVIEW,
     ].includes(quotation.status);
   }
 
@@ -376,9 +376,9 @@ export class QuotationsService {
       [QuotationStatus.PENDING_APPROVAL]: [QuotationStatus.APPROVED, QuotationStatus.REJECTED, QuotationStatus.CANCELLED],
       [QuotationStatus.APPROVED]: [QuotationStatus.SENT, QuotationStatus.CANCELLED],
       [QuotationStatus.SENT]: [QuotationStatus.ACCEPTED, QuotationStatus.DECLINED, QuotationStatus.EXPIRED],
-      [QuotationStatus.ACCEPTED]: [QuotationStatus.IN_PROGRESS, QuotationStatus.COMPLETED],
-      [QuotationStatus.IN_PROGRESS]: [QuotationStatus.COMPLETED],
-      [QuotationStatus.REVISION_REQUESTED]: [QuotationStatus.DRAFT, QuotationStatus.CANCELLED],
+      [QuotationStatus.ACCEPTED]: [QuotationStatus.ACTIVE, QuotationStatus.COMPLETED],
+      [QuotationStatus.ACTIVE]: [QuotationStatus.COMPLETED],
+      [QuotationStatus.PENDING_REVIEW]: [QuotationStatus.DRAFT, QuotationStatus.CANCELLED],
     };
 
     return allowedTransitions[quotation.status]?.includes(newStatus) || false;

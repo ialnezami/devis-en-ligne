@@ -92,6 +92,10 @@ export class Quotation {
   @Column({ type: 'uuid', nullable: true })
   clientId?: string;
 
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'clientId' })
+  client?: User;
+
   // Quotation Details
   @Column({ type: 'text', nullable: true })
   terms?: string;

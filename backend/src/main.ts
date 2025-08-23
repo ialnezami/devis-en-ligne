@@ -1,17 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { swaggerConfig, swaggerCustomOptions } from './config/swagger.config';
-import { apiVersioningConfig } from './config/api-versioning.config';
+
+// Simple AppModule for minimal functionality
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+  controllers: [],
+  providers: [],
+})
+class MinimalAppModule {}
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(MinimalAppModule);
   
   // Enable CORS
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
     credentials: true,
   });
 
@@ -21,18 +31,6 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transform: true,
   }));
-
-  // API versioning
-  app.enableVersioning(apiVersioningConfig);
-
-  // Swagger/OpenAPI Configuration
-  const document = SwaggerModule.createDocument(app, swaggerConfig, {
-    extraModels: [],
-    deepScanRoutes: true,
-  });
-
-  // Setup Swagger UI
-  SwaggerModule.setup('api/docs', app, document, swaggerCustomOptions);
 
   // API Health Check
   app.getHttpAdapter().get('/health', (req, res) => {
@@ -61,12 +59,10 @@ async function bootstrap() {
     });
   });
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 3001;
+  const port = process.env.PORT || 3000;
 
   await app.listen(port);
   console.log(`🚀 Application is running on: http://localhost:${port}`);
-  console.log(`📚 API Documentation available at: http://localhost:${port}/api/docs`);
   console.log(`🔍 Health Check available at: http://localhost:${port}/health`);
   console.log(`📊 API Status available at: http://localhost:${port}/api/status`);
 }

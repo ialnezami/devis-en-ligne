@@ -226,6 +226,7 @@ export class RevisionService {
   ): Promise<void> {
     const quotation = await this.quotationsRepository.findOne({
       where: { id: quotationId },
+      relations: ['client'],
     });
 
     if (!quotation) {

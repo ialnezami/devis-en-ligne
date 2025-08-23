@@ -792,4 +792,33 @@ export class EmailService {
       }
     }
   }
+
+  async sendRevisionImplementedEmail(
+    to: string,
+    clientName: string,
+    quotation: any,
+    revision: any,
+    implementedBy: any,
+  ): Promise<void> {
+    const subject = `Quotation Revision Implemented - ${quotation.quotationNumber}`;
+    const html = `
+      <h2>Quotation Revision Implemented</h2>
+      <p>Dear ${clientName},</p>
+      <p>The revision for your quotation ${quotation.quotationNumber} has been implemented.</p>
+      <p><strong>Implementation Details:</strong></p>
+      <ul>
+        <li>Revision Reason: ${revision.reason}</li>
+        <li>Implemented By: ${implementedBy.firstName} ${implementedBy.lastName}</li>
+        <li>Implementation Date: ${new Date().toLocaleDateString()}</li>
+      </ul>
+      <p>Your quotation has been updated accordingly. Please review the changes.</p>
+      <p>Best regards,<br>Your Team</p>
+    `;
+
+    await this.sendEmail({
+      to,
+      subject,
+      html,
+    });
+  }
 }

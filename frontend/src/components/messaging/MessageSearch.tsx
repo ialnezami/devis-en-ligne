@@ -277,7 +277,7 @@ export default function MessageSearch({ onSearchResultClick, onClose, className 
               </label>
               <select
                 value={filters.dateRange}
-                onChange={(e) => setFilters(prev => ({ ...prev, dateRange: e.target.value }))}
+                                 onChange={(e) => setFilters(prev => ({ ...prev, dateRange: e.target.value as 'all' | 'today' | 'week' | 'month' | 'year' }))}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
               >
                 <option value="all">All Time</option>
@@ -323,7 +323,7 @@ export default function MessageSearch({ onSearchResultClick, onClose, className 
               </label>
               <select
                 value={filters.messageType}
-                onChange={(e) => setFilters(prev => ({ ...prev, messageType: e.target.value }))}
+                                 onChange={(e) => setFilters(prev => ({ ...prev, messageType: e.target.value as 'all' | 'text' | 'file' | 'image' | 'document' | 'quote' }))}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white"
               >
                 <option value="all">All Types</option>
@@ -370,55 +370,55 @@ export default function MessageSearch({ onSearchResultClick, onClose, className 
       <div className="max-h-96 overflow-y-auto">
         {searchResults.length > 0 ? (
           <div ref={resultsRef}>
-            {searchResults.map((result, index) => (
-              <div
-                key={result.id}
-                onClick={() => handleResultClick(result)}
-                className={`p-4 border-b border-gray-200 dark:border-gray-700 cursor-pointer transition-colors ${
-                  index === selectedResultIndex
-                    ? 'bg-blue-50 dark:bg-blue-900/20'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                }`}
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {result.senderName}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        in {result.conversationName}
-                      </span>
-                      <span className={`text-xs px-2 py-1 rounded-full ${getRelevanceColor(result.relevanceScore)} bg-opacity-10`}>
-                        {Math.round(result.relevanceScore * 100)}% match
-                      </span>
-                    </div>
-                    
-                    <p className="text-gray-800 dark:text-gray-200 mb-2">
-                      {result.content}
-                    </p>
-                    
-                    {result.context && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 italic">
-                        Context: {result.context}
-                      </p>
-                    )}
-                    
-                    {result.attachments.length > 0 && (
-                      <div className="flex items-center space-x-2 mt-2">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          📎 {result.attachments.length} attachment(s)
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="text-right text-sm text-gray-500 dark:text-gray-400">
-                    {formatTimestamp(result.timestamp)}
-                  </div>
-                </div>
-              </div>
-            ))}
+                         {searchResults.map((result, index) => (
+               <div
+                 key={result.message.id}
+                 onClick={() => handleResultClick(result)}
+                 className={`p-4 border-b border-gray-200 dark:border-gray-700 cursor-pointer transition-colors ${
+                   index === selectedResultIndex
+                     ? 'bg-blue-50 dark:bg-blue-900/20'
+                     : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                 }`}
+               >
+                 <div className="flex items-start justify-between mb-2">
+                   <div className="flex-1">
+                     <div className="flex items-center space-x-2 mb-1">
+                       <span className="font-medium text-gray-900 dark:text-white">
+                         {result.message.senderName}
+                       </span>
+                       <span className="text-sm text-gray-500 dark:text-gray-400">
+                         in {result.conversation.title}
+                       </span>
+                       <span className={`text-xs px-2 py-1 rounded-full ${getRelevanceColor(result.relevance)} bg-opacity-10`}>
+                         {Math.round(result.relevance * 100)}% match
+                       </span>
+                     </div>
+                     
+                     <p className="text-gray-800 dark:text-gray-200 mb-2">
+                       {result.message.content}
+                     </p>
+                     
+                     {result.highlight.content && (
+                       <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+                         Highlight: {result.highlight.content}
+                       </p>
+                     )}
+                     
+                     {result.message.attachments && result.message.attachments.length > 0 && (
+                       <div className="flex items-center space-x-2 mt-2">
+                         <span className="text-xs text-gray-500 dark:text-gray-400">
+                           📎 {result.message.attachments.length} attachment(s)
+                         </span>
+                       </div>
+                     )}
+                   </div>
+                   
+                   <div className="text-right text-sm text-gray-500 dark:text-gray-400">
+                     {formatTimestamp(result.message.createdAt.toISOString())}
+                   </div>
+                 </div>
+               </div>
+             ))}
           </div>
         ) : searchQuery && !isSearching ? (
           <div className="p-8 text-center text-gray-500 dark:text-gray-400">

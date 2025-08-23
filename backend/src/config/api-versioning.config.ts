@@ -1,4 +1,4 @@
-import { VersioningOptions } from '@nestjs/common';
+import { VersioningOptions, VersioningType } from '@nestjs/common';
 
 export const apiVersioningConfig: VersioningOptions = {
   type: VersioningType.URI,

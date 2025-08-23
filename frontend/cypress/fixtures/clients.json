@@ -1,0 +1,59 @@
+{
+  "activeClient": {
+    "id": 1,
+    "name": "Active Client Corp",
+    "email": "contact@activeclient.com",
+    "phone": "+1234567890",
+    "company": "Active Client Corporation",
+    "address": {
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "country": "USA"
+    },
+    "status": "active",
+    "industry": "Technology",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-15T00:00:00.000Z",
+    "lastContact": "2024-01-15T10:30:00.000Z"
+  },
+  "prospectClient": {
+    "id": 2,
+    "name": "Prospect Client LLC",
+    "email": "info@prospectclient.com",
+    "phone": "+1234567891",
+    "company": "Prospect Client LLC",
+    "address": {
+      "street": "456 Business Ave",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipCode": "90210",
+      "country": "USA"
+    },
+    "status": "prospect",
+    "industry": "Healthcare",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-10T00:00:00.000Z",
+    "lastContact": "2024-01-10T14:00:00.000Z"
+  },
+  "inactiveClient": {
+    "id": 3,
+    "name": "Inactive Client Inc",
+    "email": "hello@inactiveclient.com",
+    "phone": "+1234567892",
+    "company": "Inactive Client Inc",
+    "address": {
+      "street": "789 Old Rd",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601",
+      "country": "USA"
+    },
+    "status": "inactive",
+    "industry": "Finance",
+    "createdAt": "2023-06-01T00:00:00.000Z",
+    "updatedAt": "2023-12-01T00:00:00.000Z",
+    "lastContact": "2023-12-01T09:00:00.000Z"
+  }
+}

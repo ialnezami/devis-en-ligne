@@ -1,0 +1,83 @@
+{
+  "sampleQuote": {
+    "id": 1,
+    "quoteNumber": "Q-2024-001",
+    "clientId": 1,
+    "clientName": "Test Client",
+    "description": "Website Development Services",
+    "amount": 5000.00,
+    "currency": "USD",
+    "status": "draft",
+    "validUntil": "2024-12-31",
+    "createdAt": "2024-01-15T00:00:00.000Z",
+    "updatedAt": "2024-01-15T00:00:00.000Z",
+    "items": [
+      {
+        "id": 1,
+        "description": "Frontend Development",
+        "quantity": 1,
+        "unitPrice": 3000.00,
+        "total": 3000.00
+      },
+      {
+        "id": 2,
+        "description": "Backend Development",
+        "quantity": 1,
+        "unitPrice": 2000.00,
+        "total": 2000.00
+      }
+    ]
+  },
+  "approvedQuote": {
+    "id": 2,
+    "quoteNumber": "Q-2024-002",
+    "clientId": 2,
+    "clientName": "Another Client",
+    "description": "Mobile App Development",
+    "amount": 8000.00,
+    "currency": "USD",
+    "status": "approved",
+    "validUntil": "2024-12-31",
+    "createdAt": "2024-01-14T00:00:00.000Z",
+    "updatedAt": "2024-01-16T00:00:00.000Z",
+    "approvedAt": "2024-01-16T00:00:00.000Z",
+    "items": [
+      {
+        "id": 3,
+        "description": "iOS Development",
+        "quantity": 1,
+        "unitPrice": 4000.00,
+        "total": 4000.00
+      },
+      {
+        "id": 4,
+        "description": "Android Development",
+        "quantity": 1,
+        "unitPrice": 4000.00,
+        "total": 4000.00
+      }
+    ]
+  },
+  "expiredQuote": {
+    "id": 3,
+    "quoteNumber": "Q-2024-003",
+    "clientId": 3,
+    "clientName": "Old Client",
+    "description": "Consulting Services",
+    "amount": 2000.00,
+    "currency": "USD",
+    "status": "expired",
+    "validUntil": "2024-01-01",
+    "createdAt": "2023-12-01T00:00:00.000Z",
+    "updatedAt": "2023-12-01T00:00:00.000Z",
+    "items": [
+      {
+        "id": 5,
+        "description": "Business Consulting",
+        "quantity": 20,
+        "unitPrice": 100.00,
+        "total": 2000.00
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "testUser": {
+    "id": 1,
+    "email": "test@example.com",
+    "password": "testpassword123",
+    "firstName": "Test",
+    "lastName": "User",
+    "role": "user",
+    "company": "Test Company",
+    "phone": "+1234567890",
+    "isActive": true,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastLogin": "2024-01-15T10:30:00.000Z"
+  },
+  "adminUser": {
+    "id": 2,
+    "email": "admin@example.com",
+    "password": "adminpassword123",
+    "firstName": "Admin",
+    "lastName": "User",
+    "role": "admin",
+    "company": "Test Company",
+    "phone": "+1234567891",
+    "isActive": true,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastLogin": "2024-01-15T11:00:00.000Z"
+  },
+  "managerUser": {
+    "id": 3,
+    "email": "manager@example.com",
+    "password": "managerpassword123",
+    "firstName": "Manager",
+    "lastName": "User",
+    "role": "manager",
+    "company": "Test Company",
+    "phone": "+1234567892",
+    "isActive": true,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastLogin": "2024-01-15T09:15:00.000Z"
+  },
+  "inactiveUser": {
+    "id": 4,
+    "email": "inactive@example.com",
+    "password": "inactivepassword123",
+    "firstName": "Inactive",
+    "lastName": "User",
+    "role": "user",
+    "company": "Test Company",
+    "phone": "+1234567893",
+    "isActive": false,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastLogin": "2024-01-10T15:45:00.000Z"
+  }
+}

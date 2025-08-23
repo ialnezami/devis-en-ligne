@@ -1,0 +1,6 @@
+name,email,phone,company,industry,status
+"Import Client A","clienta@import.com","+1234567890","Import Company A","Technology","active"
+"Import Client B","clientb@import.com","+1234567891","Import Company B","Healthcare","prospect"
+"Import Client C","clientc@import.com","+1234567892","Import Company C","Finance","active"
+"Import Client D","clientd@import.com","+1234567893","Import Company D","Education","prospect"
+"Import Client E","cliente@import.com","+1234567894","Import Company E","Retail","active"

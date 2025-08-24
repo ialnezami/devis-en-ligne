@@ -19,7 +19,7 @@ import {
   StarIcon,
   TagIcon,
   PlusIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   TrashIcon,
   EyeIcon,
   ShareIcon,

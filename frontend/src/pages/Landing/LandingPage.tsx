@@ -10,33 +10,71 @@ import {
   DocumentTextIcon,
   PhoneIcon,
   EnvelopeIcon,
-  MapPinIcon
+  MapPinIcon,
+  PlayIcon,
+  ShieldCheckIcon,
+  ClockIcon,
+  RocketLaunchIcon,
+  SparklesIcon
 } from '@heroicons/react/24/outline';
 
 const LandingPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
 
   const features = [
     {
       icon: DocumentTextIcon,
       title: 'Professional Quotations',
-      description: 'Create beautiful, detailed quotations in minutes with our intuitive interface.'
+      description: 'Create beautiful, detailed quotations in minutes with our intuitive interface.',
+      color: 'blue'
     },
     {
       icon: ChartBarIcon,
       title: 'Advanced Analytics',
-      description: 'Track your business performance with comprehensive reporting and insights.'
+      description: 'Track your business performance with comprehensive reporting and insights.',
+      color: 'green'
     },
     {
       icon: UserGroupIcon,
       title: 'Client Management',
-      description: 'Manage your clients efficiently with our integrated CRM system.'
+      description: 'Manage your clients efficiently with our integrated CRM system.',
+      color: 'purple'
     },
     {
       icon: CogIcon,
       title: 'Customizable Templates',
-      description: 'Use pre-built templates or create your own to match your brand.'
+      description: 'Use pre-built templates or create your own to match your brand.',
+      color: 'orange'
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: 'Sarah Johnson',
+      role: 'CEO, TechCorp',
+      company: 'TechCorp Solutions',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+      content: 'Quotation Tool has transformed how we handle client proposals. It\'s a game-changer!',
+      rating: 5
+    },
+    {
+      name: 'Michael Chen',
+      role: 'Sales Director',
+      company: 'Innovate Marketing',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+      content: 'We\'ve increased our proposal win rate by 40% since using this platform.',
+      rating: 5
+    },
+    {
+      name: 'Emma Rodriguez',
+      role: 'Freelance Consultant',
+      company: 'ER Consulting',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+      content: 'The templates are beautiful and save me hours of work. Highly recommended!',
+      rating: 5
     }
   ];
 
@@ -101,6 +139,15 @@ const LandingPage: React.FC = () => {
     const annualTotal = plan.monthlyPrice * 12;
     const savings = annualTotal - plan.annualPrice;
     return Math.round((savings / annualTotal) * 100);
+  };
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (waitlistEmail) {
+      setWaitlistSubmitted(true);
+      // Here you would typically send the email to your backend
+      console.log('Waitlist signup:', waitlistEmail);
+    }
   };
 
   const renderSection = () => {
@@ -337,68 +384,166 @@ const LandingPage: React.FC = () => {
 
       default:
         return (
-          <div className="max-w-7xl mx-auto px-4 py-16">
+          <>
             {/* Hero Section */}
-            <div className="text-center mb-20">
-              <h1 className="text-6xl font-bold text-gray-900 mb-6">
-                Create Professional
-                <span className="text-blue-600"> Quotations</span>
-                <br />in Minutes
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Streamline your business with our powerful quotation tool. Create beautiful, 
-                detailed proposals that win more deals and impress your clients.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/register"
-                  className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center"
-                >
-                  Get Started Free
-                  <ArrowRightIcon className="h-5 w-5 ml-2" />
-                </Link>
-                <Link
-                  to="/demo"
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:border-gray-400 transition-colors"
-                >
-                  View Demo
-                </Link>
+            <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+              <div className="max-w-7xl mx-auto px-4 py-24">
+                <div className="text-center mb-16">
+                  <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+                    <SparklesIcon className="h-4 w-4 mr-2" />
+                    Now in Beta - Join the Waitlist
+                  </div>
+                  <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+                    Create Professional
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600"> Quotations</span>
+                    <br />in Minutes
+                  </h1>
+                  <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Streamline your business with our powerful quotation tool. Create beautiful, 
+                    detailed proposals that win more deals and impress your clients.
+                  </p>
+                  
+                  {/* Waitlist Form */}
+                  <div className="max-w-md mx-auto mb-8">
+                    {!waitlistSubmitted ? (
+                      <form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-3">
+                        <input
+                          type="email"
+                          placeholder="Enter your email"
+                          value={waitlistEmail}
+                          onChange={(e) => setWaitlistEmail(e.target.value)}
+                          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
+                        />
+                        <button
+                          type="submit"
+                          className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                        >
+                          Join Waitlist
+                        </button>
+                      </form>
+                    ) : (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p className="text-green-800 font-medium">🎉 You're on the waitlist! We'll notify you when we launch.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link
+                      to="/demo"
+                      className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center shadow-lg hover:shadow-xl"
+                    >
+                      <PlayIcon className="h-5 w-5 mr-2" />
+                      Watch Demo
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:border-gray-400 transition-colors hover:bg-gray-50"
+                    >
+                      Get Started Free
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Hero Stats */}
+                <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">10K+</div>
+                    <div className="text-gray-600">Businesses</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
+                    <div className="text-gray-600">Quotations</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">98%</div>
+                    <div className="text-gray-600">Satisfaction</div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Features Section */}
-            <div className="mb-20">
-              <h2 className="text-4xl font-bold text-center mb-12">Why Choose Quotation Tool?</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {features.map((feature) => (
-                  <div key={feature.title} className="text-center">
-                    <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <feature.icon className="h-8 w-8 text-blue-600" />
+            <div className="py-24 bg-white">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Quotation Tool?</h2>
+                  <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Built for modern businesses who want to look professional and close more deals
+                  </p>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  {features.map((feature, index) => (
+                    <div key={feature.title} className="text-center group">
+                      <div className={`bg-gradient-to-br from-${feature.color}-100 to-${feature.color}-200 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                        <feature.icon className={`h-10 w-10 text-${feature.color}-600`} />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-3 text-gray-900">{feature.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-gray-600">{feature.description}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Social Proof */}
-            <div className="text-center">
-              <div className="flex items-center justify-center space-x-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon key={i} className="h-6 w-6 text-yellow-400 fill-current" />
-                ))}
+            {/* Social Proof Section */}
+            <div className="py-24 bg-gray-50">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl font-bold text-gray-900 mb-4">Trusted by Industry Leaders</h2>
+                  <p className="text-xl text-gray-600">See what our customers are saying</p>
+                </div>
+                
+                <div className="grid md:grid-cols-3 gap-8 mb-12">
+                  {testimonials.map((testimonial) => (
+                    <div key={testimonial.name} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                      <div className="flex items-center mb-4">
+                        <div className="flex space-x-1 mr-4">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <StarIcon key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-gray-700 mb-6 italic">"{testimonial.content}"</p>
+                      <div className="flex items-center">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="w-12 h-12 rounded-full mr-4"
+                        />
+                        <div>
+                          <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                          <div className="text-sm text-gray-600">{testimonial.role}, {testimonial.company}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="text-center">
+                  <p className="text-lg text-gray-600 mb-8">
+                    Join thousands of businesses already using Quotation Tool
+                  </p>
+                  <div className="flex justify-center items-center space-x-8 text-gray-400">
+                    <div className="flex items-center">
+                      <ShieldCheckIcon className="h-5 w-5 mr-2" />
+                      <span>Enterprise Security</span>
+                    </div>
+                    <div className="flex items-center">
+                      <ClockIcon className="h-5 w-5 mr-2" />
+                      <span>99.9% Uptime</span>
+                    </div>
+                    <div className="flex items-center">
+                      <RocketLaunchIcon className="h-5 w-5 mr-2" />
+                      <span>Lightning Fast</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="text-lg text-gray-600 mb-2">
-                Trusted by over 10,000+ businesses worldwide
-              </p>
-              <p className="text-gray-500">
-                "Quotation Tool has transformed how we handle client proposals. It's a game-changer!" 
-                <br />
-                <span className="font-semibold">- Sarah Johnson, CEO of TechCorp</span>
-              </p>
             </div>
-          </div>
+          </>
         );
     }
   };
@@ -406,7 +551,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
+      <nav className="bg-white/95 backdrop-blur-sm shadow-sm border-b sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -480,9 +625,9 @@ const LandingPage: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-bold mb-4">QuotationTool</h3>
               <p className="text-gray-400">
@@ -517,7 +662,7 @@ const LandingPage: React.FC = () => {
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
             <p>&copy; 2024 QuotationTool. All rights reserved.</p>
           </div>
         </div>

@@ -111,7 +111,6 @@ export class GoogleCalendarIntegration implements CalendarIntegration {
           id: response.data.id,
           externalId: response.data.id,
           title: event.title,
-          description: event.description,
           startTime: event.startTime,
           endTime: event.endTime,
           attendees: event.attendees || [],

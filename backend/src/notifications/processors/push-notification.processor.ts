@@ -137,7 +137,7 @@ export class PushNotificationProcessor {
       const result = await this.pushNotificationService.sendToMultipleDevices(deviceTokens, {
         title: renderedContent.title,
         body: renderedContent.body,
-        priority: (priority || template.priority) === 'low' ? 'normal' : (priority || template.priority),
+        priority: ((priority || template.priority) === 'low' ? 'normal' : (priority || template.priority)) as 'normal' | 'high',
         sound: template.sound,
         icon: template.icon,
         imageUrl: template.imageUrl,

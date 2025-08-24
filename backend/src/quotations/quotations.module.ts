@@ -10,9 +10,13 @@ import { RevisionService } from './services/revision.service';
 import { TaxCalculationService } from './services/tax-calculation.service';
 import { DiscountService } from './services/discount.service';
 import { Logger } from '../common/logger/logger.service';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Quotation, QuotationItem])],
+  imports: [
+    TypeOrmModule.forFeature([Quotation, QuotationItem]),
+    NotificationsModule,
+  ],
   controllers: [QuotationsController],
   providers: [
     QuotationsService,

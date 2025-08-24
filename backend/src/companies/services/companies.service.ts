@@ -67,7 +67,7 @@ export class CompaniesService {
           accounting: false,
           payment: false,
         },
-      });
+      })[0];
 
       await this.companySettingsRepository.save(defaultSettings);
 
@@ -93,7 +93,7 @@ export class CompaniesService {
         },
         customCSS: null,
         customJS: null,
-      });
+      })[0];
 
       await this.companyBrandingRepository.save(defaultBranding);
 
@@ -347,7 +347,7 @@ export class CompaniesService {
         settings = this.companySettingsRepository.create({
           companyId,
           ...settingsDto,
-        });
+        })[0];
       } else {
         // Update existing settings
         Object.assign(settings, settingsDto);
@@ -399,7 +399,7 @@ export class CompaniesService {
         branding = this.companyBrandingRepository.create({
           companyId,
           ...brandingDto,
-        });
+        })[0];
       } else {
         // Update existing branding
         Object.assign(branding, brandingDto);

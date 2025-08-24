@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { GlobalStyles } from './styles';
 import Layout from './components/layout/MainLayout';
+import LandingPage from './pages/Landing';
 import Dashboard from './pages/Dashboard/Dashboard';
 import UIDemo from './pages/Demo/UIDemo';
 import PhaseDashboard from './pages/PhaseManagement/PhaseDashboard';
@@ -28,6 +29,9 @@ const App: React.FC = () => {
           <AuthProvider>
             <Router>
               <Routes>
+                {/* Landing page - default route */}
+                <Route path="/" element={<LandingPage />} />
+                
                 {/* Public routes */}
                 <Route path="/login" element={
                   <PublicRoute>
@@ -123,10 +127,11 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } />
                 
-                {/* Catch all route */}
-                <Route path="*" element={
-                  <Navigate to="/dashboard" replace />
-                } />
+                {/* Redirect dashboard to dashboard */}
+                <Route path="/dashboard" element={<Navigate to="/dashboard" replace />} />
+                
+                {/* Catch all - redirect to landing page */}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Router>
           </AuthProvider>

@@ -4,7 +4,7 @@ export const AppConfig = registerAs('app', () => ({
   name: process.env.APP_NAME || 'Online Quotation Tool',
   version: process.env.APP_VERSION || '1.0.0',
   environment: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 3001,
   host: process.env.HOST || '0.0.0.0',
   
   // Security

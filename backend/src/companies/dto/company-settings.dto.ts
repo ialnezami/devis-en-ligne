@@ -78,10 +78,20 @@ export class CompanySettingsDto {
   @IsString()
   dateFormat?: string;
 
+  @ApiPropertyOptional({ description: 'Time format' })
+  @IsOptional()
+  @IsString()
+  timeFormat?: string;
+
   @ApiPropertyOptional({ description: 'Language preference' })
   @IsOptional()
   @IsString()
   language?: string;
+
+  @ApiPropertyOptional({ description: 'Locale preference' })
+  @IsOptional()
+  @IsString()
+  locale?: string;
 
   @ApiPropertyOptional({ description: 'Number format' })
   @IsOptional()
@@ -93,6 +103,20 @@ export class CompanySettingsDto {
   @IsObject()
   notifications?: NotificationSettings;
 
+  @ApiPropertyOptional({ description: 'Notification preferences' })
+  @IsOptional()
+  @IsObject()
+  notificationPreferences?: {
+    quotationCreated?: boolean;
+    quotationUpdated?: boolean;
+    quotationApproved?: boolean;
+    quotationRejected?: boolean;
+    paymentReceived?: boolean;
+    invoiceGenerated?: boolean;
+    userInvited?: boolean;
+    userRemoved?: boolean;
+  };
+
   @ApiPropertyOptional({ description: 'Security settings' })
   @IsOptional()
   @IsObject()
@@ -101,7 +125,14 @@ export class CompanySettingsDto {
   @ApiPropertyOptional({ description: 'Integration settings' })
   @IsOptional()
   @IsObject()
-  integrations?: IntegrationSettings;
+  integrations?: {
+    crm?: boolean;
+    accounting?: boolean;
+    payment?: boolean;
+    email?: boolean;
+    calendar?: boolean;
+    storage?: boolean;
+  };
 
   @ApiPropertyOptional({ description: 'Business hours' })
   @IsOptional()

@@ -3,15 +3,16 @@
 ## 📋 Table of Contents
 
 1. [Project Overview](#project-overview)
-2. [Architecture](#architecture)
-3. [Technology Stack](#technology-stack)
-4. [Features & Functionalities](#features--functionalities)
-5. [Project Structure](#project-structure)
-6. [Setup & Installation](#setup--installation)
-7. [Development Guide](#development-guide)
-8. [Deployment](#deployment)
-9. [API Documentation](#api-documentation)
-10. [Contributing](#contributing)
+2. [Screenshots](#screenshots)
+3. [Architecture](#architecture)
+4. [Technology Stack](#technology-stack)
+5. [Features & Functionalities](#features--functionalities)
+6. [Project Structure](#project-structure)
+7. [Setup & Installation](#setup--installation)
+8. [Development Guide](#development-guide)
+9. [Deployment](#deployment)
+10. [API Documentation](#api-documentation)
+11. [Contributing](#contributing)
 
 ---
 
@@ -25,6 +26,26 @@ The Online Quotation Tool is a comprehensive multi-platform solution that enable
 - Enable multi-platform access (web, mobile)
 - Ensure scalable and maintainable architecture
 - Implement secure user authentication and authorization
+
+---
+
+## 📸 Screenshots
+
+### Landing Page
+![Landing Page](./screenshots/Screenshot%202025-08-24%20at%2011.18.20.png)
+*Professional landing page with product presentation, pricing, and waitlist signup*
+
+### Product Features
+![Product Features](./screenshots/Screenshot%202025-08-24%20at%2011.18.29.png)
+*Key features and benefits of the quotation tool*
+
+### Pricing Plans
+![Pricing Plans](./screenshots/Screenshot%202025-08-24%20at%2011.18.52.png)
+*Transparent pricing with monthly and annual subscription options*
+
+### Contact & Information
+![Contact & Information](./screenshots/Screenshot%202025-08-24%20at%2011.19.32.png)
+*Contact form and detailed information about the platform*
 
 ---
 

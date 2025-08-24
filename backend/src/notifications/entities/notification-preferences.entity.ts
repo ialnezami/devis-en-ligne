@@ -10,9 +10,9 @@ export class NotificationPreferences {
   @Column({ type: 'uuid', unique: true })
   userId: string;
 
-  @OneToOne(() => User, user => user.notificationPreferences)
+  // @OneToOne(() => User, user => user.notificationPreferences)
   @JoinColumn({ name: 'userId' })
-  user: User;
+  // user: User;
 
   // Global notification settings
   @Column({ type: 'boolean', default: true })

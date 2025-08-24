@@ -16,7 +16,7 @@ import {
   HeartIcon,
   BuildingOfficeIcon,
   PaletteIcon,
-  TypographyIcon,
+  DocumentTextIcon,
   PhotoIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
@@ -452,7 +452,7 @@ const CustomizableEstimates: React.FC = () => {
                 
                 <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
                   <div className="flex items-center space-x-2 mb-2">
-                    <TypographyIcon className="h-5 w-5 text-purple-500" />
+                    <DocumentTextIcon className="h-5 w-5 text-purple-500" />
                     <span className="font-medium">Typography</span>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">

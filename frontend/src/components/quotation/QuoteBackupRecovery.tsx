@@ -13,7 +13,7 @@ import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
   InformationCircleIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
 import { Quote, QuoteBackup, quoteManagementService } from '@/services/quoteManagementService';

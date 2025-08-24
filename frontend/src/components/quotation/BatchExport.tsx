@@ -10,7 +10,7 @@ import {
   CheckCircleIcon,
   ExclamationTriangleIcon,
   ClockIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   TrashIcon,
   CogIcon
 } from '@heroicons/react/24/outline';
@@ -425,7 +425,7 @@ export const BatchExport: React.FC<BatchExportProps> = ({
                               size="sm"
                               onClick={() => pdfExportService.downloadPDF(result.url!, result.filename)}
                             >
-                              <DownloadIcon className="h-4 w-4" />
+                              <ArrowDownOnSquareIcon className="h-4 w-4" />
                             </Button>
                           </div>
                         )}

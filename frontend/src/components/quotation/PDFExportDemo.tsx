@@ -9,7 +9,7 @@ import {
   CalendarIcon,
   CurrencyDollarIcon,
   EyeIcon,
-  DownloadIcon
+  ArrowDownOnSquareIcon
 } from '@heroicons/react/24/outline';
 
 // Sample quotation data for demonstration
@@ -167,7 +167,7 @@ const PDFExportDemo: React.FC = () => {
 
           <Card>
             <CardContent className="p-6 text-center">
-              <DownloadIcon className="h-12 w-12 text-purple-600 mx-auto mb-4" />
+              <ArrowDownOnSquareIcon className="h-12 w-12 text-purple-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 Batch Export
               </h3>
@@ -191,7 +191,7 @@ const PDFExportDemo: React.FC = () => {
                 onClick={handleBatchExport}
                 className="flex items-center space-x-2"
               >
-                <DownloadIcon className="h-4 w-4" />
+                <ArrowDownOnSquareIcon className="h-4 w-4" />
                 <span>Batch Export All</span>
               </Button>
             </CardTitle>

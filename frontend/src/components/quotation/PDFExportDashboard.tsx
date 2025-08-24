@@ -9,7 +9,7 @@ import {
   EyeIcon,
   FolderIcon,
   ClockIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   PlusIcon,
   ArrowPathIcon
 } from '@heroicons/react/24/outline';
@@ -238,7 +238,7 @@ export const PDFExportDashboard: React.FC<PDFExportDashboardProps> = ({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-3">
-              <DownloadIcon className="h-8 w-8 text-green-600" />
+              <ArrowDownOnSquareIcon className="h-8 w-8 text-green-600" />
               <div>
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Completed</p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.completed}</p>
@@ -420,7 +420,7 @@ export const PDFExportDashboard: React.FC<PDFExportDashboardProps> = ({
                         toast.success('Re-downloading PDF...');
                       }}
                     >
-                      <DownloadIcon className="h-4 w-4" />
+                      <ArrowDownOnSquareIcon className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>

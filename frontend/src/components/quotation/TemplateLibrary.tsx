@@ -14,7 +14,7 @@ import {
   TrashIcon,
   DuplicateIcon,
   ShareIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   UploadIcon,
   GridIcon,
   ListIcon,
@@ -690,7 +690,7 @@ export const TemplateLibrary: React.FC<TemplateLibraryProps> = ({
                 </Button>
                 
                 <Button variant="outline" onClick={handleBulkExport}>
-                  <DownloadIcon className="h-4 w-4 mr-2" />
+                  <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
                   Export Selected
                 </Button>
                 

@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { 
   PlusIcon,
   DocumentIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   EyeIcon,
   TrashIcon,
   PencilIcon,
@@ -568,7 +568,7 @@ export const ClientDocumentation: React.FC<ClientDocumentationProps> = ({
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
                         <Button variant="outline" size="sm" className="flex-1">
-                          <DownloadIcon className="h-4 w-4 mr-1" />
+                          <ArrowDownOnSquareIcon className="h-4 w-4 mr-1" />
                           Download
                         </Button>
                         
@@ -687,7 +687,7 @@ export const ClientDocumentation: React.FC<ClientDocumentationProps> = ({
                 <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center space-x-2">
                     <Button variant="outline" size="sm">
-                      <DownloadIcon className="h-4 w-4 mr-1" />
+                      <ArrowDownOnSquareIcon className="h-4 w-4 mr-1" />
                       Download
                     </Button>
                     

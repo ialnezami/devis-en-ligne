@@ -9,7 +9,7 @@ import {
   ClockIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   TrashIcon,
   FunnelIcon,
   RefreshIcon,
@@ -455,7 +455,7 @@ export const ExportHistory: React.FC<ExportHistoryProps> = ({
                           onClick={() => downloadExport(item)}
                           disabled={item.status !== 'completed'}
                         >
-                          <DownloadIcon className="h-4 w-4" />
+                          <ArrowDownOnSquareIcon className="h-4 w-4" />
                         </Button>
                       </div>
                     </td>

@@ -8,7 +8,7 @@ import {
   EyeIcon,
   EyeSlashIcon,
   ArrowPathIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   PrinterIcon,
   MagnifyingGlassIcon,
   MinusIcon,
@@ -273,7 +273,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
 
           <div className="flex items-center space-x-3">
             <Button variant="outline" onClick={handleDownload}>
-              <DownloadIcon className="h-4 w-4 mr-2" />
+              <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
               Download
             </Button>
             

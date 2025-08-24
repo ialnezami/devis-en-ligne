@@ -9,7 +9,7 @@ import {
   MagnifyingGlassPlusIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   PrinterIcon,
   EyeIcon,
   EyeSlashIcon,
@@ -231,7 +231,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
               size="sm"
               onClick={onDownload}
             >
-              <DownloadIcon className="h-4 w-4 mr-2" />
+              <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
               Download
             </Button>
           </div>

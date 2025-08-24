@@ -346,20 +346,20 @@ export class IntegrationManagerService {
         return this.hubspotIntegration;
       case 'quickbooks':
         return this.quickbooksIntegration;
-      case 'xero':
-        return this.xeroIntegration;
-      case 'stripe':
-        return this.stripeIntegration;
-      case 'paypal':
-        return this.paypalIntegration;
-      case 'mailchimp':
-        return this.mailchimpIntegration;
-      case 'sendgrid':
-        return this.sendgridIntegration;
+      // case 'xero':
+      //   return this.xeroIntegration;
+      // case 'stripe':
+      //   return this.stripeIntegration;
+      // case 'paypal':
+      //   return this.paypalIntegration;
+      // case 'mailchimp':
+      //   return this.mailchimpIntegration;
+      // case 'sendgrid':
+      //   return this.sendgridIntegration;
       case 'google':
         return this.googleCalendarIntegration;
-      case 'outlook':
-        return this.outlookCalendarIntegration;
+      // case 'outlook':
+      //   return this.outlookCalendarIntegration;
       default:
         this.logger.warn('Unknown integration provider', { provider: type.provider });
         return null;

@@ -204,13 +204,17 @@ export class FileStorageService {
 
       // Create version metadata
       const fileVersion: FileVersion = {
+        id: crypto.randomUUID(),
+        fileId: originalFileId,
         version,
-        filename: path.basename(filePath),
+        filePath,
         size: buffer.length,
-        uploadedAt: new Date(),
         uploadedBy,
         changes,
-        checksum: this.calculateChecksum(buffer),
+        createdAt: new Date(),
+        metadata: {
+          checksum: this.calculateChecksum(buffer),
+        },
       };
 
       // Save version metadata

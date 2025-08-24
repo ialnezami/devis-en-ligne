@@ -35,27 +35,27 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: ['.env.local', '.env'],
     }),
 
-    // Database - Enabled for auth system
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService) => ({
-        type: 'postgres',
-        host: configService.get('database.host'),
-        port: configService.get('database.port'),
-        username: configService.get('database.username'),
-        password: configService.get('database.password'),
-        database: configService.get('database.name'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
-        synchronize: configService.get('database.synchronize', false),
-        logging: configService.get('database.logging', false),
-        ssl: configService.get('database.ssl', false),
-        extra: {
-        connectionLimit: configService.get('database.connectionLimit', 10),
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    // Database - Temporarily disabled due to schema mismatch
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService) => ({
+    //     type: 'postgres',
+    //     host: configService.get('database.host'),
+    //     port: configService.get('database.port'),
+    //     username: configService.get('database.username'),
+    //     password: configService.get('database.password'),
+    //     database: configService.get('database.name'),
+    //     entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //     migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
+    //     synchronize: configService.get('database.synchronize', false),
+    //     logging: configService.get('database.logging', false),
+    //     ssl: configService.get('database.ssl', false),
+    //     extra: {
+    //     connectionLimit: configService.get('database.connectionLimit', 10),
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
     // Redis and Queue - Temporarily disabled for basic server
     // BullModule.forRootAsync({
@@ -94,8 +94,8 @@ import { DatabaseModule } from './database/database.module';
     // ScheduleModule.forRoot(),
 
     // Feature Modules
-    AuthModule, // Full auth module with database support
-    UsersModule, // Enabled for auth system
+    AuthModule, // Minimal auth module for frontend requests
+    // UsersModule, // Temporarily disabled due to database dependency
     // QuotationsModule, // Temporarily disabled for basic server
     // NotificationsModule, // Temporarily disabled due to compilation errors
     // FilesModule, // Temporarily disabled for basic server

@@ -349,7 +349,7 @@ const QuotationDetail: React.FC = () => {
                         </div>
                       </div>
                       <Button variant="outline" size="sm">
-                        <DownloadIcon className="h-4 w-4 mr-2" />
+                        <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
                         Download
                       </Button>
                     </div>

@@ -90,19 +90,19 @@ import { DatabaseModule } from './database/database.module';
     //   inject: [ConfigService],
     // }),
 
-    // Scheduling
-    ScheduleModule.forRoot(),
+    // Scheduling - Temporarily disabled for basic server
+    // ScheduleModule.forRoot(),
 
     // Feature Modules
     // AuthModule, // Temporarily disabled for basic server
     // UsersModule, // Temporarily disabled for basic server
     // QuotationsModule, // Temporarily disabled for basic server
     // NotificationsModule, // Temporarily disabled due to compilation errors
-    // FilesModule, // Temporarily disabled due to compilation errors
-    // CompaniesModule, // Temporarily disabled due to compilation errors
-    // TemplatesModule, // Temporarily disabled due to compilation errors
-    // AnalyticsModule, // Temporarily disabled due to compilation errors
-    DatabaseModule,
+    // FilesModule, // Temporarily disabled for basic server
+    // CompaniesModule, // Temporarily disabled for basic server
+    // TemplatesModule, // Temporarily disabled for basic server
+    // AnalyticsModule, // Temporarily disabled for basic server
+    // DatabaseModule, // Temporarily disabled for basic server
     // IntegrationsModule, // Temporarily disabled due to compilation errors
   ],
   controllers: [],

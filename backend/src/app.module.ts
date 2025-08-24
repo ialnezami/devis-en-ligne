@@ -35,50 +35,50 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: ['.env.local', '.env'],
     }),
 
-    // Database
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService) => ({
-        type: 'postgres',
-        host: configService.get('database.host'),
-        port: configService.get('database.port'),
-        username: configService.get('database.username'),
-        password: configService.get('database.password'),
-        database: configService.get('database.name'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
-        synchronize: configService.get('database.synchronize', false),
-        logging: configService.get('database.logging', false),
-        ssl: configService.get('database.ssl', false),
-        extra: {
-          connectionLimit: configService.get('database.connectionLimit', 10),
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    // Database - Temporarily disabled for basic server
+    // TypeOrmModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService) => ({
+    //     type: 'postgres',
+    //     host: configService.get('database.host'),
+    //     port: configService.get('database.port'),
+    //     username: configService.get('database.username'),
+    //     password: configService.get('database.password'),
+    //     database: configService.get('database.name'),
+    //     entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    //     migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
+    //     synchronize: configService.get('database.synchronize', false),
+    //     logging: configService.get('database.logging', false),
+    //     ssl: configService.get('database.ssl', false),
+    //     extra: {
+    //     connectionLimit: configService.get('database.connectionLimit', 10),
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
-    // Redis and Queue
-    BullModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService) => ({
-        redis: {
-          host: configService.get('redis.host'),
-          port: configService.get('redis.port'),
-          password: configService.get('redis.password'),
-          db: configService.get('redis.db', 0),
-        },
-        defaultJobOptions: {
-          removeOnComplete: 100,
-          removeOnFail: 200,
-          attempts: 3,
-          backoff: {
-            type: 'exponential',
-            delay: 2000,
-          },
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    // Redis and Queue - Temporarily disabled for basic server
+    // BullModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService) => ({
+    //     redis: {
+    //       host: configService.get('redis.host'),
+    //       port: configService.get('redis.port'),
+    //       password: configService.get('redis.password'),
+    //       db: configService.get('redis.db', 0),
+    //     },
+    //     defaultJobOptions: {
+    //       removeOnComplete: 100,
+    //       removeOnFail: 200,
+    //       attempts: 3,
+    //       backoff: {
+    //       type: 'exponential',
+    //       delay: 2000,
+    //       },
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
     // Rate Limiting - Temporarily disabled due to configuration issues
     // ThrottlerModule.forRootAsync({
@@ -94,9 +94,9 @@ import { DatabaseModule } from './database/database.module';
     ScheduleModule.forRoot(),
 
     // Feature Modules
-    AuthModule,
-    UsersModule,
-    QuotationsModule,
+    // AuthModule, // Temporarily disabled for basic server
+    // UsersModule, // Temporarily disabled for basic server
+    // QuotationsModule, // Temporarily disabled for basic server
     // NotificationsModule, // Temporarily disabled due to compilation errors
     // FilesModule, // Temporarily disabled due to compilation errors
     // CompaniesModule, // Temporarily disabled due to compilation errors

@@ -33,13 +33,13 @@ export class IntegrationManagerService {
     private salesforceIntegration: SalesforceIntegration,
     private hubspotIntegration: HubSpotIntegration,
     private quickbooksIntegration: QuickBooksIntegration,
-    private xeroIntegration: XeroIntegration,
-    private stripeIntegration: StripeIntegration,
-    private paypalIntegration: PayPalIntegration,
-    private mailchimpIntegration: MailchimpIntegration,
-    private sendgridIntegration: SendGridIntegration,
+    // private xeroIntegration: XeroIntegration,
+    // private stripeIntegration: StripeIntegration,
+    // private paypalIntegration: PayPalIntegration,
+    // private mailchimpIntegration: MailchimpIntegration,
+    // private sendgridIntegration: SendGridIntegration,
     private googleCalendarIntegration: GoogleCalendarIntegration,
-    private outlookCalendarIntegration: OutlookCalendarIntegration,
+    // private outlookCalendarIntegration: OutlookCalendarIntegration,
   ) {}
 
   /**

@@ -35,19 +35,19 @@ import { GoogleCalendarIntegration } from './providers/calendar/google-calendar.
     
     // Accounting Integrations
     QuickBooksIntegration,
-    XeroIntegration,
+    // XeroIntegration,
     
     // Payment Integrations
-    StripeIntegration,
-    PayPalIntegration,
+    // StripeIntegration,
+    // PayPalIntegration,
     
     // Email Integrations
-    MailchimpIntegration,
-    SendGridIntegration,
+    // MailchimpIntegration,
+    // SendGridIntegration,
     
     // Calendar Integrations
     GoogleCalendarIntegration,
-    OutlookCalendarIntegration,
+    // OutlookCalendarIntegration,
   ],
   exports: [IntegrationManagerService],
 })

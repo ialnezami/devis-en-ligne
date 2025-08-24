@@ -1,9 +1,35 @@
+import { Quotation } from '@/quotations/entities/quotation.entity';
+import { ApprovalDecision } from '@/quotations/services/approval.service';
+import { User } from '@/users/entities/user.entity';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class EmailService {
+  sendOverdueApprovalEmail(email: string, firstName: string, quotation: Quotation) {
+    throw new Error('Method not implemented.');
+  }
+  sendApprovalDecisionEmail(email: string, firstName: string, quotation: Quotation, approvalDecision: ApprovalDecision) {
+    throw new Error('Method not implemented.');
+  }
+  sendNextApprovalLevelEmail: any;
+  sendApprovalEscalationEmail(email: string, firstName: string, quotation: Quotation, escalatedBy: User, reason: string) {
+    throw new Error('Method not implemented.');
+  }
+  async sendRevisionImplementedEmail(email: string, firstName: string, quotation: Quotation, revision: any, implementedBy: User) {
+    const mailOptions = {
+      from: this.configService.get<string>('FROM_EMAIL', 'noreply@example.com'),
+      to: email,
+      subject: 'Quotation Revision Implemented',
+      html: `
+        <h2>Quotation Revision Implemented</h2>
+        <p>Dear ${firstName},</p>
+      `,
+    };
+
+    await this.sendEmail(mailOptions);
+  }
   private transporter: nodemailer.Transporter;
   private readonly logger = new Logger(EmailService.name);
 

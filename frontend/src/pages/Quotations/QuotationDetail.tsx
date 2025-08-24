@@ -9,7 +9,7 @@ import {
   PencilIcon,
   DocumentDuplicateIcon,
   ShareIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   ClockIcon,
   UserIcon,
   BuildingOfficeIcon,

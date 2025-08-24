@@ -502,7 +502,7 @@ export const ClientList: React.FC<ClientListProps> = ({
                 </Button>
                 
                 <Button variant="outline" onClick={handleBulkExport}>
-                  <DownloadIcon className="h-4 w-4 mr-2" />
+                  <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
                   Export Selected
                 </Button>
                 

@@ -38,6 +38,7 @@ export interface FileUploadOptions {
   watermark?: boolean;
   encryption?: boolean;
   publicAccess?: boolean;
+  contentValidation?: boolean;
   expiresAt?: Date;
 }
 

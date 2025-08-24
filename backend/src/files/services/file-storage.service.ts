@@ -25,8 +25,8 @@ export interface StorageMetadata {
 export class FileStorageService {
   private readonly logger = new Logger(FileStorageService.name);
   private readonly storageConfig: FileStorageConfig;
-  private readonly s3Client: any = null;
-  private readonly useS3: boolean;
+  private s3Client: any = null;
+  private useS3: boolean;
 
   constructor(private configService: ConfigService) {
     this.storageConfig = {

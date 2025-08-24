@@ -252,7 +252,7 @@ export class PushNotificationProcessor {
         {
           title: renderedContent.title,
           body: renderedContent.body,
-          priority: template.priority,
+          priority: template.priority === 'low' ? 'normal' : template.priority,
           sound: template.sound,
           icon: template.icon,
           imageUrl: template.imageUrl,

@@ -593,7 +593,7 @@ export const ClientProfile: React.FC<ClientProfileProps> = ({
                   
                   <div className="flex items-center space-x-2 mt-4">
                     <Button variant="outline" size="sm" className="flex-1">
-                      <DownloadIcon className="h-4 w-4 mr-1" />
+                      <ArrowDownOnSquareIcon className="h-4 w-4 mr-1" />
                       Download
                     </Button>
                     

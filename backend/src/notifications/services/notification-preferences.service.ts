@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { NotificationPreferences } from '../entities/notification-preferences.entity';
 import { CreateNotificationPreferencesDto } from '../dto/create-notification-preferences.dto';
 import { UpdateNotificationPreferencesDto } from '../dto/update-notification-preferences.dto';
+import { NotificationType } from '../entities/notification.entity';
 
 @Injectable()
 export class NotificationPreferencesService {
@@ -322,7 +323,7 @@ export class NotificationPreferencesService {
   async muteNotifications(
     userId: string,
     mutedUntil: Date,
-    mutedTypes?: string[],
+    mutedTypes?: NotificationType[],
     mutedCategories?: string[],
   ): Promise<NotificationPreferences> {
     try {

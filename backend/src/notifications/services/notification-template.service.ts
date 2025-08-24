@@ -1,7 +1,7 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { NotificationTemplate } from './push-notification.service';
+import { NotificationTemplate } from '../entities/notification-template.entity';
 import { CreateNotificationTemplateDto } from '../dto/create-notification-template.dto';
 import { UpdateNotificationTemplateDto } from '../dto/update-notification-template.dto';
 
@@ -432,7 +432,7 @@ export class NotificationTemplateService {
           title: 'New Quotation Created',
           body: 'A new quotation has been created for {{clientName}} with total amount {{amount}}.',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'normal' as const,
           variables: ['clientName', 'amount'],
         },
@@ -441,7 +441,7 @@ export class NotificationTemplateService {
           title: 'Quotation Approved',
           body: 'Your quotation for {{clientName}} has been approved!',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'high' as const,
           variables: ['clientName'],
         },
@@ -450,7 +450,7 @@ export class NotificationTemplateService {
           title: 'Quotation Rejected',
           body: 'Your quotation for {{clientName}} has been rejected. Reason: {{reason}}',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'high' as const,
           variables: ['clientName', 'reason'],
         },
@@ -459,7 +459,7 @@ export class NotificationTemplateService {
           title: 'Payment Received',
           body: 'Payment of {{amount}} has been received for quotation {{quotationNumber}}.',
           category: 'payment',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'high' as const,
           variables: ['amount', 'quotationNumber'],
         },
@@ -468,7 +468,7 @@ export class NotificationTemplateService {
           title: 'You\'ve Been Invited',
           body: '{{inviterName}} has invited you to join {{companyName}}.',
           category: 'user',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'normal' as const,
           variables: ['inviterName', 'companyName'],
         },
@@ -477,7 +477,7 @@ export class NotificationTemplateService {
           title: 'Reminder',
           body: '{{message}}',
           category: 'general',
-          platforms: ['android', 'ios', 'web'],
+          platforms: ['android', 'ios', 'web'] as const,
           priority: 'normal' as const,
           variables: ['message'],
         },

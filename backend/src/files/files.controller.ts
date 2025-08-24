@@ -413,7 +413,7 @@ export class FilesController {
       const attachments = await this.fileAttachmentService.getEntityAttachments(
         entityType,
         entityId,
-        { attachmentType, isRequired: isRequired === 'true' },
+        { attachmentType, isRequired: isRequired === true },
       );
       return attachments;
     } catch (error) {

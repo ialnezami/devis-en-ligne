@@ -145,9 +145,17 @@ export class ApiKey {
     return daysUntilExpiry !== null && daysUntilExpiry <= days;
   }
 
-  toResponseObject(): Omit<ApiKey, 'key'> {
+  toResponseObject(): Omit<this, 'key'> {
+    // Exclude the 'key' property from the returned object
     const { key, ...response } = this;
-    return response;
+    // Remove any getter properties (virtuals) from the response
+    const plainResponse: any = {};
+    Object.getOwnPropertyNames(response).forEach((prop) => {
+      if (prop !== 'key' && typeof (response as any)[prop] !== 'function') {
+        plainResponse[prop] = (response as any)[prop];
+      }
+    });
+    return plainResponse;
   }
 
   toDetailedResponseObject(): any {

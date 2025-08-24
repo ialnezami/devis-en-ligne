@@ -34,10 +34,10 @@ export class SecuritySettings {
   @IsNumber()
   maxLoginAttempts?: number;
 
-  @ApiPropertyOptional({ description: 'Password complexity requirements' })
+  @ApiPropertyOptional({ description: 'Password complexity requirements', enum: ['low', 'medium', 'high'] })
   @IsOptional()
   @IsString()
-  passwordPolicy?: string;
+  passwordPolicy?: 'low' | 'medium' | 'high';
 }
 
 export class IntegrationSettings {

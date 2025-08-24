@@ -399,7 +399,7 @@ export class CompaniesService {
         branding = this.companyBrandingRepository.create({
           companyId,
           ...brandingDto,
-        })[0];
+        });
       } else {
         // Update existing branding
         Object.assign(branding, brandingDto);

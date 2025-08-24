@@ -11,7 +11,7 @@ import {
   TrashIcon,
   EyeIcon,
   CodeBracketIcon,
-  PaletteIcon,
+  SwatchIcon,
   CogIcon,
   DocumentTextIcon,
   TagIcon,
@@ -393,7 +393,7 @@ export const TemplateCreationForm: React.FC<TemplateCreationFormProps> = ({
           </TabsTrigger>
           
           <TabsTrigger value="styling" className="flex items-center space-x-2">
-            <PaletteIcon className="h-4 w-4" />
+            <SwatchIcon className="h-4 w-4" />
             <span>Styling</span>
           </TabsTrigger>
           

@@ -12,7 +12,7 @@ import {
   EyeIcon,
   EyeSlashIcon,
   CogIcon,
-  PaletteIcon
+  SwatchIcon
 } from '@heroicons/react/24/outline';
 import { PDFExportOptions } from '@/services/pdfExportService';
 import { pdfExportService } from '@/services/pdfExportService';

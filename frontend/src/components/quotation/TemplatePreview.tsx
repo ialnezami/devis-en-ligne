@@ -15,7 +15,7 @@ import {
   PlusIcon,
   DocumentTextIcon,
   CodeBracketIcon,
-  PaletteIcon
+  SwatchIcon
 } from '@heroicons/react/24/outline';
 import { QuoteTemplate, TemplateVariable, templateManagementService } from '@/services/templateManagementService';
 import { toast } from 'react-hot-toast';
@@ -385,7 +385,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
                       size="sm"
                       onClick={() => setActiveView('css')}
                     >
-                      <PaletteIcon className="h-4 w-4 mr-2" />
+                      <SwatchIcon className="h-4 w-4 mr-2" />
                       CSS
                     </Button>
                   </div>

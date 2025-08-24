@@ -15,7 +15,7 @@ import {
   StarIcon,
   HeartIcon,
   BuildingOfficeIcon,
-  PaletteIcon,
+  SwatchIcon,
   DocumentTextIcon,
   PhotoIcon,
   CheckCircleIcon,
@@ -424,7 +424,7 @@ const CustomizableEstimates: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <PaletteIcon className="h-5 w-5" />
+                <SwatchIcon className="h-5 w-5" />
                 <span>Brand Guidelines</span>
               </CardTitle>
             </CardHeader>
@@ -442,7 +442,7 @@ const CustomizableEstimates: React.FC = () => {
                 
                 <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
                   <div className="flex items-center space-x-2 mb-2">
-                    <PaletteIcon className="h-5 w-5 text-green-500" />
+                    <SwatchIcon className="h-5 w-5 text-green-500" />
                     <span className="font-medium">Color Usage</span>
                   </div>
                   <p className="text-sm text-gray-600 dark:text-gray-400">

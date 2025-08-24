@@ -203,7 +203,6 @@ export class GoogleCalendarIntegration implements CalendarIntegration {
           id: response.data.id,
           externalId: response.data.id,
           title: response.data.summary,
-          description: response.data.description,
           startTime: new Date(response.data.start.dateTime || response.data.start.date),
           endTime: new Date(response.data.end.dateTime || response.data.end.date),
           attendees: response.data.attendees?.map((a: any) => a.email) || [],

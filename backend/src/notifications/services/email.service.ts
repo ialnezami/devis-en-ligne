@@ -382,7 +382,6 @@ export class EmailService {
             subject,
             template,
             context: recipient.context,
-            metadata: recipient.metadata,
             scheduledAt,
             priority,
           };
@@ -812,6 +811,121 @@ export class EmailService {
         <li>Implementation Date: ${new Date().toLocaleDateString()}</li>
       </ul>
       <p>Your quotation has been updated accordingly. Please review the changes.</p>
+      <p>Best regards,<br>Your Team</p>
+    `;
+
+    await this.sendEmail({
+      to,
+      subject,
+      html,
+    });
+  }
+
+  async sendApprovalDecisionEmail(
+    to: string,
+    clientName: string,
+    quotation: any,
+    approvalDecision: any,
+  ): Promise<void> {
+    const subject = `Quotation Approval Decision - ${quotation.quotationNumber}`;
+    const html = `
+      <h2>Quotation Approval Decision</h2>
+      <p>Dear ${clientName},</p>
+      <p>Your quotation ${quotation.quotationNumber} has been ${approvalDecision.decision}.</p>
+      <p><strong>Decision Details:</strong></p>
+      <ul>
+        <li>Decision: ${approvalDecision.decision}</li>
+        <li>Decision Date: ${approvalDecision.approvedAt.toLocaleDateString()}</li>
+        ${approvalDecision.comments ? `<li>Comments: ${approvalDecision.comments}</li>` : ''}
+      </ul>
+      <p>Best regards,<br>Your Team</p>
+    `;
+
+    await this.sendEmail({
+      to,
+      subject,
+      html,
+    });
+  }
+
+  async sendNextApprovalLevelEmail(
+    to: string,
+    approverName: string,
+    quotation: any,
+    nextLevel: any,
+  ): Promise<void> {
+    const subject = `Approval Required - ${quotation.quotationNumber}`;
+    const html = `
+      <h2>Approval Required</h2>
+      <p>Dear ${approverName},</p>
+      <p>You are required to approve quotation ${quotation.quotationNumber} at the ${nextLevel} level.</p>
+      <p><strong>Quotation Details:</strong></p>
+      <ul>
+        <li>Quotation Number: ${quotation.quotationNumber}</li>
+        <li>Client: ${quotation.client?.name || 'N/A'}</li>
+        <li>Amount: ${quotation.totalAmount}</li>
+        <li>Requested By: ${quotation.createdBy?.firstName} ${quotation.createdBy?.lastName}</li>
+      </ul>
+      <p>Please review and approve this quotation.</p>
+      <p>Best regards,<br>Your Team</p>
+    `;
+
+    await this.sendEmail({
+      to,
+      subject,
+      html,
+    });
+  }
+
+  async sendApprovalEscalationEmail(
+    to: string,
+    approverName: string,
+    quotation: any,
+    escalatedBy: any,
+    reason: string,
+  ): Promise<void> {
+    const subject = `Approval Escalated - ${quotation.quotationNumber}`;
+    const html = `
+      <h2>Approval Escalated</h2>
+      <p>Dear ${approverName},</p>
+      <p>The approval for quotation ${quotation.quotationNumber} has been escalated.</p>
+      <p><strong>Escalation Details:</strong></p>
+      <ul>
+        <li>Escalated By: ${escalatedBy.firstName} ${escalatedBy.lastName}</li>
+        <li>Reason: ${reason}</li>
+        <li>Escalation Date: ${new Date().toLocaleDateString()}</li>
+        <li>New Urgency: ${quotation.approvalUrgency}</li>
+      </ul>
+      <p>Please review this quotation as soon as possible.</p>
+      <p>Best regards,<br>Your Team</p>
+    `;
+
+    await this.sendEmail({
+      to,
+      subject,
+      html,
+    });
+  }
+
+  async sendOverdueApprovalEmail(
+    to: string,
+    approverName: string,
+    quotation: any,
+  ): Promise<void> {
+    const subject = `Overdue Approval - ${quotation.quotationNumber}`;
+    const html = `
+      <h2>Overdue Approval</h2>
+      <p>Dear ${approverName},</p>
+      <p>The approval for quotation ${quotation.quotationNumber} is overdue.</p>
+      <p><strong>Quotation Details:</strong></p>
+      <ul>
+        <li>Quotation Number: ${quotation.quotationNumber}</li>
+        <li>Client: ${quotation.client?.name || 'N/A'}</li>
+        <li>Amount: ${quotation.totalAmount}</li>
+        <li>Deadline: ${quotation.approvalDeadline?.toLocaleDateString() || 'N/A'}</li>
+        <li>Days Overdue: ${Math.ceil((new Date().getTime() - (quotation.approvalDeadline?.getTime() || 0)) / (1000 * 60 * 60 * 24))}</li>
+      </ul>
+      <p>Please review and approve this quotation immediately.</p>
       <p>Best regards,<br>Your Team</p>
     `;
 

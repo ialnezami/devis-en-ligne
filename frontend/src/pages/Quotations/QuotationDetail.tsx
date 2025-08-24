@@ -381,7 +381,7 @@ const QuotationDetail: React.FC = () => {
                 Share via Email
               </Button>
               <Button variant="outline" className="w-full justify-start">
-                <DownloadIcon className="h-4 w-4 mr-2" />
+                <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
                 Download PDF
               </Button>
               <Button variant="outline" className="w-full justify-start">
@@ -550,7 +550,7 @@ const QuotationDetail: React.FC = () => {
               className="h-20 flex-col space-y-2"
               onClick={() => handleShare('download')}
             >
-              <DownloadIcon className="h-6 w-6" />
+              <ArrowDownOnSquareIcon className="h-6 w-6" />
               <span>Download</span>
             </Button>
           </div>

@@ -127,9 +127,6 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } />
                 
-                {/* Redirect dashboard to dashboard */}
-                <Route path="/dashboard" element={<Navigate to="/dashboard" replace />} />
-                
                 {/* Catch all - redirect to landing page */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

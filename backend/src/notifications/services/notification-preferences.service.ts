@@ -518,7 +518,7 @@ export class NotificationPreferencesService {
   /**
    * Check if user has specific notification type enabled
    */
-  async isNotificationTypeEnabled(userId: string, type: string): Promise<boolean> {
+  async isNotificationTypeEnabled(userId: string, type: NotificationType): Promise<boolean> {
     try {
       const preferences = await this.getUserPreferences(userId);
       return preferences.typeSettings[type] !== false;

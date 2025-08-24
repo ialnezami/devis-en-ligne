@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { NotificationPreferences } from '../entities/notification-preferences.entity';
 import { CreateNotificationPreferencesDto } from '../dto/create-notification-preferences.dto';
 import { UpdateNotificationPreferencesDto } from '../dto/update-notification-preferences.dto';
-import { NotificationType } from '../entities/notification.entity';
+import { NotificationType, NotificationChannel } from '../entities/notification.entity';
 
 @Injectable()
 export class NotificationPreferencesService {
@@ -98,7 +98,7 @@ export class NotificationPreferencesService {
    */
   async toggleNotificationType(
     userId: string,
-    type: string,
+    type: NotificationType,
     enabled: boolean,
   ): Promise<NotificationPreferences> {
     try {
@@ -232,8 +232,8 @@ export class NotificationPreferencesService {
    */
   async updateChannelSettings(
     userId: string,
-    type: string,
-    channels: string[],
+    type: NotificationType,
+    channels: NotificationChannel[],
   ): Promise<NotificationPreferences> {
     try {
       const preferences = await this.getUserPreferences(userId);

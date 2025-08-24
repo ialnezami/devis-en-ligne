@@ -18,13 +18,15 @@ export interface FileMetadata {
 }
 
 export interface FileVersion {
+  id: string;
+  fileId: string;
   version: string;
-  filename: string;
+  filePath: string;
   size: number;
-  uploadedAt: Date;
   uploadedBy: string;
-  changes?: string;
-  checksum: string;
+  changes: string;
+  createdAt: Date;
+  metadata: Record<string, any>;
 }
 
 export interface FileUploadOptions {

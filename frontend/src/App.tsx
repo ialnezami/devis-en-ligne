@@ -15,7 +15,6 @@ import QuotationCreationWizard from './pages/Quotations/QuotationCreationWizard'
 import QuotationDetail from './pages/Quotations/QuotationDetail';
 import CustomizableEstimates from './pages/Estimates/CustomizableEstimates';
 import { Login, Register, ForgotPassword, ResetPassword } from './pages/Auth';
-import { Unauthorized } from './pages/Error';
 import { Profile } from './pages/Profile';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';

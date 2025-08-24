@@ -5,4 +5,4 @@ export { styled, animations, componentStyles, createResponsiveStyles, css, keyfr
 export { default as GlobalStyles } from './global';
 
 // Re-export Tailwind CSS
-export * from './globals.css';
+export * from './globals.css?inline';

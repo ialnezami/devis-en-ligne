@@ -94,7 +94,7 @@ import { DatabaseModule } from './database/database.module';
     // ScheduleModule.forRoot(),
 
     // Feature Modules
-    // AuthModule, // Temporarily disabled for basic server
+    AuthModule, // Minimal auth module for frontend requests
     // UsersModule, // Temporarily disabled for basic server
     // QuotationsModule, // Temporarily disabled for basic server
     // NotificationsModule, // Temporarily disabled due to compilation errors

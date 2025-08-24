@@ -2,6 +2,23 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
+  async validateUser(email: string, password: string): Promise<any> {
+    // Mock user validation - in production this would check against database
+    if (email && password) {
+      return {
+        id: 'mock-user-id',
+        email: email,
+        username: 'mockuser',
+        firstName: 'Mock',
+        lastName: 'User',
+        roles: ['user'],
+        status: 'active',
+        twoFactorEnabled: false,
+      };
+    }
+    return null;
+  }
+
   async register(registerDto: any) {
     // Mock registration response
     return {
@@ -35,6 +52,24 @@ export class AuthService {
       },
       accessToken: 'mock-access-token',
       refreshToken: 'mock-refresh-token',
+    };
+  }
+
+  async verify2FAAndLogin(userId: string, verify2FADto: any) {
+    // Mock 2FA verification response
+    return {
+      user: {
+        id: userId,
+        email: 'mock@example.com',
+        username: 'mockuser',
+        firstName: 'Mock',
+        lastName: 'User',
+        roles: ['user'],
+        status: 'active',
+        twoFactorEnabled: true,
+      },
+      accessToken: 'mock-access-token-after-2fa',
+      refreshToken: 'mock-refresh-token-after-2fa',
     };
   }
 

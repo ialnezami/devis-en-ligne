@@ -22,7 +22,16 @@ import {
   ProjectSchedule,
   CalendarWidget
 } from '@/types/calendar';
-import { cn, formatDate, formatTime } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
+
+// Local utility function for formatting time
+const formatTime = (date: Date): string => {
+  return date.toLocaleTimeString('en-US', { 
+    hour: 'numeric', 
+    minute: '2-digit',
+    hour12: true 
+  });
+};
 
 // Mock data for demonstration
 const mockEvents: CalendarEvent[] = [

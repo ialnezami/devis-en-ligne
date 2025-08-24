@@ -1,251 +1,69 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { UsersService } from '../users/users.service';
-import { User } from '../users/entities/user.entity';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { RefreshTokenDto } from './dto/refresh-token.dto';
-import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { Verify2FADto } from './dto/verify-2fa.dto';
-import { EmailService } from '../notifications/email.service';
-import { Logger } from '../common/logger/logger.service';
-import { TwoFactorAuthService } from './two-factor-auth.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
-    private configService: ConfigService,
-    private emailService: EmailService,
-    private logger: Logger,
-    private twoFactorAuthService: TwoFactorAuthService,
-  ) {}
-
-  async validateUser(email: string, password: string): Promise<User | null> {
-    try {
-      const user = await this.usersService.findByEmail(email);
-      
-      if (user && await user.validatePassword(password)) {
-        const { password: _, ...result } = user;
-        return result as User;
-      }
-      
-      return null;
-    } catch (error) {
-      this.logger.error('Error validating user', { email, error: error.message });
-      return null;
-    }
-  }
-
-  async login(loginDto: LoginDto) {
-    const user = await this.validateUser(loginDto.email, loginDto.password);
-    
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-
-    if (user.status !== 'active') {
-      throw new UnauthorizedException('Account is not active');
-    }
-
-    // Check if 2FA is enabled
-    if (user.twoFactorEnabled) {
-      // Return a special response indicating 2FA is required
-      return {
-        requires2FA: true,
-        userId: user.id,
-        message: 'Two-factor authentication code required',
-      };
-    }
-
-    const tokens = await this.generateTokens(user);
-    
-    // Update last login
-    await this.usersService.updateLastLogin(user.id);
-    
-    this.logger.log('User logged in successfully', { userId: user.id, email: user.email });
-    
+  async register(registerDto: any) {
+    // Mock registration response
     return {
       user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        roles: user.roles,
-        status: user.status,
-        company: user.company,
-        twoFactorEnabled: user.twoFactorEnabled,
+        id: 'mock-user-id',
+        email: registerDto.email || 'mock@example.com',
+        username: registerDto.username || 'mockuser',
+        firstName: registerDto.firstName || 'Mock',
+        lastName: registerDto.lastName || 'User',
+        roles: ['user'],
+        status: 'active',
+        twoFactorEnabled: false,
       },
-      ...tokens,
+      accessToken: 'mock-access-token',
+      refreshToken: 'mock-refresh-token',
     };
   }
 
-  async verify2FAAndLogin(userId: string, verify2FADto: Verify2FADto) {
-    const user = await this.usersService.findById(userId);
-    
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
-    if (!user.twoFactorEnabled) {
-      throw new BadRequestException('2FA is not enabled for this user');
-    }
-
-    // Verify 2FA code
-    const verificationResult = await this.twoFactorAuthService.verify2FA(
-      userId,
-      verify2FADto.code,
-      verify2FADto.backupCode,
-    );
-
-    if (!verificationResult.verified) {
-      throw new UnauthorizedException('Invalid 2FA code');
-    }
-
-    const tokens = await this.generateTokens(user);
-    
-    // Update last login
-    await this.usersService.updateLastLogin(user.id);
-    
-    this.logger.log('User logged in with 2FA successfully', { 
-      userId: user.id, 
-      email: user.email,
-      usedBackupCode: verificationResult.usedBackupCode 
-    });
-    
+  async login(loginDto: any) {
+    // Mock login response
     return {
       user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        roles: user.roles,
-        status: user.status,
-        company: user.company,
-        twoFactorEnabled: user.twoFactorEnabled,
+        id: 'mock-user-id',
+        email: loginDto.email || 'mock@example.com',
+        username: loginDto.username || 'mockuser',
+        firstName: 'Mock',
+        lastName: 'User',
+        roles: ['user'],
+        status: 'active',
+        twoFactorEnabled: false,
       },
-      ...tokens,
+      accessToken: 'mock-access-token',
+      refreshToken: 'mock-refresh-token',
     };
   }
 
-  async register(registerDto: RegisterDto) {
-    // Check if user already exists
-    const existingUser = await this.usersService.findByEmail(registerDto.email);
-    if (existingUser) {
-      throw new BadRequestException('User with this email already exists');
-    }
-
-    const existingUsername = await this.usersService.findByUsername(registerDto.username);
-    if (existingUsername) {
-      throw new BadRequestException('Username already taken');
-    }
-
-    // Create user
-    const user = await this.usersService.create(registerDto);
-    
-    // Generate tokens
-    const tokens = await this.generateTokens(user);
-    
-    this.logger.log('User registered successfully', { userId: user.id, email: user.email });
-    
+  async refreshToken(refreshTokenDto: any) {
+    // Mock token refresh response
     return {
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        roles: user.roles,
-        status: user.status,
-        twoFactorEnabled: user.twoFactorEnabled,
-      },
-      ...tokens,
+      accessToken: 'new-mock-access-token',
+      refreshToken: 'new-mock-refresh-token',
     };
   }
 
-  async refreshToken(refreshTokenDto: RefreshTokenDto) {
-    try {
-      const payload = this.jwtService.verify(refreshTokenDto.refreshToken, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      });
-
-      const user = await this.usersService.findById(payload.sub);
-      if (!user || user.status !== 'active') {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
-
-      const tokens = await this.generateTokens(user);
-      
-      this.logger.log('Token refreshed successfully', { userId: user.id });
-      
-      return tokens;
-    } catch (error) {
-      throw new UnauthorizedException('Invalid refresh token');
-    }
+  async forgotPassword(forgotPasswordDto: any) {
+    // Mock password reset response
+    return {
+      message: 'If an account with that email exists, a password reset link has been sent.',
+    };
   }
 
-  async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
-    const user = await this.usersService.findByEmail(forgotPasswordDto.email);
-    
-    if (user && user.status === 'active') {
-      const resetToken = await this.usersService.generatePasswordResetToken(user.id);
-      
-      // Send reset email
-      await this.emailService.sendPasswordResetEmail(user.email, resetToken);
-      
-      this.logger.log('Password reset email sent', { userId: user.id, email: user.email });
-    }
-
-    // Always return success to prevent email enumeration
-    return { message: 'If an account with that email exists, a password reset link has been sent.' };
-  }
-
-  async resetPassword(resetPasswordDto: ResetPasswordDto) {
-    const user = await this.usersService.findByPasswordResetToken(resetPasswordDto.token);
-    
-    if (!user) {
-      throw new BadRequestException('Invalid or expired reset token');
-    }
-
-    await this.usersService.resetPassword(user.id, resetPasswordDto.newPassword);
-    
-    this.logger.log('Password reset successfully', { userId: user.id });
-    
-    return { message: 'Password has been reset successfully' };
+  async resetPassword(resetPasswordDto: any) {
+    // Mock password reset response
+    return {
+      message: 'Password has been reset successfully.',
+    };
   }
 
   async logout(userId: string) {
-    // In a more sophisticated implementation, you might want to blacklist the token
-    // For now, we'll just log the logout
-    this.logger.log('User logged out', { userId });
-    
-    return { message: 'Logged out successfully' };
-  }
-
-  private async generateTokens(user: User) {
-    const payload = { 
-      email: user.email, 
-      sub: user.id,
-      roles: user.roles,
-      twoFactorEnabled: user.twoFactorEnabled,
-    };
-
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload),
-      this.jwtService.signAsync(payload, {
-        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-        expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN', '7d'),
-      }),
-    ]);
-
+    // Mock logout response
     return {
-      accessToken,
-      refreshToken,
+      message: 'User logged out successfully.',
     };
   }
 }

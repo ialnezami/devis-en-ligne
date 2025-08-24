@@ -347,7 +347,7 @@ export class CompaniesService {
         settings = this.companySettingsRepository.create({
           companyId,
           ...settingsDto,
-        })[0];
+        });
       } else {
         // Update existing settings
         Object.assign(settings, settingsDto);

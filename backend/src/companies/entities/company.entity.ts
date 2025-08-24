@@ -95,8 +95,8 @@ export class Company {
   @OneToOne(() => CompanyBranding, (branding) => branding.company)
   branding: CompanyBranding;
 
-  // @OneToMany(() => Notification, (notification) => notification.company)
-  // notifications: Notification[];
+  @OneToMany(() => Notification, (notification) => notification.company)
+  notifications: Notification[];
 
   // Timestamps
   @CreateDateColumn()

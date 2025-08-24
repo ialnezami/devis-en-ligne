@@ -531,13 +531,13 @@ export class PDFStorageService {
     await storageProvider.deleteFile(filePath);
   }
 
-  private fileExists(filePath: string): boolean {
     // This is a simplified check - in production you'd want to use the storage provider
-    try {
-      const storageProvider = this.storageFactory.getStorageProvider();
-      return storageProvider.fileExists(filePath);
-    } catch {
-      return false;
+    private async fileExists(filePath: string): Promise<boolean> {
+      try {
+        const storageProvider = this.storageFactory.getStorageProvider();
+        return await storageProvider.fileExists(filePath);
+      } catch {
+        return false;
+      }
     }
-  }
 }

@@ -6,7 +6,7 @@ export { Badge, badgeVariants } from './Badge';
 export { default as Modal } from './Modal';
 export { default as Select } from './Select';
 export type { SelectOption } from './Select';
-export { Textarea, textareaVariants } from './Textarea';
+export { Textarea } from './Textarea';
 export { Checkbox, checkboxVariants, labelVariants } from './Checkbox';
 export { default as RadioGroup } from './RadioGroup';
 export type { RadioOption } from './RadioGroup';

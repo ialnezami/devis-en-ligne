@@ -426,14 +426,22 @@ export class NotificationTemplateService {
    */
   async createDefaultTemplates(): Promise<void> {
     try {
-      const defaultTemplates = [
+      const defaultTemplates: Array<{
+        name: string;
+        title: string;
+        body: string;
+        category: string;
+        platforms: ('android' | 'ios' | 'web')[];
+        priority: 'low' | 'normal' | 'high';
+        variables: string[];
+      }> = [
         {
           name: 'quotation_created',
           title: 'New Quotation Created',
           body: 'A new quotation has been created for {{clientName}} with total amount {{amount}}.',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'normal' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'normal',
           variables: ['clientName', 'amount'],
         },
         {
@@ -441,8 +449,8 @@ export class NotificationTemplateService {
           title: 'Quotation Approved',
           body: 'Your quotation for {{clientName}} has been approved!',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'high' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'high',
           variables: ['clientName'],
         },
         {
@@ -450,8 +458,8 @@ export class NotificationTemplateService {
           title: 'Quotation Rejected',
           body: 'Your quotation for {{clientName}} has been rejected. Reason: {{reason}}',
           category: 'quotation',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'high' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'high',
           variables: ['clientName', 'reason'],
         },
         {
@@ -459,8 +467,8 @@ export class NotificationTemplateService {
           title: 'Payment Received',
           body: 'Payment of {{amount}} has been received for quotation {{quotationNumber}}.',
           category: 'payment',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'high' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'high',
           variables: ['amount', 'quotationNumber'],
         },
         {
@@ -468,8 +476,8 @@ export class NotificationTemplateService {
           title: 'You\'ve Been Invited',
           body: '{{inviterName}} has invited you to join {{companyName}}.',
           category: 'user',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'normal' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'normal',
           variables: ['inviterName', 'companyName'],
         },
         {
@@ -477,8 +485,8 @@ export class NotificationTemplateService {
           title: 'Reminder',
           body: '{{message}}',
           category: 'general',
-          platforms: ['android', 'ios', 'web'] as const,
-          priority: 'normal' as const,
+          platforms: ['android', 'ios', 'web'],
+          priority: 'normal',
           variables: ['message'],
         },
       ];

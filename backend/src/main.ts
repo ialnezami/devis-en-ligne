@@ -1,23 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
-// Simple AppModule for minimal functionality
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
-  controllers: [],
-  providers: [],
-})
-class MinimalAppModule {}
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(MinimalAppModule);
+  const app = await NestFactory.create(AppModule);
   
   // Enable CORS
   app.enableCors({

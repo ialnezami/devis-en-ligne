@@ -9,7 +9,7 @@ import {
   MagnifyingGlassIcon,
   FunnelIcon,
   CalendarIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   TrashIcon,
   ArchiveBoxIcon,
   EyeIcon,
@@ -491,7 +491,7 @@ export const NotificationHistory: React.FC<NotificationHistoryProps> = ({
           </Button>
           
           <Button variant="outline" onClick={handleExportHistory}>
-            <DownloadIcon className="h-4 w-4 mr-2" />
+                            <ArrowDownOnSquareIcon className="h-4 w-4 mr-2" />
             Export
           </Button>
           

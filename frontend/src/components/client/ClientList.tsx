@@ -14,7 +14,7 @@ import {
   TrashIcon,
   DuplicateIcon,
   ShareIcon,
-  DownloadIcon,
+  ArrowDownOnSquareIcon,
   UploadIcon,
   PhoneIcon,
   EnvelopeIcon,
